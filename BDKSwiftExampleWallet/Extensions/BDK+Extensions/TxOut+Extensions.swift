@@ -7,7 +7,7 @@
 
 import BitcoinDevKit
 
-extension TxOut: Equatable {
+extension TxOut: @retroactive Equatable {
     public static func == (lhs: TxOut, rhs: TxOut) -> Bool {
         return lhs.value == rhs.value && lhs.scriptPubkey == rhs.scriptPubkey
     }

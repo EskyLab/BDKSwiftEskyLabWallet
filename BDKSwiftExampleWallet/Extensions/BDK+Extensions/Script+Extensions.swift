@@ -7,7 +7,7 @@
 
 import BitcoinDevKit
 
-extension Script: Equatable {
+extension Script: @retroactive Equatable {
     public static func == (lhs: Script, rhs: Script) -> Bool {
         let lhsBytes = lhs.toBytes()
         let rhsBytes = rhs.toBytes()

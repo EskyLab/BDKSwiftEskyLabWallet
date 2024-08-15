@@ -7,7 +7,7 @@
 
 import BitcoinDevKit
 
-extension BitcoinDevKit.Transaction: Equatable {
+extension BitcoinDevKit.Transaction: @retroactive Equatable {
     public static func == (lhs: BitcoinDevKit.Transaction, rhs: BitcoinDevKit.Transaction) -> Bool {
         // Compare the properties that determine equality for Transaction
         return lhs.txid() == rhs.txid() && lhs.weight() == rhs.weight() && lhs.size() == rhs.size()
