@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
 		AE0C30F72A804A2D008F1EAE /* WalletTransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0C30F62A804A2D008F1EAE /* WalletTransactionListView.swift */; };
@@ -173,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +475,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1600;
+				ORGANIZATIONNAME = CypherPunkCulture;
 				TargetAttributes = {
 					AE4984772A1BBBD6009951E2 = {
 						CreatedOnToolsVersion = 14.2;
@@ -912,6 +915,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE4984A72A1BD425009951E2 /* XCRemoteSwiftPackageReference "bdk-swift" */;
+			productName = BitcoinDevKit;
+		};
 		AE4984A82A1BD425009951E2 /* BitcoinDevKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AE4984A72A1BD425009951E2 /* XCRemoteSwiftPackageReference "bdk-swift" */;
