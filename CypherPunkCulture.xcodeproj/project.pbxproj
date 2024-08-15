@@ -107,11 +107,11 @@
 		AE34DDAB2B6B31ED00F04AD4 /* SeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedView.swift; sourceTree = "<group>"; };
 		AE34DDAD2B6B320F00F04AD4 /* SeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedViewModel.swift; sourceTree = "<group>"; };
 		AE3902A32A3B4CD900BEC318 /* TabHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabHomeView.swift; sourceTree = "<group>"; };
-		AE4984782A1BBBD6009951E2 /* BDKSwiftExampleWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDKSwiftExampleWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CypherPunkCulture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE49847B2A1BBBD6009951E2 /* BDKSwiftExampleWalletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDKSwiftExampleWalletApp.swift; sourceTree = "<group>"; };
 		AE49847F2A1BBBD7009951E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE4984822A1BBBD7009951E2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		AE4984882A1BBBD8009951E2 /* BDKSwiftExampleWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BDKSwiftExampleWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CypherPunkCultureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE49848C2A1BBBD8009951E2 /* BDKSwiftExampleWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDKSwiftExampleWalletTests.swift; sourceTree = "<group>"; };
 		AE4984A52A1BBCB8009951E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AE6715F92A9A9220005C193F /* BDKSwiftExampleWalletPriceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BDKSwiftExampleWalletPriceServiceTests.swift; sourceTree = "<group>"; };
@@ -280,8 +280,8 @@
 		AE4984792A1BBBD6009951E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AE4984782A1BBBD6009951E2 /* BDKSwiftExampleWallet.app */,
-				AE4984882A1BBBD8009951E2 /* BDKSwiftExampleWalletTests.xctest */,
+				AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */,
+				AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -423,9 +423,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AE4984772A1BBBD6009951E2 /* BDKSwiftExampleWallet */ = {
+		AE4984772A1BBBD6009951E2 /* CypherPunkCulture */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "BDKSwiftExampleWallet" */;
+			buildConfigurationList = AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCulture" */;
 			buildPhases = (
 				AE4984742A1BBBD6009951E2 /* Sources */,
 				AE4984752A1BBBD6009951E2 /* Frameworks */,
@@ -435,7 +435,7 @@
 			);
 			dependencies = (
 			);
-			name = BDKSwiftExampleWallet;
+			name = CypherPunkCulture;
 			packageProductDependencies = (
 				AE4984A82A1BD425009951E2 /* BitcoinDevKit */,
 				AE7D5A0D2A7EE62200EAC8CE /* KeychainAccess */,
@@ -443,12 +443,12 @@
 				AEAF83B52B7BD4D10019B23B /* CodeScanner */,
 			);
 			productName = BDKSwiftExampleWallet;
-			productReference = AE4984782A1BBBD6009951E2 /* BDKSwiftExampleWallet.app */;
+			productReference = AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AE4984872A1BBBD8009951E2 /* BDKSwiftExampleWalletTests */ = {
+		AE4984872A1BBBD8009951E2 /* CypherPunkCultureTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AE49849F2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "BDKSwiftExampleWalletTests" */;
+			buildConfigurationList = AE49849F2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCultureTests" */;
 			buildPhases = (
 				AE4984842A1BBBD8009951E2 /* Sources */,
 				AE4984852A1BBBD8009951E2 /* Frameworks */,
@@ -459,9 +459,9 @@
 			dependencies = (
 				AE49848A2A1BBBD8009951E2 /* PBXTargetDependency */,
 			);
-			name = BDKSwiftExampleWalletTests;
+			name = CypherPunkCultureTests;
 			productName = BDKSwiftExampleWalletTests;
-			productReference = AE4984882A1BBBD8009951E2 /* BDKSwiftExampleWalletTests.xctest */;
+			productReference = AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -483,7 +483,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "BDKSwiftExampleWallet" */;
+			buildConfigurationList = AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "CypherPunkCulture" */;
 			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -503,8 +503,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AE4984772A1BBBD6009951E2 /* BDKSwiftExampleWallet */,
-				AE4984872A1BBBD8009951E2 /* BDKSwiftExampleWalletTests */,
+				AE4984772A1BBBD6009951E2 /* CypherPunkCulture */,
+				AE4984872A1BBBD8009951E2 /* CypherPunkCultureTests */,
 			);
 		};
 /* End PBXProject section */
@@ -610,7 +610,7 @@
 /* Begin PBXTargetDependency section */
 		AE49848A2A1BBBD8009951E2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AE4984772A1BBBD6009951E2 /* BDKSwiftExampleWallet */;
+			target = AE4984772A1BBBD6009951E2 /* CypherPunkCulture */;
 			targetProxy = AE4984892A1BBBD8009951E2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -821,7 +821,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BDKSwiftExampleWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BDKSwiftExampleWallet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CypherPunkCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CypherPunkCulture";
 			};
 			name = Debug;
 		};
@@ -840,14 +840,14 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BDKSwiftExampleWallet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BDKSwiftExampleWallet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CypherPunkCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CypherPunkCulture";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "BDKSwiftExampleWallet" */ = {
+		AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "CypherPunkCulture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE49849A2A1BBBD8009951E2 /* Debug */,
@@ -856,7 +856,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "BDKSwiftExampleWallet" */ = {
+		AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCulture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE49849D2A1BBBD8009951E2 /* Debug */,
@@ -865,7 +865,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AE49849F2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "BDKSwiftExampleWalletTests" */ = {
+		AE49849F2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCultureTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE4984A02A1BBBD8009951E2 /* Debug */,
