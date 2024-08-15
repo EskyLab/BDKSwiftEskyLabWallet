@@ -748,7 +748,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
-				DEVELOPMENT_TEAM = WUQYBPQJWN;
+				DEVELOPMENT_TEAM = U8C49P573P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
@@ -765,7 +765,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitcoindevkit.bdkswiftexamplewallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.bitcoinwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -781,7 +781,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
-				DEVELOPMENT_TEAM = WUQYBPQJWN;
+				DEVELOPMENT_TEAM = U8C49P573P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
@@ -798,7 +798,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitcoindevkit.bdkswiftexamplewallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.bitcoinwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -813,11 +813,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9G6M658RKZ;
+				DEVELOPMENT_TEAM = U8C49P573P;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.matthewramsden.BDKSwiftExampleWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.BDKSwiftExampleWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -833,11 +833,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9G6M658RKZ;
+				DEVELOPMENT_TEAM = U8C49P573P;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.matthewramsden.BDKSwiftExampleWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.BDKSwiftExampleWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

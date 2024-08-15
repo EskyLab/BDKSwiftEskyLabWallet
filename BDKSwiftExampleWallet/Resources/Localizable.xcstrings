@@ -112,6 +112,7 @@
       }
     },
     "100% open-source & open-design" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -121,7 +122,11 @@
         }
       }
     },
+    "100% open-source & open-design ₿" : {
+
+    },
     "A simple bitcoin wallet." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -261,6 +266,9 @@
         }
       }
     },
+    "CypherPunk Culture." : {
+
+    },
     "Danger Zone" : {
       "localizations" : {
         "fr" : {
@@ -290,6 +298,9 @@
           }
         }
       }
+    },
+    "EskyLab" : {
+
     },
     "Esplora Server" : {
       "localizations" : {
@@ -635,6 +646,7 @@
       }
     },
     "Your wallet, your coins" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

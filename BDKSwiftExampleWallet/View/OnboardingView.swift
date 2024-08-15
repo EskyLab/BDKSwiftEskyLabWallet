@@ -25,7 +25,7 @@ struct OnboardingView: View {
                 Spacer()
 
                 VStack(spacing: 25) {
-                    Image(systemName: "bitcoinsign.circle.fill")
+                    Image(systemName: "bitcoinsign.circle")
                         .resizable()
                         .foregroundColor(.bitcoinOrange)
                         .frame(width: 100, height: 100, alignment: .center)
@@ -33,7 +33,7 @@ struct OnboardingView: View {
                         .textStyle(BitcoinTitle1())
                         .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-                    Text("A simple bitcoin wallet.")
+                    Text("CypherPunk Culture.")
                         .textStyle(BitcoinBody1())
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -98,10 +98,10 @@ struct OnboardingView: View {
                 Spacer()
 
                 VStack {
-                    Text("Your wallet, your coins")
+                    Text("EskyLab")
                         .textStyle(BitcoinBody4())
                         .multilineTextAlignment(.center)
-                    Text("100% open-source & open-design")
+                    Text("100% open-source & open-design ₿")
                         .textStyle(BitcoinBody4())
                         .multilineTextAlignment(.center)
                 }
