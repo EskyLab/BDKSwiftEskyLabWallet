@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import BDKSwiftExampleWallet
+@testable import CypherPunkCulture
 
 final class BDKSwiftExampleWalletPriceServiceTests: XCTestCase {
 

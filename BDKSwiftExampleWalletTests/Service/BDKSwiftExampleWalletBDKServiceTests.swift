@@ -8,7 +8,7 @@
 import BitcoinDevKit
 import XCTest
 
-@testable import BDKSwiftExampleWallet
+@testable import CypherPunkCulture
 
 final class BDKSwiftExampleWalletBDKServiceTests: XCTestCase {
 
