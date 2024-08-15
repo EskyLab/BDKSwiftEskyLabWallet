@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-               BuildableName = "BDKSwiftExampleWallet.app"
-               BlueprintName = "BDKSwiftExampleWallet"
-               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+               BuildableName = "CypherPunk.app"
+               BlueprintName = "CypherPunk"
+               ReferencedContainer = "container:CypherPunk.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-            BuildableName = "BDKSwiftExampleWallet.app"
-            BlueprintName = "BDKSwiftExampleWallet"
-            ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+            BuildableName = "CypherPunk.app"
+            BlueprintName = "CypherPunk"
+            ReferencedContainer = "container:CypherPunk.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -45,9 +45,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AE4984872A1BBBD8009951E2"
-               BuildableName = "BDKSwiftExampleWalletTests.xctest"
-               BlueprintName = "BDKSwiftExampleWalletTests"
-               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+               BuildableName = "CypherPunkTests.xctest"
+               BlueprintName = "CypherPunkTests"
+               ReferencedContainer = "container:CypherPunk.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -58,7 +58,7 @@
                BlueprintIdentifier = "AE4984912A1BBBD8009951E2"
                BuildableName = "BDKSwiftExampleWalletUITests.xctest"
                BlueprintName = "BDKSwiftExampleWalletUITests"
-               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+               ReferencedContainer = "container:CypherPunk.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-            BuildableName = "BDKSwiftExampleWallet.app"
-            BlueprintName = "BDKSwiftExampleWallet"
-            ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+            BuildableName = "CypherPunk.app"
+            BlueprintName = "CypherPunk"
+            ReferencedContainer = "container:CypherPunk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-            BuildableName = "BDKSwiftExampleWallet.app"
-            BlueprintName = "BDKSwiftExampleWallet"
-            ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+            BuildableName = "CypherPunk.app"
+            BlueprintName = "CypherPunk"
+            ReferencedContainer = "container:CypherPunk.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
