@@ -120,10 +120,18 @@
             "value" : "100% open-source et open-design"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "100% open-source & open-design ₿" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100% open-source et open-design ₿"
+          }
+        }
+      }
     },
     "A simple bitcoin wallet." : {
       "extractionState" : "stale",
@@ -134,7 +142,8 @@
             "value" : "Un portefeuille bitcoin simple."
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Activity" : {
       "localizations" : {
@@ -185,6 +194,9 @@
           }
         }
       }
+    },
+    "BDKSwift + EskyLab" : {
+
     },
     "Bitcoin Wallet" : {
       "localizations" : {
@@ -298,9 +310,6 @@
           }
         }
       }
-    },
-    "EskyLab" : {
-
     },
     "Esplora Server" : {
       "localizations" : {
@@ -654,7 +663,8 @@
             "value" : "Votre portefeuille, vos pièces"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     }
   },
   "version" : "1.0"

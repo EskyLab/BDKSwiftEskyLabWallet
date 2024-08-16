@@ -98,7 +98,7 @@ struct OnboardingView: View {
                 Spacer()
 
                 VStack {
-                    Text("EskyLab")
+                    Text("BDKSwift + EskyLab")
                         .textStyle(BitcoinBody4())
                         .multilineTextAlignment(.center)
                     Text("100% open-source & open-design ₿")
