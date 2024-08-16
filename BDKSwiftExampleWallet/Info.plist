@@ -5,6 +5,8 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSPasteboardUsageDescription</key>
-	<string>"To allow users to copy and paste text between the app and other apps"</string>
+	<string>&quot;To allow users to copy and paste text between the app and other apps&quot;</string>
+	<key></key>
+	<string></string>
 </dict>
 </plist>

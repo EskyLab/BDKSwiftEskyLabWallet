@@ -65,8 +65,8 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "Name: CORESVG_VERBOSE"
-            value = "Value: 1"
+            key = "CORESVG_VERBOSE"
+            value = "1"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
