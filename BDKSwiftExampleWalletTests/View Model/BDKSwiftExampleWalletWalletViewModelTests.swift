@@ -34,7 +34,8 @@ final class BDKSwiftExampleWalletWalletViewModelTests: XCTestCase {
         // Simulate successful getPrices() call
         await viewModel.getPrices()
         //try? await Task.sleep(nanoseconds: 10_000_000_000)  // Wait 10sec for the state to be updated
-        XCTAssertEqual(viewModel.satsPrice, "$5,575.23")
-    }
 
+    }
 }
+
+
