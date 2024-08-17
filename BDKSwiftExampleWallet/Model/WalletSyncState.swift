@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WalletSyncState: CustomStringConvertible, Equatable {
+enum WalletSyncState: CustomStringConvertible, Equatable, Hashable {
     case error(Error)
     case notStarted
     case synced
@@ -16,6 +16,7 @@ enum WalletSyncState: CustomStringConvertible, Equatable {
     var description: String {
         switch self {
         case .error(let error):
+            // Provide more detailed error information if needed
             return "Error Syncing: \(error.localizedDescription)"
         case .notStarted:
             return "Not Started"
@@ -26,6 +27,7 @@ enum WalletSyncState: CustomStringConvertible, Equatable {
         }
     }
 
+    // Equatable implementation
     static func == (lhs: WalletSyncState, rhs: WalletSyncState) -> Bool {
         switch (lhs, rhs) {
         case (.error(let error1), .error(let error2)):
@@ -38,6 +40,21 @@ enum WalletSyncState: CustomStringConvertible, Equatable {
             return true
         default:
             return false
+        }
+    }
+
+    // Hashable implementation for better performance in collections that require hashing
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .error(let error):
+            hasher.combine("error")
+            hasher.combine(error.localizedDescription)
+        case .notStarted:
+            hasher.combine("notStarted")
+        case .synced:
+            hasher.combine("synced")
+        case .syncing:
+            hasher.combine("syncing")
         }
     }
 }

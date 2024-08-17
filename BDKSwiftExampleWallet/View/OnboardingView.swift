@@ -20,7 +20,7 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            // Gradient background from Bitcoin Orange to Black
+            // Gradient background
             LinearGradient(
                 gradient: Gradient(colors: [bitcoinOrange, .black]),
                 startPoint: .top,
@@ -28,86 +28,76 @@ struct OnboardingView: View {
             )
             .ignoresSafeArea()
 
-            VStack {
-
+            VStack(spacing: 25) {
                 Spacer()
 
-                VStack(spacing: 25) {
+                // Logo and Title
+                VStack(spacing: 20) {
                     Image(systemName: "bitcoinsign.circle.fill")
                         .resizable()
+                        .scaledToFit()
                         .foregroundColor(.white)
-                        .frame(width: 100, height: 100, alignment: .center)
+                        .frame(width: 100, height: 100)
                         .shadow(radius: 10)
 
                     Text("Bitcoin Wallet")
-                        .textStyle(BitcoinTitle1())
-                        .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         .foregroundColor(.white)
                         .shadow(radius: 5)
+                        .padding(.horizontal, 12)
 
                     Text("CypherPunk Culture.")
-                        .textStyle(BitcoinBody1())
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
+                        .font(.headline)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                 }
+                .padding(.horizontal, 40)
 
-                VStack {
-
+                // Network Picker
+                VStack(spacing: 20) {
                     Text("Choose your Network.")
-                        .textStyle(BitcoinBody4())
-                        .multilineTextAlignment(.center)
+                        .font(.headline)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
 
-                    VStack {
-                        Picker(
-                            "Network",
-                            selection: $viewModel.selectedNetwork
-                        ) {
-                            Text("Bitcoin").tag(Network.bitcoin)
-                            Text("Testnet").tag(Network.testnet)
-                            Text("Signet").tag(Network.signet)
-                            Text("Regtest").tag(Network.regtest)
-                        }
-                        .pickerStyle(.segmented)
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                        .tint(viewModel.buttonColor)
-
-                        Picker(
-                            "Esplora Server",
-                            selection: $viewModel.selectedURL
-                        ) {
-                            ForEach(viewModel.availableURLs, id: \.self) { url in
-                                Text(
-                                    url.replacingOccurrences(
-                                        of: "https://",
-                                        with: ""
-                                    ).replacingOccurrences(
-                                        of: "http://",
-                                        with: ""
-                                    )
-                                )
-                                .tag(url)
-                            }
-                        }
-                        .pickerStyle(.automatic)
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
-                        .tint(viewModel.buttonColor)
+                    Picker("Network", selection: $viewModel.selectedNetwork) {
+                        Text("Bitcoin").tag(Network.bitcoin)
+                        Text("Testnet").tag(Network.testnet)
+                        Text("Signet").tag(Network.signet)
+                        Text("Regtest").tag(Network.regtest)
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                    .tint(viewModel.buttonColor)
+                    .foregroundColor(.black)
 
+                    Picker("Esplora Server", selection: $viewModel.selectedURL) {
+                        ForEach(viewModel.availableURLs, id: \.self) { url in
+                            Text(
+                                url.replacingOccurrences(of: "https://", with: "")
+                                    .replacingOccurrences(of: "http://", with: "")
+                            )
+                            .tag(url)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .padding()
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                    .tint(viewModel.buttonColor)
+                    .foregroundColor(.black)
                 }
-                .padding()
+                .padding(.horizontal, 40)
 
-                VStack(spacing: 25) {
+                // Seed Phrase Field
+                VStack(spacing: 20) {
                     TextField("12 Word Seed Phrase (Optional)", text: $viewModel.words)
                         .multilineTextAlignment(.center)
                         .padding()
-                        .background(Color.black.opacity(0.5)) // Darker translucent background
+                        .background(Color.black.opacity(0.5))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         .overlay(
@@ -120,24 +110,25 @@ struct OnboardingView: View {
                     Button("Create Wallet") {
                         viewModel.createWallet()
                     }
-                    .buttonStyle(BitcoinFilled(tintColor: slateGray, isCapsule: true)) // Slate Gray button
-                    .padding(.horizontal)
+                    .buttonStyle(BitcoinFilled(tintColor: slateGray, isCapsule: true))
+                    .padding(.horizontal, 40)
                     .shadow(radius: 5)
                 }
                 .padding(.top, 30)
 
                 Spacer()
 
-                VStack {
+                // Footer
+                VStack(spacing: 8) {
                     Text("BDKSwift + EskyLab")
-                        .textStyle(BitcoinBody4())
+                        .font(.footnote)
                         .foregroundColor(.white)
                         .opacity(0.7)
                         .multilineTextAlignment(.center)
                         .shadow(radius: 2)
 
                     Text("100% open-source & open-design ₿")
-                        .textStyle(BitcoinBody4())
+                        .font(.footnote)
                         .foregroundColor(.white)
                         .opacity(0.7)
                         .multilineTextAlignment(.center)
@@ -149,7 +140,7 @@ struct OnboardingView: View {
         .alert(isPresented: $showingOnboardingViewErrorAlert) {
             Alert(
                 title: Text("Onboarding Error"),
-                message: Text(viewModel.onboardingViewError?.description ?? "Unknown"),
+                message: Text(viewModel.onboardingViewError?.localizedDescription ?? "Unknown error"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.onboardingViewError = nil
                 }
@@ -173,9 +164,3 @@ struct OnboardingView: View {
             .environment(\.locale, .init(identifier: "fr"))
     }
 #endif
-
-
-
-
-
-

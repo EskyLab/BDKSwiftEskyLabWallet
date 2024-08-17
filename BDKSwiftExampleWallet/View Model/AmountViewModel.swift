@@ -7,16 +7,16 @@
 
 import BitcoinDevKit
 import Foundation
+import SwiftUI
 
 @MainActor
-@Observable
-class AmountViewModel {
+class AmountViewModel: ObservableObject {
     let bdkClient: BDKClient
 
-    var balanceTotal: UInt64?
-    var balanceConfirmed: UInt64?
-    var amountViewError: BdkError?
-    var showingAmountViewErrorAlert = false
+    @Published var balanceTotal: UInt64?
+    @Published var balanceConfirmed: UInt64?
+    @Published var amountViewError: BdkError?
+    @Published var showingAmountViewErrorAlert = false
 
     init(bdkClient: BDKClient = .live) {
         self.bdkClient = bdkClient
@@ -38,5 +38,4 @@ class AmountViewModel {
             self.showingAmountViewErrorAlert = true
         }
     }
-
 }

@@ -8,10 +8,9 @@
 import BitcoinDevKit
 import Foundation
 import SwiftUI
+import Combine
 
-// Can't make @Observable yet
-// https://developer.apple.com/forums/thread/731187
-// Feature or Bug?
+
 class OnboardingViewModel: ObservableObject {
     let bdkClient: BDKClient
 
@@ -45,6 +44,7 @@ class OnboardingViewModel: ObservableObject {
             }
         }
     }
+    @Published var showingOnboardingViewErrorAlert: Bool = false
 
     var availableURLs: [String] {
         switch selectedNetwork {
@@ -102,5 +102,4 @@ class OnboardingViewModel: ObservableObject {
             }
         }
     }
-
 }

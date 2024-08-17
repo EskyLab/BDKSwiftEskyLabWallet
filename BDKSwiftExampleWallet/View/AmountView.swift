@@ -9,7 +9,7 @@ import BitcoinUI
 import SwiftUI
 
 struct AmountView: View {
-    @Bindable var viewModel: AmountViewModel
+    @ObservedObject var viewModel: AmountViewModel
     @State var numpadAmount = "0"
     @State var isActive: Bool = false
 
