@@ -14,29 +14,43 @@ struct OnboardingView: View {
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State private var showingOnboardingViewErrorAlert = false
 
-    var body: some View {
+    // Define custom colors
+    private let bitcoinOrange = Color(red: 247/255, green: 147/255, blue: 26/255) // #f7931a
+    private let slateGray = Color(red: 77/255, green: 77/255, blue: 77/255) // #4d4d4d
 
+    var body: some View {
         ZStack {
-            Color(uiColor: .systemBackground)
-                .ignoresSafeArea()
+            // Gradient background from Bitcoin Orange to Black
+            LinearGradient(
+                gradient: Gradient(colors: [bitcoinOrange, .black]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
             VStack {
 
                 Spacer()
 
                 VStack(spacing: 25) {
-                    Image(systemName: "bitcoinsign.circle")
+                    Image(systemName: "bitcoinsign.circle.fill")
                         .resizable()
-                        .foregroundColor(.bitcoinOrange)
+                        .foregroundColor(.white)
                         .frame(width: 100, height: 100, alignment: .center)
+                        .shadow(radius: 10)
+
                     Text("Bitcoin Wallet")
                         .textStyle(BitcoinTitle1())
                         .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+                        .foregroundColor(.white)
+                        .shadow(radius: 5)
+
                     Text("CypherPunk Culture.")
                         .textStyle(BitcoinBody1())
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
                 }
 
                 VStack {
@@ -44,6 +58,7 @@ struct OnboardingView: View {
                     Text("Choose your Network.")
                         .textStyle(BitcoinBody4())
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
 
                     VStack {
                         Picker(
@@ -55,7 +70,10 @@ struct OnboardingView: View {
                             Text("Signet").tag(Network.signet)
                             Text("Regtest").tag(Network.regtest)
                         }
-                        .pickerStyle(.automatic)
+                        .pickerStyle(.segmented)
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
                         .tint(viewModel.buttonColor)
 
                         Picker(
@@ -76,8 +94,10 @@ struct OnboardingView: View {
                             }
                         }
                         .pickerStyle(.automatic)
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
                         .tint(viewModel.buttonColor)
-
                     }
 
                 }
@@ -85,13 +105,24 @@ struct OnboardingView: View {
 
                 VStack(spacing: 25) {
                     TextField("12 Word Seed Phrase (Optional)", text: $viewModel.words)
-                        .submitLabel(.done)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .background(Color.black.opacity(0.5)) // Darker translucent background
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.white.opacity(0.8), lineWidth: 1)
+                        )
+                        .shadow(radius: 5)
                         .padding(.horizontal, 40)
+
                     Button("Create Wallet") {
                         viewModel.createWallet()
                     }
-                    .buttonStyle(BitcoinFilled(tintColor: .bitcoinOrange, isCapsule: true))
+                    .buttonStyle(BitcoinFilled(tintColor: slateGray, isCapsule: true)) // Slate Gray button
+                    .padding(.horizontal)
+                    .shadow(radius: 5)
                 }
                 .padding(.top, 30)
 
@@ -100,15 +131,20 @@ struct OnboardingView: View {
                 VStack {
                     Text("BDKSwift + EskyLab")
                         .textStyle(BitcoinBody4())
+                        .foregroundColor(.white)
+                        .opacity(0.7)
                         .multilineTextAlignment(.center)
+                        .shadow(radius: 2)
+
                     Text("100% open-source & open-design ₿")
                         .textStyle(BitcoinBody4())
+                        .foregroundColor(.white)
+                        .opacity(0.7)
                         .multilineTextAlignment(.center)
+                        .shadow(radius: 2)
                 }
                 .padding(EdgeInsets(top: 32, leading: 32, bottom: 8, trailing: 32))
-
             }
-
         }
         .alert(isPresented: $showingOnboardingViewErrorAlert) {
             Alert(
@@ -119,7 +155,6 @@ struct OnboardingView: View {
                 }
             )
         }
-
     }
 }
 
@@ -138,3 +173,9 @@ struct OnboardingView: View {
             .environment(\.locale, .init(identifier: "fr"))
     }
 #endif
+
+
+
+
+
+
