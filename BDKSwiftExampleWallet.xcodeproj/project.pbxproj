@@ -10,6 +10,9 @@
 		924B75842C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 924B75832C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		924B75882C701DD9008CA7CD /* Stickers.xcstickers in Resources */ = {isa = PBXBuildFile; fileRef = 924B75872C701DD9008CA7CD /* Stickers.xcstickers */; };
 		924B75892C701DD9008CA7CD /* Stickers.xcstickers in Resources */ = {isa = PBXBuildFile; fileRef = 924B75872C701DD9008CA7CD /* Stickers.xcstickers */; };
+		924B759C2C716E65008CA7CD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759B2C716E65008CA7CD /* KeychainAccess */; };
+		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
+		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
@@ -201,6 +204,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */,
+				924B759C2C716E65008CA7CD /* KeychainAccess in Frameworks */,
+				924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */,
 				92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1134,6 +1140,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		924B759B2C716E65008CA7CD /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE7D5A0C2A7EE62200EAC8CE /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		924B759D2C716E6B008CA7CD /* BitcoinUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AEB735D12B2CC4B900F99DBB /* XCRemoteSwiftPackageReference "BitcoinUI" */;
+			productName = BitcoinUI;
+		};
+		924B759F2C716E70008CA7CD /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AEAF83B42B7BD4D10019B23B /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
 		92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AE4984A72A1BD425009951E2 /* XCRemoteSwiftPackageReference "bdk-swift" */;
