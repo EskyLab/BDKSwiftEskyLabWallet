@@ -15,21 +15,21 @@ struct OnboardingView: View {
     @State private var showingOnboardingViewErrorAlert = false
 
     // Define custom colors
-    private let bitcoinOrange = Color(red: 247/255, green: 147/255, blue: 26/255) // #f7931a
-    private let slateGray = Color(red: 77/255, green: 77/255, blue: 77/255) // #4d4d4d
-    private let darkMatteBackground = Color(red: 30/255, green: 30/255, blue: 30/255) // Matte dark gray background
-    private let lightGrayBackground = Color(red: 50/255, green: 50/255, blue: 50/255) // Lighter gray background
+    private let matteBlack = Color(red: 26/255, green: 26/255, blue: 26/255) // Matte black background
+    private let slateGray = Color(red: 48/255, green: 48/255, blue: 48/255) // Slate gray background
+    private let lightBackground = Color.white // Light gray for light mode
+    private let darkTextColor = Color(red: 30/255, green: 30/255, blue: 30/255) // Dark text for light mode
+    private let lightTextColor = Color.white // Light text for dark mode
+    private let mutedTextColor = Color.gray.opacity(0.7) // Muted text color
+
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     var body: some View {
         NavigationView {
             ZStack {
-                // Background Gradient with matte-like finish
-                LinearGradient(
-                    gradient: Gradient(colors: [darkMatteBackground, lightGrayBackground]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
+                // Background Color with matte black for dark mode and light gray for light mode
+                (colorScheme == .dark ? matteBlack : lightBackground)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 25) {
@@ -40,20 +40,20 @@ struct OnboardingView: View {
                             Image(systemName: "bitcoinsign.circle.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(.bitcoinOrange)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .frame(width: 100, height: 100)
                                 .shadow(radius: 10)
 
                             Text("Bitcoin Wallet")
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .shadow(radius: 5)
                                 .padding(.horizontal, 12)
 
                             Text("CypherPunk Culture.")
                                 .font(.headline)
-                                .foregroundColor(.white)
+                                .foregroundColor(mutedTextColor) // Muted text color
                                 .multilineTextAlignment(.center)
                         }
                         .padding(.horizontal, 40)
@@ -62,7 +62,7 @@ struct OnboardingView: View {
                         VStack(spacing: 20) {
                             Text("Choose your Network.")
                                 .font(.headline)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .multilineTextAlignment(.center)
 
                             Picker("Network", selection: $viewModel.selectedNetwork) {
@@ -73,10 +73,10 @@ struct OnboardingView: View {
                             }
                             .pickerStyle(SegmentedPickerStyle())
                             .padding()
-                            .background(Color.white.opacity(0.2))
+                            .background(colorScheme == .dark ? slateGray : Color.white) // Adapt background color
                             .cornerRadius(10)
                             .tint(viewModel.buttonColor)
-                            .foregroundColor(.black)
+                            .foregroundColor(colorScheme == .dark ? .black : .black)
 
                             Picker("Esplora Server", selection: $viewModel.selectedURL) {
                                 ForEach(viewModel.availableURLs, id: \.self) { url in
@@ -89,10 +89,10 @@ struct OnboardingView: View {
                             }
                             .pickerStyle(MenuPickerStyle())
                             .padding()
-                            .background(Color.white.opacity(0.2))
+                            .background(colorScheme == .dark ? slateGray : Color.white) // Adapt background color
                             .cornerRadius(10)
                             .tint(viewModel.buttonColor)
-                            .foregroundColor(.black)
+                            .foregroundColor(colorScheme == .dark ? .black : .black)
                         }
                         .padding(.horizontal, 40)
 
@@ -101,12 +101,12 @@ struct OnboardingView: View {
                             TextField("12 Word Seed Phrase (Optional)", text: $viewModel.words)
                                 .multilineTextAlignment(.center)
                                 .padding()
-                                .background(Color.white.opacity(0.2))
-                                .foregroundColor(.black) // Reverted text color to black
+                                .background(colorScheme == .dark ? slateGray : Color.white) // Adapt background color
+                                .foregroundColor(colorScheme == .dark ? lightTextColor : darkTextColor) // Adapt text color
                                 .cornerRadius(10)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.white.opacity(0.8), lineWidth: 1)
+                                        .stroke(colorScheme == .dark ? lightTextColor.opacity(0.8) : darkTextColor.opacity(0.3), lineWidth: 1)
                                 )
                                 .shadow(radius: 5)
                                 .padding(.horizontal, 40)
@@ -116,11 +116,11 @@ struct OnboardingView: View {
                             }) {
                                 Text("Create Wallet")
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.white.opacity(0.9)) // Standard white text color
-                                    .padding(.vertical, 15) // Added vertical padding
-                                    .padding(.horizontal, 40) // Added horizontal padding
-                                    .background(slateGray) // Slate gray background color
-                                    .clipShape(Capsule()) // Rounded style with capsule shape
+                                    .foregroundColor(colorScheme == .dark ? .black : .white) // Adapt text color
+                                    .padding(.vertical, 15)
+                                    .padding(.horizontal, 40)
+                                    .background(colorScheme == .dark ? lightTextColor : darkTextColor) // Adapt button background
+                                    .clipShape(Capsule())
                                     .shadow(radius: 5)
                             }
                             .padding(.horizontal, 40)
@@ -133,14 +133,14 @@ struct OnboardingView: View {
                         VStack(spacing: 8) {
                             Text("BDKSwift + EskyLab")
                                 .font(.footnote)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .opacity(0.7)
                                 .multilineTextAlignment(.center)
                                 .shadow(radius: 2)
 
                             Text("100% open-source & open-design ₿")
                                 .font(.footnote)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .opacity(0.7)
                                 .multilineTextAlignment(.center)
                                 .shadow(radius: 2)
@@ -179,8 +179,6 @@ struct OnboardingView: View {
             .environment(\.locale, .init(identifier: "fr"))
     }
 #endif
-
-
 
 
 
