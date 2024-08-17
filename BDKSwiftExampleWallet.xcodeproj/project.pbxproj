@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		924B75842C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 924B75832C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		924B75882C701DD9008CA7CD /* Stickers.xcstickers in Resources */ = {isa = PBXBuildFile; fileRef = 924B75872C701DD9008CA7CD /* Stickers.xcstickers */; };
+		924B75892C701DD9008CA7CD /* Stickers.xcstickers in Resources */ = {isa = PBXBuildFile; fileRef = 924B75872C701DD9008CA7CD /* Stickers.xcstickers */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
@@ -79,6 +82,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		924B75852C701DD9008CA7CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 924B75822C701DD9008CA7CD;
+			remoteInfo = "EskyLab-StickerPack StickerPackExtension";
+		};
 		AE4984892A1BBBD8009951E2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
@@ -88,7 +98,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		924B758D2C701DD9008CA7CD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				924B75842C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		924B75802C701DD8008CA7CD /* EskyLab-StickerPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EskyLab-StickerPack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		924B75832C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab-StickerPack StickerPackExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		924B75872C701DD9008CA7CD /* Stickers.xcstickers */ = {isa = PBXFileReference; lastKnownFileType = folder.stickers; name = Stickers.xcstickers; path = "EskyLab-StickerPack StickerPackExtension/Stickers.xcstickers"; sourceTree = "<group>"; };
 		A733D6CF2A81113000F333B4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		AE0C30F62A804A2D008F1EAE /* WalletTransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTransactionListView.swift; sourceTree = "<group>"; };
@@ -272,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				AE4984A52A1BBCB8009951E2 /* README.md */,
+				924B75872C701DD9008CA7CD /* Stickers.xcstickers */,
 				AE49847A2A1BBBD6009951E2 /* BDKSwiftExampleWallet */,
 				AE49848B2A1BBBD8009951E2 /* BDKSwiftExampleWalletTests */,
 				AE4984792A1BBBD6009951E2 /* Products */,
@@ -284,6 +312,8 @@
 			children = (
 				AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */,
 				AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */,
+				924B75802C701DD8008CA7CD /* EskyLab-StickerPack.app */,
+				924B75832C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,6 +455,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		924B757F2C701DD8008CA7CD /* EskyLab-StickerPack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924B758E2C701DD9008CA7CD /* Build configuration list for PBXNativeTarget "EskyLab-StickerPack" */;
+			buildPhases = (
+				924B757E2C701DD8008CA7CD /* Resources */,
+				924B758D2C701DD9008CA7CD /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				924B75862C701DD9008CA7CD /* PBXTargetDependency */,
+			);
+			name = "EskyLab-StickerPack";
+			packageProductDependencies = (
+			);
+			productName = "EskyLab-StickerPack";
+			productReference = 924B75802C701DD8008CA7CD /* EskyLab-StickerPack.app */;
+			productType = "com.apple.product-type.application.messages";
+		};
+		924B75822C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 924B758A2C701DD9008CA7CD /* Build configuration list for PBXNativeTarget "EskyLab-StickerPack StickerPackExtension" */;
+			buildPhases = (
+				924B75812C701DD9008CA7CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EskyLab-StickerPack StickerPackExtension";
+			packageProductDependencies = (
+			);
+			productName = "EskyLab-StickerPack StickerPackExtension";
+			productReference = 924B75832C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
+		};
 		AE4984772A1BBBD6009951E2 /* CypherPunkCulture */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCulture" */;
@@ -477,6 +543,12 @@
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = CypherPunkCulture;
 				TargetAttributes = {
+					924B757F2C701DD8008CA7CD = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					924B75822C701DD9008CA7CD = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					AE4984772A1BBBD6009951E2 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -508,11 +580,29 @@
 			targets = (
 				AE4984772A1BBBD6009951E2 /* CypherPunkCulture */,
 				AE4984872A1BBBD8009951E2 /* CypherPunkCultureTests */,
+				924B757F2C701DD8008CA7CD /* EskyLab-StickerPack */,
+				924B75822C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		924B757E2C701DD8008CA7CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924B75892C701DD9008CA7CD /* Stickers.xcstickers in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		924B75812C701DD9008CA7CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				924B75882C701DD9008CA7CD /* Stickers.xcstickers in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AE4984762A1BBBD6009951E2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -611,6 +701,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		924B75862C701DD9008CA7CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 924B75822C701DD9008CA7CD /* EskyLab-StickerPack StickerPackExtension */;
+			targetProxy = 924B75852C701DD9008CA7CD /* PBXContainerItemProxy */;
+		};
 		AE49848A2A1BBBD8009951E2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AE4984772A1BBBD6009951E2 /* CypherPunkCulture */;
@@ -619,6 +714,84 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		924B758B2C701DD9008CA7CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8C49P573P;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EskyLab-StickerPack StickerPackExtension/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.EskyLab-StickerPack.StickerPackExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		924B758C2C701DD9008CA7CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8C49P573P;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EskyLab-StickerPack StickerPackExtension/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.EskyLab-StickerPack.StickerPackExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		924B758F2C701DD9008CA7CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8C49P573P;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EskyLab-StickerPack/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.EskyLab-StickerPack";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		924B75902C701DD9008CA7CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8C49P573P;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EskyLab-StickerPack/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.EskyLab-StickerPack";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AE49849A2A1BBBD8009951E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -755,6 +928,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
@@ -790,6 +964,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
@@ -863,6 +1038,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		924B758A2C701DD9008CA7CD /* Build configuration list for PBXNativeTarget "EskyLab-StickerPack StickerPackExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924B758B2C701DD9008CA7CD /* Debug */,
+				924B758C2C701DD9008CA7CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		924B758E2C701DD9008CA7CD /* Build configuration list for PBXNativeTarget "EskyLab-StickerPack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924B758F2C701DD9008CA7CD /* Debug */,
+				924B75902C701DD9008CA7CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "BDKSwiftExampleWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
