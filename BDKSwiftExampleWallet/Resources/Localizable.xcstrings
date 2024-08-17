@@ -414,6 +414,9 @@
         }
       }
     },
+    "Onboarding" : {
+
+    },
     "Onboarding Error" : {
       "localizations" : {
         "fr" : {
