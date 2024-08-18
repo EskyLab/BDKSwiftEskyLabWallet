@@ -112,7 +112,7 @@
       }
     },
     "100% open-source & open-design" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -132,18 +132,6 @@
           }
         }
       }
-    },
-    "A simple bitcoin wallet." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Un portefeuille bitcoin simple."
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "Activity" : {
       "localizations" : {
@@ -659,18 +647,6 @@
           }
         }
       }
-    },
-    "Your wallet, your coins" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Votre portefeuille, vos pièces"
-          }
-        }
-      },
-      "shouldTranslate" : false
     }
   },
   "version" : "1.0"

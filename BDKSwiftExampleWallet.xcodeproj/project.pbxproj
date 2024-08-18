@@ -952,6 +952,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CypherPunk;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"To scan QR codes\"";
 				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
@@ -991,6 +992,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CypherPunk;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_MetalCaptureEnabled = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"To scan QR codes\"";
 				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
