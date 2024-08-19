@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "bitcoin-logo-2010-v1.png",
+      "filename" : "sml1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bitcoin-logo-2010-v2.png",
+      "filename" : "sml1 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bitcoin-logo-2010-v1 1.png",
+      "filename" : "sml1 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

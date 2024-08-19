@@ -10,8 +10,8 @@
 		924B759C2C716E65008CA7CD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759B2C716E65008CA7CD /* KeychainAccess */; };
 		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
+		926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 926546A02C740DFE003018BF /* EskyLab Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
-		92FEA4912C73A2CA005C5FB5 /* CypherPunkCulture-StickerPack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 92FEA48A2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
 		AE0C30F72A804A2D008F1EAE /* WalletTransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0C30F62A804A2D008F1EAE /* WalletTransactionListView.swift */; };
@@ -83,12 +83,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		92FEA48F2C73A2CA005C5FB5 /* PBXContainerItemProxy */ = {
+		926546A52C740DFF003018BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 92FEA4892C73A2C8005C5FB5;
-			remoteInfo = "CypherPunkCulture-StickerPack";
+			remoteGlobalIDString = 9265469F2C740DFE003018BF;
+			remoteInfo = "EskyLab Pack";
 		};
 		AE4984892A1BBBD8009951E2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -106,7 +106,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				92FEA4912C73A2CA005C5FB5 /* CypherPunkCulture-StickerPack.appex in Embed Foundation Extensions */,
+				926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,8 +114,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FEA4702C73992F005C5FB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92FEA48A2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CypherPunkCulture-StickerPack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A733D6CF2A81113000F333B4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		AE0C30F62A804A2D008F1EAE /* WalletTransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTransactionListView.swift; sourceTree = "<group>"; };
@@ -186,22 +186,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		92FEA4922C73A2CA005C5FB5 /* Exceptions for "CypherPunkCulture-StickerPack" folder in "CypherPunkCulture-StickerPack" target */ = {
+		926546A82C740DFF003018BF /* Exceptions for "EskyLab Pack" folder in "EskyLab Pack" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 92FEA4892C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */;
+			target = 9265469F2C740DFE003018BF /* EskyLab Pack */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		92FEA48B2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */ = {
+		926546A12C740DFE003018BF /* EskyLab Pack */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				92FEA4922C73A2CA005C5FB5 /* Exceptions for "CypherPunkCulture-StickerPack" folder in "CypherPunkCulture-StickerPack" target */,
+				926546A82C740DFF003018BF /* Exceptions for "EskyLab Pack" folder in "EskyLab Pack" target */,
 			);
-			path = "CypherPunkCulture-StickerPack";
+			path = "EskyLab Pack";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -326,7 +326,7 @@
 				AE49847A2A1BBBD6009951E2 /* BDKSwiftExampleWallet */,
 				AE49848B2A1BBBD8009951E2 /* BDKSwiftExampleWalletTests */,
 				92FEA4702C73992F005C5FB5 /* Info.plist */,
-				92FEA48B2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */,
+				926546A12C740DFE003018BF /* EskyLab Pack */,
 				AE4984792A1BBBD6009951E2 /* Products */,
 				AE235D0D2A9CEF69000C1C55 /* Frameworks */,
 			);
@@ -337,7 +337,7 @@
 			children = (
 				AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */,
 				AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */,
-				92FEA48A2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack.appex */,
+				926546A02C740DFE003018BF /* EskyLab Pack.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -479,24 +479,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		92FEA4892C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */ = {
+		9265469F2C740DFE003018BF /* EskyLab Pack */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 92FEA4932C73A2CA005C5FB5 /* Build configuration list for PBXNativeTarget "CypherPunkCulture-StickerPack" */;
+			buildConfigurationList = 926546A92C740DFF003018BF /* Build configuration list for PBXNativeTarget "EskyLab Pack" */;
 			buildPhases = (
-				92FEA4882C73A2C8005C5FB5 /* Resources */,
+				9265469E2C740DFE003018BF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				92FEA48B2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */,
+				926546A12C740DFE003018BF /* EskyLab Pack */,
 			);
-			name = "CypherPunkCulture-StickerPack";
+			name = "EskyLab Pack";
 			packageProductDependencies = (
 			);
-			productName = "CypherPunkCulture-StickerPack";
-			productReference = 92FEA48A2C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack.appex */;
+			productName = "EskyLab Pack";
+			productReference = 926546A02C740DFE003018BF /* EskyLab Pack.appex */;
 			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
 		AE4984772A1BBBD6009951E2 /* CypherPunkCulture */ = {
@@ -511,7 +511,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				92FEA4902C73A2CA005C5FB5 /* PBXTargetDependency */,
+				926546A62C740DFF003018BF /* PBXTargetDependency */,
 			);
 			name = CypherPunkCulture;
 			packageProductDependencies = (
@@ -553,7 +553,7 @@
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = CypherPunkCulture;
 				TargetAttributes = {
-					92FEA4892C73A2C8005C5FB5 = {
+					9265469F2C740DFE003018BF = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					AE4984772A1BBBD6009951E2 = {
@@ -587,13 +587,13 @@
 			targets = (
 				AE4984772A1BBBD6009951E2 /* CypherPunkCulture */,
 				AE4984872A1BBBD8009951E2 /* CypherPunkCultureTests */,
-				92FEA4892C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */,
+				9265469F2C740DFE003018BF /* EskyLab Pack */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		92FEA4882C73A2C8005C5FB5 /* Resources */ = {
+		9265469E2C740DFE003018BF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -698,10 +698,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		92FEA4902C73A2CA005C5FB5 /* PBXTargetDependency */ = {
+		926546A62C740DFF003018BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 92FEA4892C73A2C8005C5FB5 /* CypherPunkCulture-StickerPack */;
-			targetProxy = 92FEA48F2C73A2CA005C5FB5 /* PBXContainerItemProxy */;
+			target = 9265469F2C740DFE003018BF /* EskyLab Pack */;
+			targetProxy = 926546A52C740DFF003018BF /* PBXContainerItemProxy */;
 		};
 		AE49848A2A1BBBD8009951E2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -711,7 +711,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		92FEA4942C73A2CA005C5FB5 /* Debug */ = {
+		926546AA2C740DFF003018BF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
@@ -720,10 +720,10 @@
 				DEVELOPMENT_TEAM = U8C49P573P;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "CypherPunkCulture-StickerPack/Info.plist";
-				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
+				INFOPLIST_FILE = "EskyLab Pack/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bitcoinwallet.CypherPunkCulture-StickerPack";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bitcoinwallet.EskyLab-Pack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -731,7 +731,7 @@
 			};
 			name = Debug;
 		};
-		92FEA4952C73A2CA005C5FB5 /* Release */ = {
+		926546AB2C740DFF003018BF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
@@ -740,10 +740,10 @@
 				DEVELOPMENT_TEAM = U8C49P573P;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "CypherPunkCulture-StickerPack/Info.plist";
-				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
+				INFOPLIST_FILE = "EskyLab Pack/Info.plist";
+				INFOPLIST_KEY_NSStickerSharingLevel = OS;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bitcoinwallet.CypherPunkCulture-StickerPack";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bitcoinwallet.EskyLab-Pack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -810,6 +810,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
@@ -879,6 +880,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
@@ -901,6 +903,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_STICKER_CONTENT = YES;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				ASSETCATALOG_COMPILER_TARGET_STICKERS_ICON_ROLE = extension;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
@@ -941,6 +944,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_STICKER_CONTENT = YES;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				ASSETCATALOG_COMPILER_TARGET_STICKERS_ICON_ROLE = extension;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
@@ -953,7 +957,7 @@
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CypherPunk;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				INFOPLIST_KEY_MetalCaptureEnabled = NO;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"To scan QR codes\"";
 				INFOPLIST_KEY_NSStickerSharingLevel = Messages;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1021,11 +1025,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		92FEA4932C73A2CA005C5FB5 /* Build configuration list for PBXNativeTarget "CypherPunkCulture-StickerPack" */ = {
+		926546A92C740DFF003018BF /* Build configuration list for PBXNativeTarget "EskyLab Pack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				92FEA4942C73A2CA005C5FB5 /* Debug */,
-				92FEA4952C73A2CA005C5FB5 /* Release */,
+				926546AA2C740DFF003018BF /* Debug */,
+				926546AB2C740DFF003018BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

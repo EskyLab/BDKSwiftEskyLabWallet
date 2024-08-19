@@ -1,25 +1,23 @@
 {
   "images" : [
     {
-      "filename" : "Icon-App-29x29@2x-1.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "Icon-App-29x29@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "Icon-App-40x40@3x.png",
+      "filename" : "120.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x45"
     },
     {
-      "filename" : "Icon-App-60x60@3x.png",
+      "filename" : "180.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x45"
@@ -40,7 +38,7 @@
       "size" : "74x55"
     },
     {
-      "filename" : "iTunesArtwork@2x.png",
+      "filename" : "bitcoin-btc-logo-appstore.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
