@@ -8,7 +8,7 @@ Fingerprint: BCA7 ECA0 C8A9 AE5D E671  1957 4DFE 7AA4 623B AE21
 
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](https://github.com/reez/BDKSwiftExampleWallet/blob/main/LICENSE)
 
-An example iOS app using [Bitcoin Dev Kit](https://github.com/bitcoindevkit) (BDK)
+An EskyLab iOS app using [Bitcoin Dev Kit](https://github.com/bitcoindevkit) (BDK)
 
 <img src="Docs/cypherpunk culture Bitcoin Wallet.png" alt="Screenshot" width="750" height="475">
 
