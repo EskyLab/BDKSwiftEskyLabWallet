@@ -9,6 +9,24 @@
   "stickers" : [
     {
       "filename" : "EskyLab.sticker"
+    },
+    {
+      "filename" : "star.sticker"
+    },
+    {
+      "filename" : "circle.sticker"
+    },
+    {
+      "filename" : "romb.sticker"
+    },
+    {
+      "filename" : "square.sticker"
+    },
+    {
+      "filename" : "club.sticker"
+    },
+    {
+      "filename" : "heart.sticker"
     }
   ]
 }
