@@ -17,9 +17,9 @@ struct OnboardingView: View {
     // Define custom colors
     private let matteBlack = Color(red: 26/255, green: 26/255, blue: 26/255) // Matte black background
     private let slateGray = Color(red: 48/255, green: 48/255, blue: 48/255) // Slate gray background
-    private let lightBackground = Color.white // Light gray for light mode
+    private let lightBackground = Color.bitcoinWhite // Light gray for light mode
     private let darkTextColor = Color(red: 30/255, green: 30/255, blue: 30/255) // Dark text for light mode
-    private let lightTextColor = Color.white // Light text for dark mode
+    private let lightTextColor = Color.bitcoinWhite // Light text for dark mode
     private let mutedTextColor = Color.gray.opacity(0.7) // Muted text color
 
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
