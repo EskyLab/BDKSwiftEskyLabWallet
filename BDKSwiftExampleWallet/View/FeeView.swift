@@ -16,74 +16,50 @@ struct FeeView: View {
     @Binding var rootIsActive: Bool
 
     var body: some View {
-
-        ZStack {
-            Color(uiColor: .systemBackground)
-
+        NavigationStack {
             VStack {
-
                 Spacer()
-
-                HStack {
-                    Spacer()
-                    Picker("Select Fee", selection: $viewModel.selectedFeeIndex) {
-                        HStack {
-                            Image(systemName: "gauge.with.dots.needle.0percent")
-                            Text(
-                                " No Priority - \(viewModel.recommendedFees?.minimumFee ?? 1)"
-                            )
-                        }
+                
+                Picker("Select Fee", selection: $viewModel.selectedFeeIndex) {
+                    FeePickerItem(icon: "gauge.with.dots.needle.0percent", text: "No Priority - \(viewModel.recommendedFees?.minimumFee ?? 1)")
                         .tag(0)
-                        HStack {
-                            Image(systemName: "gauge.with.dots.needle.33percent")
-                            Text(
-                                " Low Priority - \(viewModel.recommendedFees?.hourFee ?? 1)"
-                            )
-                        }
+                    FeePickerItem(icon: "gauge.with.dots.needle.33percent", text: "Low Priority - \(viewModel.recommendedFees?.hourFee ?? 1)")
                         .tag(1)
-                        HStack {
-                            Image(systemName: "gauge.with.dots.needle.50percent")
-                            Text(
-                                " Med Priority - \(viewModel.recommendedFees?.halfHourFee ?? 1)"
-                            )
-                        }
+                    FeePickerItem(icon: "gauge.with.dots.needle.50percent", text: "Med Priority - \(viewModel.recommendedFees?.halfHourFee ?? 1)")
                         .tag(2)
-                        HStack {
-                            Image(systemName: "gauge.with.dots.needle.67percent")
-                            Text(
-                                " High Priority - \(viewModel.recommendedFees?.fastestFee ?? 1)"
-                            )
-                        }
+                    FeePickerItem(icon: "gauge.with.dots.needle.67percent", text: "High Priority - \(viewModel.recommendedFees?.fastestFee ?? 1)")
                         .tag(3)
-                    }
-                    .pickerStyle(.automatic)
-                    .tint(.bitcoinOrange)
-                    Text("sat/vb")
-                        .foregroundColor(.secondary)
-                        .fontWeight(.thin)
-                    Spacer()
                 }
+                .pickerStyle(WheelPickerStyle()) // Use WheelPickerStyle for better readability on iPhones
+                .padding(.horizontal)
+                .background(Color(.systemGroupedBackground)) // Enhance the background for better contrast
+                .cornerRadius(10)
+                .clipped()
+                
+                Text("Fee rate: \(viewModel.selectedFee ?? 1) sat/vb")
+                    .foregroundColor(.secondary)
+                    .font(.subheadline)
+                    .padding(.vertical)
 
                 Spacer()
-
-                NavigationLink(
-                    destination: BuildTransactionView(
-                        amount: amount,
-                        address: address,
-                        fee: viewModel.selectedFee ?? 1,
-                        viewModel: .init(),
-                        shouldPopToRootView: self.$rootIsActive
-
-                    )
-                ) {
-                    Label(
-                        title: { Text("Next") },
-                        icon: { Image(systemName: "arrow.right") }
-                    )
-                    .labelStyle(.iconOnly)
+                
+                NavigationLink(destination: BuildTransactionView(
+                    amount: amount,
+                    address: address,
+                    fee: viewModel.selectedFee ?? 1,
+                    viewModel: .init(),
+                    shouldPopToRootView: $rootIsActive
+                )) {
+                    Text("Next")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.bitcoinOrange)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                .isDetailLink(false)
-                .buttonStyle(BitcoinOutlined(width: 100, isCapsule: true))
+                .buttonStyle(PlainButtonStyle()) // Remove default button style
+                .padding()
 
             }
             .padding()
@@ -91,20 +67,32 @@ struct FeeView: View {
             .task {
                 await viewModel.getFees()
             }
-
+            .alert(isPresented: $viewModel.showingFeeViewErrorAlert) {
+                Alert(
+                    title: Text("Fee Error"),
+                    message: Text(viewModel.feeViewError?.description ?? "Unknown"),
+                    dismissButton: .default(Text("OK")) {
+                        viewModel.feeViewError = nil
+                    }
+                )
+            }
         }
-        .alert(isPresented: $viewModel.showingFeeViewErrorAlert) {
-            Alert(
-                title: Text("Fee Error"),
-                message: Text(viewModel.feeViewError?.description ?? "Unknown"),
-                dismissButton: .default(Text("OK")) {
-                    viewModel.feeViewError = nil
-                }
-            )
-        }
-
     }
+}
 
+struct FeePickerItem: View {
+    let icon: String
+    let text: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .frame(width: 24, height: 24) // Adjust icon size for better visibility
+            Text(text)
+                .font(.body) // Adjust font size for readability
+        }
+        .padding(.vertical, 4) // Add vertical padding for better separation
+    }
 }
 
 #if DEBUG

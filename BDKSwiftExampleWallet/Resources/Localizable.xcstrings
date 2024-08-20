@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     " High Priority - %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -12,6 +13,7 @@
       }
     },
     " Low Priority - %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -22,6 +24,7 @@
       }
     },
     " Med Priority - %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -32,6 +35,7 @@
       }
     },
     " No Priority - %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -332,6 +336,9 @@
         }
       }
     },
+    "Fee rate: %lld sat/vb" : {
+
+    },
     "Fees" : {
       "localizations" : {
         "fr" : {
@@ -415,6 +422,9 @@
         }
       }
     },
+    "Paste" : {
+
+    },
     "Receive" : {
       "localizations" : {
         "fr" : {
@@ -456,6 +466,7 @@
       }
     },
     "sat/vb" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -476,6 +487,9 @@
         }
       }
     },
+    "Scan QR Code" : {
+
+    },
     "Select Fee" : {
       "localizations" : {
         "fr" : {
@@ -495,6 +509,9 @@
           }
         }
       }
+    },
+    "Settings" : {
+
     },
     "Settings Error" : {
       "localizations" : {

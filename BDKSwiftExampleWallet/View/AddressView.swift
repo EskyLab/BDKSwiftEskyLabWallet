@@ -5,118 +5,99 @@
 //  Created by Matthew Ramsden on 9/15/23.
 //
 
-import BitcoinUI
-import CodeScanner
 import SwiftUI
+import CodeScanner
+import BitcoinUI
 
 struct AddressView: View {
     let amount: String
     @State private var address: String = ""
     @Binding var rootIsActive: Bool
-    let pasteboard = UIPasteboard.general
     @State private var isShowingScanner = false
+    let pasteboard = UIPasteboard.general
 
     var body: some View {
-
-        ZStack {
-            Color(uiColor: .systemBackground)
-
-            VStack {
-
-                HStack {
-
-                    Button {
-                        isShowingScanner = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "qrcode.viewfinder")
-                                .minimumScaleFactor(0.5)
+        NavigationStack {
+            ZStack {
+                Color(uiColor: .systemBackground)
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 16) {
+                    HStack(spacing: 16) {
+                        Button(action: {
+                            isShowingScanner = true
+                        }) {
+                            Label("Scan QR Code", systemImage: "qrcode.viewfinder")
+                                .font(.title2)
+                        }
+                        
+                        Button(action: {
+                            handlePasteboard()
+                        }) {
+                            Label("Paste", systemImage: "doc.on.doc")
+                                .font(.title2)
                         }
                     }
-
-                    Spacer()
-
-                    Button {
-                        if pasteboard.hasStrings {
-                            if let string = pasteboard.string {
-                                let lowercaseAddress = string.lowercased()
-                                address = lowercaseAddress
-                            } else {
-                                // TODO: handle error
-                            }
-                        } else {
-                            // TODO: handle error
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "doc.on.doc")
-                                .minimumScaleFactor(0.5)
-                        }
-                    }
-
-                }
-                .font(.largeTitle)
-                .foregroundColor(Color(UIColor.label))
-                .padding(.top)
-                .sheet(isPresented: $isShowingScanner) {
-                    CodeScannerView(
-                        codeTypes: [.qr],
-                        simulatedData: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
-                        completion: handleScan
-                    )
-                }
-
-                Spacer()
-
-                VStack {
-                    HStack {
-                        Text("Address")
-                            .bold()
-                        Spacer()
-                    }
-                    .padding(.horizontal, 15.0)
-                    TextField(
-                        "Enter address to send BTC to",
-                        text: $address
-                    )
-                    .truncationMode(.middle)
-                    .submitLabel(.done)
-                    .lineLimit(1)
-                    .padding()
-                }
-
-                Spacer()
-
-                NavigationLink(
-                    destination:
-                        FeeView(
-                            amount: amount,
-                            address: address,
-                            viewModel: .init(),
-                            rootIsActive: self.$rootIsActive
+                    .padding(.top)
+                    .sheet(isPresented: $isShowingScanner) {
+                        CodeScannerView(
+                            codeTypes: [.qr],
+                            simulatedData: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+                            completion: handleScan
                         )
-                ) {
-                    Label(
-                        title: { Text("Next") },
-                        icon: { Image(systemName: "arrow.right") }
-                    )
-                    .labelStyle(.iconOnly)
+                    }
+                    
+                    VStack(spacing: 12) {
+                        HStack {
+                            Text("Address")
+                                .bold()
+                            Spacer()
+                        }
+                        .padding(.horizontal, 15)
+                        
+                        TextField(
+                            "Enter address to send BTC to",
+                            text: $address
+                        )
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .lineLimit(1)
+                    }
+                    
+                    NavigationLink(destination: FeeView(
+                        amount: amount,
+                        address: address,
+                        viewModel: .init(),
+                        rootIsActive: self.$rootIsActive
+                    )) {
+                        Label("Next", systemImage: "arrow.right")
+                            .labelStyle(.iconOnly)
+                            .font(.title2)
+                            .padding()
+                            .background(Color.orange, in: RoundedRectangle(cornerRadius: 8))
+                            .foregroundColor(.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.orange, lineWidth: 2)
+                            )
+                    }
+                    .buttonStyle(.plain) // Ensure the button style is plain to match custom design
                 }
-                .isDetailLink(false)
-                .buttonStyle(BitcoinOutlined(width: 100, isCapsule: true))
-
+                .padding()
+                .navigationTitle("Address")
             }
-            .padding()
-            .navigationTitle("Address")
-
         }
-
+    }
+    
+    private func handlePasteboard() {
+        if pasteboard.hasStrings, let string = pasteboard.string {
+            address = string.lowercased()
+        } else {
+            // TODO: handle error
+        }
     }
 
-}
-
-extension AddressView {
-    func handleScan(result: Result<ScanResult, ScanError>) {
+    private func handleScan(result: Result<ScanResult, ScanError>) {
         isShowingScanner = false
         switch result {
         case .success(let result):

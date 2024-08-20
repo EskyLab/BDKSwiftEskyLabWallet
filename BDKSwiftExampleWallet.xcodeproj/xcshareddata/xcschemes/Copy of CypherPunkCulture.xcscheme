@@ -41,6 +41,17 @@
                ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "92D7D79A2C74AE5E009D4727"
+               BuildableName = "bdkFFI.frameworkTests.xctest"
+               BlueprintName = "bdkFFI.frameworkTests"
+               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
