@@ -12,7 +12,13 @@
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
+        "identifier" : "AE4984872A1BBBD8009951E2",
+        "name" : "CypherPunkCultureTests"
+      }
+    }
   ],
   "version" : 1
 }

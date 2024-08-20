@@ -5,8 +5,8 @@
 //  Created by Matthew Ramsden on 9/15/23.
 //
 
-import BitcoinUI
 import SwiftUI
+import BitcoinUI
 
 struct AmountView: View {
     @ObservedObject var viewModel: AmountViewModel
@@ -14,17 +14,18 @@ struct AmountView: View {
     @State var isActive: Bool = false
 
     var body: some View {
-
-        NavigationView {
-
+        NavigationStack {
             ZStack {
                 Color(uiColor: .systemBackground)
+                    .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 50) {
                     Spacer()
+
                     VStack(spacing: 4) {
                         Text("\(numpadAmount.formattedWithSeparator) sats")
                             .textStyle(BitcoinTitle1())
+
                         if let balance = viewModel.balanceTotal {
                             HStack(spacing: 2) {
                                 Text(balance.delimiter)
@@ -34,6 +35,7 @@ struct AmountView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                         }
+
                         if let balance = viewModel.balanceConfirmed {
                             HStack(spacing: 2) {
                                 Text(balance.delimiter)
@@ -70,23 +72,18 @@ struct AmountView: View {
                             .labelStyle(.iconOnly)
                         }
                         .buttonStyle(BitcoinOutlined(width: 100, isCapsule: true))
-                        NavigationLink(
-                            destination: AddressView(amount: numpadAmount, rootIsActive: $isActive),
-                            isActive: $isActive
-                        ) {
-                            EmptyView()
+                        .navigationDestination(isPresented: $isActive) {
+                            AddressView(amount: numpadAmount, rootIsActive: $isActive)
                         }
-                        .hidden()
                     }
-
                 }
                 .padding()
                 .task {
                     viewModel.getBalance()
                 }
             }
-            .onChange(of: isActive) {
-                if !isActive {
+            .onChange(of: isActive) { _, newValue in
+                if !newValue {
                     numpadAmount = "0"
                 }
             }
@@ -100,12 +97,8 @@ struct AmountView: View {
                 }
             )
         }
-
     }
 
-}
-
-extension AmountView {
     func numpadRow(_ characters: [String], buttonSize: CGFloat) -> some View {
         HStack(spacing: buttonSize / 2) {
             ForEach(characters, id: \.self) { character in
@@ -144,12 +137,12 @@ struct NumpadButton: View {
 }
 
 #if DEBUG
-    #Preview {
-        AmountView(viewModel: .init(bdkClient: .mock))
-    }
+#Preview {
+    AmountView(viewModel: .init(bdkClient: .mock))
+}
 
-    #Preview {
-        AmountView(viewModel: .init(bdkClient: .mock))
-            .environment(\.sizeCategory, .accessibilityLarge)
-    }
+#Preview {
+    AmountView(viewModel: .init(bdkClient: .mock))
+        .environment(\.sizeCategory, .accessibilityLarge)
+}
 #endif

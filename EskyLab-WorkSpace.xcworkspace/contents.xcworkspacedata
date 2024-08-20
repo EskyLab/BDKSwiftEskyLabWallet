@@ -4,4 +4,7 @@
    <FileRef
       location = "container:BDKSwiftExampleWallet.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:BDKSwiftExampleWalletTests">
+   </FileRef>
 </Workspace>
