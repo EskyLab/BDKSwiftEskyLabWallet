@@ -18,7 +18,7 @@
                BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
                BuildableName = "CypherPunkCulture.app"
                BlueprintName = "CypherPunkCulture"
-               ReferencedContainer = "container:">
+               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,18 +29,18 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-               BuildableName = "CypherPunkCulture.app"
-               BlueprintName = "CypherPunkCulture"
+               BlueprintIdentifier = "AE4984872A1BBBD8009951E2"
+               BuildableName = "CypherPunkCultureTests.xctest"
+               BlueprintName = "CypherPunkCultureTests"
                ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      buildConfiguration = "Release"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
@@ -49,17 +49,6 @@
          </TestPlanReference>
       </TestPlans>
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AE4984872A1BBBD8009951E2"
-               BuildableName = "CypherPunkCultureTests.xctest"
-               BlueprintName = "CypherPunkCultureTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">
@@ -96,15 +85,6 @@
             ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AE4984772A1BBBD6009951E2"
-            BuildableName = "CypherPunkCulture.app"
-            BlueprintName = "CypherPunkCulture"
-            ReferencedContainer = "container:">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
          <AdditionalOption
             key = "APP_DISTRIBUTOR_ID_OVERRIDE"
