@@ -11,46 +11,58 @@ struct TabHomeView: View {
     @Bindable var viewModel: TabHomeViewModel
 
     var body: some View {
-
         ZStack {
+            // Background color using the improved background view
             Color(uiColor: UIColor.systemBackground)
+                .ignoresSafeArea()
 
             TabView {
                 WalletView(viewModel: .init())
                     .tabItem {
-                        Image(systemName: "bitcoinsign")
+                        Label("Wallet", systemImage: "bitcoinsign")
                     }
+
                 ReceiveView(viewModel: .init())
                     .tabItem {
-                        Image(systemName: "arrow.down")
+                        Label("Receive", systemImage: "arrow.down")
                     }
+
                 AmountView(viewModel: .init())
                     .tabItem {
-                        Image(systemName: "arrow.up")
+                        Label("Amount", systemImage: "arrow.up")
                     }
+
                 SettingsView(viewModel: .init())
                     .tabItem {
-                        Image(systemName: "gear")
+                        Label("Settings", systemImage: "gear")
                     }
             }
-            .tint(.primary)
+            .tint(Color("bitcoinOrange")) // Change to Bitcoin orange
             .onAppear {
                 viewModel.loadWallet()
+                customizeTabBarAppearance()
             }
-
         }
         .alert(isPresented: $viewModel.showingTabViewErrorAlert) {
             Alert(
                 title: Text("TabView Error"),
-                message: Text(viewModel.tabViewError?.description ?? "Unknown"),
+                message: Text(viewModel.tabViewError?.description ?? "Unknown error"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.tabViewError = nil
                 }
             )
         }
-
     }
 
+    // Custom function to adjust the Tab Bar appearance for iOS 18
+    private func customizeTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(named: "bitcoinOrange") // Set Bitcoin orange for selected tab
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
 }
 
 #Preview {

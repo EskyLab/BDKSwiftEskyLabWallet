@@ -54,11 +54,15 @@ struct FeeView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.bitcoinOrange)
-                        .foregroundColor(.white)
+                        .background(Color.white) // Inverted button color
+                        .foregroundColor(.bitcoinOrange) // Text color to match branding
                         .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.bitcoinOrange, lineWidth: 2) // Subtle border to enhance visibility
+                        )
                 }
-                .buttonStyle(PlainButtonStyle()) // Remove default button style
+                .buttonStyle(PlainButtonStyle()) // Ensure the button style is plain to match custom design
                 .padding()
 
             }

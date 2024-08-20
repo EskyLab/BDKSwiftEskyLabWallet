@@ -20,83 +20,82 @@ struct WalletView: View {
         NavigationView {
 
             ZStack {
+                // Background color
                 Color(uiColor: .systemBackground)
                     .ignoresSafeArea()
 
                 VStack(spacing: 20) {
 
                     VStack(spacing: 10) {
+                        // Title with animation
                         Text("Bitcoin".uppercased())
-                            .fontWeight(.semibold)
+                            .font(.title2.weight(.bold))
                             .fontWidth(.expanded)
                             .foregroundColor(.bitcoinOrange)
                             .scaleEffect(isAnimating ? 1.0 : 0.6)
                             .onAppear {
-                                withAnimation(.easeOut(duration: 0.5)) {
+                                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                                     isAnimating = true
                                 }
                             }
-                        withAnimation {
-                            HStack(spacing: 15) {
-                                Image(systemName: "bitcoinsign")
-                                    .foregroundColor(.secondary)
-                                    .font(.title)
-                                    .fontWeight(.thin)
-                                Text(viewModel.balanceTotal.formattedSatoshis())
-                                    .contentTransition(.numericText())
-                                    .fontWeight(.semibold)
-                                    .fontDesign(.rounded)
-                                Text("sats")
-                                    .foregroundColor(.secondary)
-                                    .fontWeight(.thin)
-                            }
-                            .font(.largeTitle)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
+                        
+                        // Balance display
+                        HStack(spacing: 15) {
+                            Image(systemName: "bitcoinsign")
+                                .font(.title2) // Slim Bitcoin symbol
+                                .foregroundColor(.primary) // Slightly muted color for Bitcoin symbol
+                            Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
+                                .font(.system(size: 40, weight: .bold, design: .monospaced))
+                                .foregroundColor(viewModel.balanceTotal == 0 ? .secondary : .primary) // Display zero normally
+                                .contentTransition(.numericText())
+                            Text("sats")
+                                .foregroundColor(.secondary)
                         }
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        
+                        // Sync state and price
                         HStack {
                             if viewModel.walletSyncState == .syncing {
                                 Image(systemName: "chart.bar.fill")
-                                    .symbolEffect(
-                                        .variableColor.cumulative
-                                    )
+                                    .symbolEffect(.pulse.byLayer)
+                                    .foregroundColor(.bitcoinOrange)
                             }
                             Text(viewModel.satsPrice)
+                                .font(.title3.weight(.medium))
+                                .foregroundColor(.primary)
                                 .contentTransition(.numericText())
-                                .fontDesign(.rounded)
                         }
                         .foregroundColor(.secondary)
-                        .font(.subheadline)
                     }
                     .padding(.top, 40.0)
                     .padding(.bottom, 20.0)
+
+                    // Activity section
                     VStack {
                         HStack {
                             Text("Activity")
+                                .fontWeight(.bold)
+                                .font(.headline)
                             Spacer()
-                            HStack {
-                                HStack(spacing: 5) {
-                                    if viewModel.walletSyncState == .syncing {
-                                        Image(systemName: "slowmo")
-                                            .symbolEffect(
-                                                .variableColor.cumulative
-                                            )
-                                            .contentTransition(.symbolEffect(.replace.offUp))
-                                    } else if viewModel.walletSyncState == .synced {
-                                        Image(systemName: "checkmark.circle")
-                                            .foregroundColor(
-                                                viewModel.walletSyncState == .synced
-                                                    ? .green : .secondary
-                                            )
-                                    } else {
-                                        Image(systemName: "questionmark")
-                                    }
+                            HStack(spacing: 5) {
+                                if viewModel.walletSyncState == .syncing {
+                                    Image(systemName: "slowmo")
+                                        .symbolEffect(.pulse.byLayer)
+                                        .foregroundColor(.bitcoinOrange)
+                                } else if viewModel.walletSyncState == .synced {
+                                    Image(systemName: "checkmark.circle")
+                                        .foregroundColor(.green)
+                                } else {
+                                    Image(systemName: "questionmark.circle")
+                                        .foregroundColor(.secondary)
                                 }
                             }
-                            .foregroundColor(.secondary)
                             .font(.caption)
                         }
-                        .fontWeight(.bold)
+                        .padding(.bottom, 10)
+                        
+                        // Transaction list
                         WalletTransactionListView(
                             transactionDetails: viewModel.transactionDetails,
                             walletSyncState: viewModel.walletSyncState
@@ -127,7 +126,6 @@ struct WalletView: View {
                     viewModel.getTransactions()
                     await viewModel.getPrices()
                 }
-
             }
 
         }
@@ -140,9 +138,7 @@ struct WalletView: View {
                 }
             )
         }
-
     }
-
 }
 
 #if DEBUG

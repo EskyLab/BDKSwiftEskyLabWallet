@@ -16,40 +16,45 @@ struct ReceiveView: View {
     var body: some View {
 
         ZStack {
+            // Background color
             Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
 
-            VStack {
-
+            VStack(spacing: 20) {
+                // Header with Bitcoin icon and title
                 VStack(spacing: 8) {
                     Image(systemName: "bitcoinsign.circle.fill")
                         .resizable()
                         .foregroundColor(.bitcoinOrange)
-                        .fontWeight(.bold)
-                        .frame(width: 50, height: 50, alignment: .center)
+                        .frame(width: 50, height: 50)
+                        .font(.title)
                     Text("Receive Address")
-                        .fontWeight(.semibold)
+                        .font(.headline.weight(.semibold))
+                        .foregroundColor(.primary)
                 }
-                .font(.caption)
                 .padding(.top, 40.0)
-
+                
                 Spacer()
-
-                if viewModel.address != "" {
-                    QRCodeView(qrCodeType: .bitcoin(viewModel.address))
-                        .animation(.default, value: viewModel.address)
-                } else {
+                
+                // QR Code View
+                if viewModel.address.isEmpty {
                     QRCodeView(qrCodeType: .bitcoin(viewModel.address))
                         .blur(radius: 15)
+                        .transition(.opacity)
+                } else {
+                    QRCodeView(qrCodeType: .bitcoin(viewModel.address))
+                        .transition(.opacity)
                 }
-
+                
                 Spacer()
-
+                
+                // Address and copy button
                 HStack {
-                    Text(viewModel.address)
+                    Text(viewModel.address.isEmpty ? "No address" : viewModel.address)
+                        .font(.body.monospaced())
+                        .foregroundColor(.primary)
                         .lineLimit(1)
                         .truncationMode(.middle)
-                        .fontDesign(.monospaced)
                     Button {
                         UIPasteboard.general.string = viewModel.address
                         isCopied = true
@@ -60,24 +65,19 @@ struct ReceiveView: View {
                         }
                     } label: {
                         HStack {
-                            withAnimation {
-                                Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
-                            }
+                            Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                                .font(.body.weight(.semibold))
+                                .foregroundColor(.bitcoinOrange)
                         }
-                        .fontWeight(.semibold)
-                        .foregroundColor(.bitcoinOrange)
                     }
                 }
                 .padding()
-                .fontDesign(.monospaced)
                 .font(.caption)
-
             }
             .padding()
             .onAppear {
                 viewModel.getAddress()
             }
-
         }
         .alert(isPresented: $viewModel.showingReceiveViewErrorAlert) {
             Alert(
@@ -88,9 +88,7 @@ struct ReceiveView: View {
                 }
             )
         }
-
     }
-
 }
 
 #if DEBUG

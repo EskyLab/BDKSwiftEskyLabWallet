@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CodeScanner
-import BitcoinUI
 
 struct AddressView: View {
     let amount: String
@@ -21,7 +20,7 @@ struct AddressView: View {
             ZStack {
                 Color(uiColor: .systemBackground)
                     .ignoresSafeArea()
-                
+
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
                         Button(action: {
@@ -29,41 +28,54 @@ struct AddressView: View {
                         }) {
                             Label("Scan QR Code", systemImage: "qrcode.viewfinder")
                                 .font(.title2)
+                                .padding()
+                                .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                                .foregroundColor(.primary)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                )
                         }
-                        
+
                         Button(action: {
                             handlePasteboard()
                         }) {
                             Label("Paste", systemImage: "doc.on.doc")
                                 .font(.title2)
+                                .padding()
+                                .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                                .foregroundColor(.primary)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                )
                         }
                     }
                     .padding(.top)
-                    .sheet(isPresented: $isShowingScanner) {
-                        CodeScannerView(
-                            codeTypes: [.qr],
-                            simulatedData: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
-                            completion: handleScan
-                        )
-                    }
-                    
+
                     VStack(spacing: 12) {
                         HStack {
                             Text("Address")
-                                .bold()
+                                .fontWeight(.bold)
                             Spacer()
                         }
                         .padding(.horizontal, 15)
-                        
+
                         TextField(
                             "Enter address to send BTC to",
                             text: $address
                         )
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                        .lineLimit(1)
+                        .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                        .font(.title3)
+                        .foregroundColor(.primary)
                     }
-                    
+
                     NavigationLink(destination: FeeView(
                         amount: amount,
                         address: address,
@@ -74,18 +86,25 @@ struct AddressView: View {
                             .labelStyle(.iconOnly)
                             .font(.title2)
                             .padding()
-                            .background(Color.orange, in: RoundedRectangle(cornerRadius: 8))
-                            .foregroundColor(.white)
+                            .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                            .foregroundColor(.bitcoinOrange)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.orange, lineWidth: 2)
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.bitcoinOrange, lineWidth: 2)
                             )
                     }
-                    .buttonStyle(.plain) // Ensure the button style is plain to match custom design
+                    .buttonStyle(.plain) // Ensures button style remains consistent with custom design
                 }
                 .padding()
                 .navigationTitle("Address")
             }
+        }
+        .sheet(isPresented: $isShowingScanner) {
+            CodeScannerView(
+                codeTypes: [.qr],
+                simulatedData: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+                completion: handleScan
+            )
         }
     }
     

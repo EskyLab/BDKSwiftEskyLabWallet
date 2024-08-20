@@ -56,6 +56,7 @@
       }
     },
     "..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -157,6 +158,9 @@
         }
       }
     },
+    "Amount" : {
+
+    },
     "Amount Error" : {
       "localizations" : {
         "fr" : {
@@ -234,6 +238,7 @@
       }
     },
     "confirmed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -296,6 +301,9 @@
         }
       }
     },
+    "Done" : {
+
+    },
     "Enter address to send BTC to" : {
       "localizations" : {
         "fr" : {
@@ -317,6 +325,7 @@
       }
     },
     "Fee" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -585,6 +594,7 @@
       }
     },
     "To" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -595,6 +605,7 @@
       }
     },
     "total" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -644,6 +655,9 @@
           }
         }
       }
+    },
+    "Wallet" : {
+
     },
     "Wallet Error" : {
       "localizations" : {

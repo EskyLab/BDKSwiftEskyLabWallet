@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import BitcoinUI
 
 struct AmountView: View {
     @ObservedObject var viewModel: AmountViewModel
-    @State var numpadAmount = "0"
-    @State var isActive: Bool = false
+    @State private var numpadAmount = "0"
+    @State private var isActive: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -19,33 +18,33 @@ struct AmountView: View {
                 Color(uiColor: .systemBackground)
                     .edgesIgnoringSafeArea(.all)
 
-                VStack(spacing: 50) {
+                VStack(spacing: 40) {
                     Spacer()
 
-                    VStack(spacing: 4) {
+                    VStack(spacing: 8) {
                         Text("\(numpadAmount.formattedWithSeparator) sats")
-                            .textStyle(BitcoinTitle1())
+                            .font(.largeTitle.weight(.bold))
+                            .foregroundColor(.primary)
 
                         if let balance = viewModel.balanceTotal {
                             HStack(spacing: 2) {
                                 Text(balance.delimiter)
-                                Text("total")
+                                Text("Total")
                             }
-                            .fontWeight(.semibold)
-                            .font(.caption)
+                            .font(.caption2.weight(.medium))
                             .foregroundColor(.secondary)
                         }
 
                         if let balance = viewModel.balanceConfirmed {
                             HStack(spacing: 2) {
                                 Text(balance.delimiter)
-                                Text("confirmed")
+                                Text("Confirmed")
                             }
-                            .fontWeight(.semibold)
-                            .font(.caption)
+                            .font(.caption2.weight(.medium))
                             .foregroundColor(.secondary)
                         }
                     }
+                    .padding(.horizontal, 16)
 
                     GeometryReader { geometry in
                         let buttonSize = geometry.size.width / 4
@@ -61,20 +60,26 @@ struct AmountView: View {
 
                     Spacer()
 
-                    VStack {
-                        Button {
-                            isActive = true
-                        } label: {
-                            Label(
-                                title: { Text("Next") },
-                                icon: { Image(systemName: "arrow.right") }
-                            )
-                            .labelStyle(.iconOnly)
-                        }
-                        .buttonStyle(BitcoinOutlined(width: 100, isCapsule: true))
-                        .navigationDestination(isPresented: $isActive) {
-                            AddressView(amount: numpadAmount, rootIsActive: $isActive)
-                        }
+                    Button {
+                        isActive = true
+                    } label: {
+                        Label(
+                            title: { Text("Next").font(.headline) },
+                            icon: { Image(systemName: "arrow.right") }
+                        )
+                        .labelStyle(.iconOnly)
+                        .padding()
+                        .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
+                        .foregroundColor(.bitcoinOrange)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.bitcoinOrange, lineWidth: 2)
+                        )
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity)
+                    .navigationDestination(isPresented: $isActive) {
+                        AddressView(amount: numpadAmount, rootIsActive: $isActive)
                     }
                 }
                 .padding()
@@ -91,7 +96,7 @@ struct AmountView: View {
         .alert(isPresented: $viewModel.showingAmountViewErrorAlert) {
             Alert(
                 title: Text("Amount Error"),
-                message: Text(viewModel.amountViewError?.description ?? "Unknown"),
+                message: Text(viewModel.amountViewError?.description ?? "Unknown Error"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.amountViewError = nil
                 }
@@ -100,10 +105,15 @@ struct AmountView: View {
     }
 
     func numpadRow(_ characters: [String], buttonSize: CGFloat) -> some View {
-        HStack(spacing: buttonSize / 2) {
+        HStack(spacing: buttonSize / 6) {
             ForEach(characters, id: \.self) { character in
                 NumpadButton(numpadAmount: $numpadAmount, character: character)
                     .frame(width: buttonSize, height: buttonSize)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white)
+                            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    )
             }
         }
     }
@@ -112,6 +122,8 @@ struct AmountView: View {
 struct NumpadButton: View {
     @Binding var numpadAmount: String
     var character: String
+
+    @State private var isPressed: Bool = false
 
     var body: some View {
         Button {
@@ -131,8 +143,26 @@ struct NumpadButton: View {
                 }
             }
         } label: {
-            Text(character).textStyle(BitcoinTitle3())
+            Text(character)
+                .font(.title2.weight(.medium))
+                .foregroundColor(.bitcoinOrange)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(isPressed ? Color(uiColor: .systemGray5) : Color.white)
+                )
+                .scaleEffect(isPressed ? 0.95 : 1.0)
+                .animation(.easeInOut(duration: 0.1), value: isPressed)
         }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    isPressed = true
+                }
+                .onEnded { _ in
+                    isPressed = false
+                }
+        )
     }
 }
 

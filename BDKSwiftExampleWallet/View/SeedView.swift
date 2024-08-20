@@ -18,17 +18,22 @@ struct SeedView: View {
             Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 16) {
+                // Displaying seed words
                 ForEach(
                     Array(viewModel.seed.mnemonic.components(separatedBy: " ").enumerated()),
                     id: \.element
                 ) { index, word in
                     HStack {
                         Text("\(index + 1). \(word)")
+                            .font(.body)
+                            .foregroundColor(.primary)
                         Spacer()
                     }
-                    .padding(.horizontal, 40.0)
+                    .padding(.horizontal, 16)
                 }
+                
+                // Copy button
                 HStack {
                     Spacer()
                     Button {
@@ -41,17 +46,11 @@ struct SeedView: View {
                         }
                     } label: {
                         HStack {
-                            withAnimation {
-                                HStack {
-                                    Image(
-                                        systemName: showCheckmark
-                                            ? "checkmark" : "doc.on.doc"
-                                    )
-                                    Text("Copy")
-                                }
-                            }
+                            Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                            Text("Copy")
                         }
-                        .bold()
+                        .font(.body.weight(.semibold))
+                        .foregroundColor(.white)
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.bitcoinOrange)
@@ -67,7 +66,7 @@ struct SeedView: View {
         .alert(isPresented: $viewModel.showingSeedViewErrorAlert) {
             Alert(
                 title: Text("Showing Seed Error"),
-                message: Text(viewModel.seedViewError?.description ?? ""),
+                message: Text(viewModel.seedViewError?.description ?? "Unknown Error"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.seedViewError = nil
                 }
@@ -77,11 +76,13 @@ struct SeedView: View {
     }
 }
 
-#Preview {
-    SeedView(viewModel: .init())
-}
+#if DEBUG
+    #Preview("SeedView - en") {
+        SeedView(viewModel: .init())
+    }
 
-#Preview {
-    SeedView(viewModel: .init())
-        .environment(\.sizeCategory, .accessibilityLarge)
-}
+    #Preview("SeedView - en - Large") {
+        SeedView(viewModel: .init())
+            .environment(\.sizeCategory, .accessibilityLarge)
+    }
+#endif
