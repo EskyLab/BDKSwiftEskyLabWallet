@@ -6,6 +6,8 @@
 	<string>EskyLab Pack</string>
 	<key>NSExtension</key>
 	<dict>
+		<key>MSMessagesExtensionStoreIconName</key>
+		<string>iMessage App Icon.stickersiconset</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.message-payload-provider</string>
 		<key>NSExtensionPrincipalClass</key>
