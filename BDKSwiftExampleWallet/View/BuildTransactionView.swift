@@ -37,7 +37,7 @@ struct BuildTransactionView: View {
                         DetailRow(title: "Total", value: totalAmount)
                     }
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 12).fill(Color(UIColor.secondarySystemBackground)))
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color(uiColor: .secondarySystemBackground)))
                     .shadow(radius: 4)
 
                     Spacer()
@@ -49,12 +49,11 @@ struct BuildTransactionView: View {
                                 .bold()
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(isSent ? Color.red : Color.white) // Inverted button color
-                                .foregroundColor(isSent ? .white : .bitcoinOrange) // Text color to match branding
-                                .cornerRadius(8)
+                                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Updated background
+                                .foregroundColor(isSent ? .white : .bitcoinOrange) // Updated foreground color
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(isSent ? Color.red : Color.bitcoinOrange, lineWidth: 2) // Border color
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(isSent ? Color.red : Color.bitcoinOrange, lineWidth: 2) // Updated border color
                                 )
                                 .shadow(radius: 4)
                         }
@@ -190,9 +189,12 @@ struct SuccessView: View {
                 Text("Done")
                     .fontWeight(.bold)
                     .padding()
-                    .background(Color.bitcoinOrange)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Updated background
+                    .foregroundColor(.primary) // Updated foreground color
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color(uiColor: .separator), lineWidth: 2) // Updated border color
+                    )
             }
             .padding()
         }

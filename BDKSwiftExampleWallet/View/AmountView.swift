@@ -15,7 +15,7 @@ struct AmountView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(uiColor: .systemBackground)
+                Color(.systemBackground)
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 40) {
@@ -69,14 +69,20 @@ struct AmountView: View {
                         )
                         .labelStyle(.iconOnly)
                         .padding()
-                        .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                        .foregroundColor(.bitcoinOrange)
+                        .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Background color
+                        .foregroundColor(.primary) // Text color
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.bitcoinOrange, lineWidth: 2)
+                                .stroke(Color(uiColor: .separator), lineWidth: 1) // Border color
+                        )
+                        .overlay(
+                            Image(systemName: "arrow.right") // Bitcoin orange arrow
+                                .foregroundColor(.bitcoinOrange)
+                                .font(.headline) // Adjust font size if needed
+                                .frame(maxWidth: .infinity, alignment: .center) // Center the arrow
                         )
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.plain)
                     .frame(maxWidth: .infinity)
                     .navigationDestination(isPresented: $isActive) {
                         AddressView(amount: numpadAmount, rootIsActive: $isActive)
@@ -111,7 +117,7 @@ struct AmountView: View {
                     .frame(width: buttonSize, height: buttonSize)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
+                            .fill(Color(uiColor: .systemFill))
                             .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                     )
             }
@@ -145,11 +151,11 @@ struct NumpadButton: View {
         } label: {
             Text(character)
                 .font(.title2.weight(.medium))
-                .foregroundColor(.bitcoinOrange)
+                .foregroundColor(.primary)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(isPressed ? Color(uiColor: .systemGray5) : Color.white)
+                        .fill(isPressed ? Color(uiColor: .systemGray5) : Color(uiColor: .systemBackground))
                 )
                 .scaleEffect(isPressed ? 0.95 : 1.0)
                 .animation(.easeInOut(duration: 0.1), value: isPressed)

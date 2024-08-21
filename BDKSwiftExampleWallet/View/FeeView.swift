@@ -32,7 +32,7 @@ struct FeeView: View {
                 }
                 .pickerStyle(WheelPickerStyle()) // Use WheelPickerStyle for better readability on iPhones
                 .padding(.horizontal)
-                .background(Color(.systemGroupedBackground)) // Enhance the background for better contrast
+                .background(Color(uiColor: .secondarySystemBackground)) // Adapt background color for dark mode
                 .cornerRadius(10)
                 .clipped()
                 
@@ -54,7 +54,7 @@ struct FeeView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.white) // Inverted button color
+                        .background(Color(uiColor: .systemFill)) // Adapt button background color for dark mode
                         .foregroundColor(.bitcoinOrange) // Text color to match branding
                         .cornerRadius(10)
                         .overlay(

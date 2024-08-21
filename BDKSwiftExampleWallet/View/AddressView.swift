@@ -29,11 +29,11 @@ struct AddressView: View {
                             Label("Scan QR Code", systemImage: "qrcode.viewfinder")
                                 .font(.title2)
                                 .padding()
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
                                 .foregroundColor(.primary)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .stroke(Color(uiColor: .separator), lineWidth: 1)
                                 )
                         }
 
@@ -43,11 +43,11 @@ struct AddressView: View {
                             Label("Paste", systemImage: "doc.on.doc")
                                 .font(.title2)
                                 .padding()
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
                                 .foregroundColor(.primary)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                        .stroke(Color(uiColor: .separator), lineWidth: 1)
                                 )
                         }
                     }
@@ -67,10 +67,10 @@ struct AddressView: View {
                         )
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                        .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                        .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                .stroke(Color(uiColor: .separator), lineWidth: 1)
                         )
                         .font(.title3)
                         .foregroundColor(.primary)
@@ -86,11 +86,11 @@ struct AddressView: View {
                             .labelStyle(.iconOnly)
                             .font(.title2)
                             .padding()
-                            .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
-                            .foregroundColor(.bitcoinOrange)
+                            .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
+                            .foregroundColor(.bitcoinOrange) // Change foreground color
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.bitcoinOrange, lineWidth: 2)
+                                    .stroke(Color.bitcoinOrange, lineWidth: 2) // Change outline color
                             )
                     }
                     .buttonStyle(.plain) // Ensures button style remains consistent with custom design
