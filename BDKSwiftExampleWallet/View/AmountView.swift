@@ -46,6 +46,9 @@ struct AmountView: View {
                     }
                     .padding(.horizontal, 16)
 
+                    // Added spacing here
+                    Spacer(minLength: 20)
+
                     GeometryReader { geometry in
                         let buttonSize = geometry.size.width / 4
                         VStack(spacing: buttonSize / 10) {
@@ -55,10 +58,12 @@ struct AmountView: View {
                             numpadRow([" ", "0", "<"], buttonSize: buttonSize)
                         }
                         .frame(maxWidth: .infinity)
+                        .padding(.bottom, 20) // Added padding here to raise the keypad
                     }
                     .frame(height: 300)
 
-                    Spacer()
+                    // Increased bottom spacing
+                    Spacer(minLength: 60) // Increased space below keypad
 
                     Button {
                         isActive = true
@@ -69,17 +74,11 @@ struct AmountView: View {
                         )
                         .labelStyle(.iconOnly)
                         .padding()
-                        .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Background color
-                        .foregroundColor(.primary) // Text color
+                        .background(Color(uiColor: .systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                        .foregroundColor(.primary)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color(uiColor: .separator), lineWidth: 1) // Border color
-                        )
-                        .overlay(
-                            Image(systemName: "arrow.right") // Bitcoin orange arrow
-                                .foregroundColor(.bitcoinOrange)
-                                .font(.headline) // Adjust font size if needed
-                                .frame(maxWidth: .infinity, alignment: .center) // Center the arrow
+                                .stroke(Color(uiColor: .separator), lineWidth: 1)
                         )
                     }
                     .buttonStyle(.plain)
@@ -117,7 +116,7 @@ struct AmountView: View {
                     .frame(width: buttonSize, height: buttonSize)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(uiColor: .systemFill))
+                            .fill(Color(uiColor: .systemGray6))
                             .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                     )
             }
