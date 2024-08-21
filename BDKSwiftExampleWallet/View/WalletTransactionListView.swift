@@ -14,7 +14,6 @@ struct WalletTransactionListView: View {
     let walletSyncState: WalletSyncState
 
     var body: some View {
-
         List {
             if transactionDetails.isEmpty && walletSyncState == .syncing {
                 WalletTransactionsListItemView(transaction: mockTransactionDetail, isRedacted: true)
@@ -23,40 +22,35 @@ struct WalletTransactionListView: View {
             } else if transactionDetails.isEmpty {
                 Text("No Transactions")
                     .font(.subheadline)
+                    .foregroundColor(.secondary)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
             } else {
                 ForEach(
                     transactionDetails.sorted(
                         by: {
-                            $0.confirmationTime?.timestamp ?? $0.received > $1.confirmationTime?
-                                .timestamp ?? $1.received
+                            $0.confirmationTime?.timestamp ?? $0.received > $1.confirmationTime?.timestamp ?? $1.received
                         }
                     ),
                     id: \.txid
                 ) { transaction in
-
                     NavigationLink(
                         destination: TransactionDetailsView(
                             viewModel: .init(),
                             transaction: transaction,
-                            amount:
-                                transaction.sent > 0
+                            amount: transaction.sent > 0
                                 ? transaction.sent - transaction.received
                                 : transaction.received - transaction.sent
                         )
                     ) {
-
                         WalletTransactionsListItemView(transaction: transaction)
                     }
                 }
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
             }
-
         }
         .listStyle(.plain)
-
     }
 }
 
@@ -72,33 +66,17 @@ struct WalletTransactionsListItemView: View {
 
     var body: some View {
         HStack(spacing: 15) {
-
-            if isRedacted {
-                Image(
-                    systemName:
-                        "circle.fill"
-                )
+            // Transaction Icon
+            Image(systemName: isRedacted ? "circle.fill" : (transaction.sent > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill"))
                 .font(.largeTitle)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(
-                    Color.gray.opacity(0.5)
+                    isRedacted ? Color.gray.opacity(0.5) : (transaction.confirmationTime != nil ? Color.bitcoinOrange : Color.secondary),
+                    Color.gray.opacity(0.05)
                 )
-            } else {
-                Image(
-                    systemName:
-                        transaction.sent > 0
-                        ? "arrow.up.circle.fill" : "arrow.down.circle.fill"
-                )
-                .font(.largeTitle)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(
-                    transaction.confirmationTime != nil
-                        ? Color.bitcoinOrange : Color.secondary,
-                    isRedacted ? Color.gray.opacity(0.5) : Color.gray.opacity(0.05)
-                )
-            }
 
             VStack(alignment: .leading, spacing: 5) {
+                // Transaction ID
                 Text(transaction.txid)
                     .truncationMode(.middle)
                     .lineLimit(1)
@@ -106,24 +84,19 @@ struct WalletTransactionsListItemView: View {
                     .fontWeight(.semibold)
                     .font(.title)
                     .foregroundColor(.primary)
-                Text(
-                    transaction.confirmationTime?.timestamp.toDate().formatted(
-                        .dateTime.day().month().hour().minute()
-                    )
-                        ?? "Unconfirmed"
-                )
-                .lineLimit(
-                    sizeCategory > .accessibilityMedium ? 2 : 1
-                )
+                
+                // Confirmation Date or Status
+                Text(transaction.confirmationTime?.timestamp.toDate().formatted(.dateTime.day().month().hour().minute()) ?? "Unconfirmed")
+                    .lineLimit(sizeCategory > .accessibilityMedium ? 2 : 1)
+                    .foregroundColor(.secondary)
+                    .font(.subheadline)
             }
-            .foregroundColor(.secondary)
-            .font(.subheadline)
-            .padding(.trailing, 30.0)
             .redacted(reason: isRedacted ? .placeholder : [])
 
             Spacer()
-            Text(
-                transaction.sent > 0
+
+            // Transaction Amount
+            Text(transaction.sent > 0
                     ? "- \(transaction.sent - transaction.received) sats"
                     : "+ \(transaction.received - transaction.sent) sats"
             )
@@ -131,12 +104,11 @@ struct WalletTransactionsListItemView: View {
             .fontWeight(.semibold)
             .fontDesign(.rounded)
             .lineLimit(1)
+            .foregroundColor(transaction.sent > 0 ? .red : .green)
             .redacted(reason: isRedacted ? .placeholder : [])
         }
-        .padding(.vertical, 15.0)
-        .padding(.vertical, 5.0)
+        .padding(.vertical, 10)
         .minimumScaleFactor(0.5)
-
     }
 }
 

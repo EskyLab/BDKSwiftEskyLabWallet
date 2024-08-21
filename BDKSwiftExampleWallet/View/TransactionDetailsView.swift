@@ -18,74 +18,77 @@ struct TransactionDetailsView: View {
     @State private var showCheckmark = false
 
     var body: some View {
-
-        VStack {
-
+        VStack(spacing: 20) {
+            // Transaction Type and Confirmation Status
             VStack(spacing: 8) {
                 Image(systemName: "bitcoinsign.circle.fill")
                     .resizable()
                     .foregroundColor(.bitcoinOrange)
-                    .fontWeight(.bold)
-                    .frame(width: 50, height: 50, alignment: .center)
-                HStack(spacing: 3) {
-                    Text(
-                        transaction.sent > 0 ? "Send" : "Receive"
-                    )
+                    .frame(width: 50, height: 50)
+                
+                HStack(spacing: 5) {
+                    Text(transaction.sent > 0 ? "Send" : "Receive")
+                        .fontWeight(.semibold)
+                    
                     if transaction.confirmationTime == nil {
                         Text("Unconfirmed")
+                            .foregroundColor(.secondary)
                     } else {
                         Text("Confirmed")
+                            .foregroundColor(.green) // Green for confirmed
                     }
                 }
-                .fontWeight(.semibold)
+                .font(.caption)
+                
                 if let height = transaction.confirmationTime?.height {
                     Text("Block \(height.delimiter)")
                         .foregroundColor(.secondary)
+                        .font(.caption)
                 }
             }
-            .font(.caption)
 
-            Spacer()
-
-            VStack(spacing: 8) {
+            // Amount and Details
+            VStack(spacing: 16) {
                 HStack {
                     Text(amount.delimiter)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                    
                     Text("sats")
+                        .foregroundColor(.secondary)
                 }
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .font(.largeTitle)
-                .foregroundColor(.primary)
-                .fontWeight(.bold)
-                .fontDesign(.rounded)
+
                 VStack(spacing: 4) {
                     if transaction.confirmationTime == nil {
                         Text("Unconfirmed")
+                            .foregroundColor(.secondary)
+                            .font(.callout)
                     } else {
-                        VStack {
-                            if let timestamp = transaction.confirmationTime?.timestamp {
-                                Text(
-                                    timestamp.toDate().formatted(
-                                        date: .abbreviated,
-                                        time: Date.FormatStyle.TimeStyle.shortened
-                                    )
-                                )
-                            }
+                        if let timestamp = transaction.confirmationTime?.timestamp {
+                            Text(timestamp.toDate().formatted(
+                                date: .abbreviated,
+                                time: .shortened
+                            ))
+                            .foregroundColor(.secondary)
+                            .font(.callout)
                         }
                     }
+
                     if let fee = transaction.fee {
                         Text("\(fee) sats fee")
+                            .foregroundColor(.secondary)
+                            .font(.callout)
                     }
                 }
-                .foregroundColor(.secondary)
-                .font(.callout)
             }
 
             Spacer()
 
+            // Transaction ID and Actions
             HStack {
                 if viewModel.network != Network.regtest.description {
-                    Button {
+                    Button(action: {
                         if let esploraURL = viewModel.esploraURL {
                             let urlString = "\(esploraURL)/tx/\(transaction.txid)"
                                 .replacingOccurrences(of: "/api", with: "")
@@ -93,46 +96,49 @@ struct TransactionDetailsView: View {
                                 UIApplication.shared.open(url)
                             }
                         }
-                    } label: {
+                    }) {
                         Image(systemName: "safari")
-                            .fontWeight(.semibold)
+                            .font(.title2)
                             .foregroundColor(.bitcoinOrange)
                     }
                     Spacer()
                 }
+                
                 Text(transaction.txid)
                     .lineLimit(1)
                     .truncationMode(.middle)
+                    .font(.caption)
+                    .foregroundColor(.primary)
                 Spacer()
-                Button {
+                
+                Button(action: {
                     UIPasteboard.general.string = transaction.txid
                     isCopied = true
-                    showCheckmark = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        isCopied = false
-                        showCheckmark = false
+                    withAnimation {
+                        showCheckmark = true
                     }
-                } label: {
-                    HStack {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
-                            Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                            isCopied = false
+                            showCheckmark = false
                         }
                     }
-                    .fontWeight(.semibold)
-                    .foregroundColor(.bitcoinOrange)
+                }) {
+                    HStack {
+                        Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                            .font(.title2)
+                            .foregroundColor(.bitcoinOrange)
+                    }
                 }
             }
-            .fontDesign(.monospaced)
             .font(.caption)
             .padding()
-            .onAppear {
-                viewModel.getNetwork()
-                viewModel.getEsploraUrl()
-            }
-
         }
         .padding()
-
+        .onAppear {
+            viewModel.getNetwork()
+            viewModel.getEsploraUrl()
+        }
     }
 }
 

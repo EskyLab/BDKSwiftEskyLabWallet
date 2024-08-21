@@ -573,6 +573,9 @@
         }
       }
     },
+    "Syncing..." : {
+
+    },
     "TabView Error" : {
       "localizations" : {
         "fr" : {
