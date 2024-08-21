@@ -191,6 +191,9 @@
         }
       }
     },
+    "Authentication Failed" : {
+
+    },
     "BDKSwift + EskyLab" : {
 
     },
@@ -422,6 +425,7 @@
 
     },
     "Onboarding Error" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -648,6 +652,9 @@
           }
         }
       }
+    },
+    "Unable to authenticate using Face ID/Touch ID. Please try again or check your device settings." : {
+
     },
     "Unconfirmed" : {
       "localizations" : {

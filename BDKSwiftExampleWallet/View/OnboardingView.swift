@@ -8,11 +8,37 @@
 import SwiftUI
 import BitcoinDevKit
 import BitcoinUI
+import LocalAuthentication
+
+func authenticateUser(completion: @escaping (Bool, Error?) -> Void) {
+    let context = LAContext()
+    var error: NSError?
+
+    // Check if the device supports biometric authentication
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+        let reason = "Authenticate to secure your wallet"
+
+        // Attempt to authenticate the user
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+            DispatchQueue.main.async {
+                if success {
+                    completion(true, nil)
+                } else {
+                    completion(false, authenticationError)
+                }
+            }
+        }
+    } else {
+        // Biometric authentication not available
+        completion(false, error)
+    }
+}
 
 struct OnboardingView: View {
     @ObservedObject var viewModel: OnboardingViewModel
     @AppStorage("isOnboarding") var isOnboarding: Bool?
     @State private var showingOnboardingViewErrorAlert = false
+    @State private var authenticationError: Error?
 
     // Define custom colors with iOS 18 design principles
     private let matteBlack = Color(red: 26/255, green: 26/255, blue: 26/255) // Matte black for dark mode
@@ -111,7 +137,15 @@ struct OnboardingView: View {
                                 .padding(.horizontal, 40)
 
                             Button(action: {
-                                viewModel.createWallet()
+                                // Trigger biometric authentication before creating the wallet
+                                authenticateUser { success, error in
+                                    if success {
+                                        viewModel.createWallet()
+                                    } else {
+                                        self.authenticationError = error
+                                        self.showingOnboardingViewErrorAlert = true
+                                    }
+                                }
                             }) {
                                 Text("Create Wallet")
                                     .fontWeight(.semibold)
@@ -151,11 +185,9 @@ struct OnboardingView: View {
         }
         .alert(isPresented: $showingOnboardingViewErrorAlert) {
             Alert(
-                title: Text("Onboarding Error"),
-                message: Text(viewModel.onboardingViewError?.localizedDescription ?? "Unknown error"),
-                dismissButton: .default(Text("OK")) {
-                    viewModel.onboardingViewError = nil
-                }
+                title: Text("Authentication Failed"),
+                message: Text("Unable to authenticate using Face ID/Touch ID. Please try again or check your device settings."),
+                dismissButton: .default(Text("OK"))
             )
         }
     }
