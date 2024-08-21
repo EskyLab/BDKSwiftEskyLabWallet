@@ -12,9 +12,6 @@
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
 		926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 926546A02C740DFE003018BF /* EskyLab Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
-		92D7D79C2C74AE5E009D4727 /* bdkFFI_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */; };
-		92D7D7A72C74AE5E009D4727 /* bdkFFI_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */; };
-		92D7D7A82C74AE5E009D4727 /* bdkFFI_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
 		AE0C30F72A804A2D008F1EAE /* WalletTransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0C30F62A804A2D008F1EAE /* WalletTransactionListView.swift */; };
@@ -93,27 +90,6 @@
 			remoteGlobalIDString = 9265469F2C740DFE003018BF;
 			remoteInfo = "EskyLab Pack";
 		};
-		92D7D79D2C74AE5E009D4727 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92D7D7912C74AE5E009D4727;
-			remoteInfo = bdkFFI.framework;
-		};
-		92D7D79F2C74AE5E009D4727 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AE4984772A1BBBD6009951E2;
-			remoteInfo = CypherPunkCulture;
-		};
-		92D7D7A52C74AE5E009D4727 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92D7D7912C74AE5E009D4727;
-			remoteInfo = bdkFFI.framework;
-		};
 		AE4984892A1BBBD8009951E2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AE4984702A1BBBD6009951E2 /* Project object */;
@@ -141,7 +117,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				92D7D7A82C74AE5E009D4727 /* bdkFFI_framework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,8 +126,6 @@
 /* Begin PBXFileReference section */
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CypherPunkCulture.entitlements; sourceTree = "<group>"; };
-		92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = bdkFFI_framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		92D7D79B2C74AE5E009D4727 /* bdkFFI.frameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bdkFFI.frameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92FEA4702C73992F005C5FB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A733D6CF2A81113000F333B4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
@@ -231,13 +204,6 @@
 			);
 			target = 9265469F2C740DFE003018BF /* EskyLab Pack */;
 		};
-		92D7D7A92C74AE5E009D4727 /* Exceptions for "bdkFFI.framework" folder in "bdkFFI.framework" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			publicHeaders = (
-				bdkFFI_framework.h,
-			);
-			target = 92D7D7912C74AE5E009D4727 /* bdkFFI.framework */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -249,42 +215,13 @@
 			path = "EskyLab Pack";
 			sourceTree = "<group>";
 		};
-		92D7D7932C74AE5E009D4727 /* bdkFFI.framework */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				92D7D7A92C74AE5E009D4727 /* Exceptions for "bdkFFI.framework" folder in "bdkFFI.framework" target */,
-			);
-			path = bdkFFI.framework;
-			sourceTree = "<group>";
-		};
-		92D7D7A12C74AE5E009D4727 /* bdkFFI.frameworkTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = bdkFFI.frameworkTests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		92D7D78F2C74AE5E009D4727 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92D7D7982C74AE5E009D4727 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				92D7D79C2C74AE5E009D4727 /* bdkFFI_framework.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AE4984752A1BBBD6009951E2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92D7D7A72C74AE5E009D4727 /* bdkFFI_framework.framework in Frameworks */,
 				AEAF83B62B7BD4D10019B23B /* CodeScanner in Frameworks */,
 				AE4984A92A1BD425009951E2 /* BitcoinDevKit in Frameworks */,
 				AEB735D32B2CC4B900F99DBB /* BitcoinUI in Frameworks */,
@@ -402,8 +339,6 @@
 				AE49848B2A1BBBD8009951E2 /* BDKSwiftExampleWalletTests */,
 				92FEA4702C73992F005C5FB5 /* Info.plist */,
 				926546A12C740DFE003018BF /* EskyLab Pack */,
-				92D7D7932C74AE5E009D4727 /* bdkFFI.framework */,
-				92D7D7A12C74AE5E009D4727 /* bdkFFI.frameworkTests */,
 				AE4984792A1BBBD6009951E2 /* Products */,
 				AE235D0D2A9CEF69000C1C55 /* Frameworks */,
 			);
@@ -415,8 +350,6 @@
 				AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */,
 				AE4984882A1BBBD8009951E2 /* CypherPunkCultureTests.xctest */,
 				926546A02C740DFE003018BF /* EskyLab Pack.appex */,
-				92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */,
-				92D7D79B2C74AE5E009D4727 /* bdkFFI.frameworkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -557,16 +490,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		92D7D78D2C74AE5E009D4727 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		9265469F2C740DFE003018BF /* EskyLab Pack */ = {
 			isa = PBXNativeTarget;
@@ -588,53 +511,6 @@
 			productReference = 926546A02C740DFE003018BF /* EskyLab Pack.appex */;
 			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
-		92D7D7912C74AE5E009D4727 /* bdkFFI.framework */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 92D7D7AA2C74AE5E009D4727 /* Build configuration list for PBXNativeTarget "bdkFFI.framework" */;
-			buildPhases = (
-				92D7D78D2C74AE5E009D4727 /* Headers */,
-				92D7D78E2C74AE5E009D4727 /* Sources */,
-				92D7D78F2C74AE5E009D4727 /* Frameworks */,
-				92D7D7902C74AE5E009D4727 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				92D7D7932C74AE5E009D4727 /* bdkFFI.framework */,
-			);
-			name = bdkFFI.framework;
-			packageProductDependencies = (
-			);
-			productName = bdkFFI.framework;
-			productReference = 92D7D7922C74AE5E009D4727 /* bdkFFI_framework.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		92D7D79A2C74AE5E009D4727 /* bdkFFI.frameworkTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 92D7D7AE2C74AE5E009D4727 /* Build configuration list for PBXNativeTarget "bdkFFI.frameworkTests" */;
-			buildPhases = (
-				92D7D7972C74AE5E009D4727 /* Sources */,
-				92D7D7982C74AE5E009D4727 /* Frameworks */,
-				92D7D7992C74AE5E009D4727 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				92D7D79E2C74AE5E009D4727 /* PBXTargetDependency */,
-				92D7D7A02C74AE5E009D4727 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				92D7D7A12C74AE5E009D4727 /* bdkFFI.frameworkTests */,
-			);
-			name = bdkFFI.frameworkTests;
-			packageProductDependencies = (
-			);
-			productName = bdkFFI.frameworkTests;
-			productReference = 92D7D79B2C74AE5E009D4727 /* bdkFFI.frameworkTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		AE4984772A1BBBD6009951E2 /* CypherPunkCulture */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE49849C2A1BBBD8009951E2 /* Build configuration list for PBXNativeTarget "CypherPunkCulture" */;
@@ -649,7 +525,6 @@
 			);
 			dependencies = (
 				926546A62C740DFF003018BF /* PBXTargetDependency */,
-				92D7D7A62C74AE5E009D4727 /* PBXTargetDependency */,
 			);
 			name = CypherPunkCulture;
 			packageProductDependencies = (
@@ -694,13 +569,6 @@
 					9265469F2C740DFE003018BF = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					92D7D7912C74AE5E009D4727 = {
-						CreatedOnToolsVersion = 16.0;
-					};
-					92D7D79A2C74AE5E009D4727 = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = AE4984772A1BBBD6009951E2;
-					};
 					AE4984772A1BBBD6009951E2 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -733,28 +601,12 @@
 				AE4984772A1BBBD6009951E2 /* CypherPunkCulture */,
 				AE4984872A1BBBD8009951E2 /* CypherPunkCultureTests */,
 				9265469F2C740DFE003018BF /* EskyLab Pack */,
-				92D7D7912C74AE5E009D4727 /* bdkFFI.framework */,
-				92D7D79A2C74AE5E009D4727 /* bdkFFI.frameworkTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9265469E2C740DFE003018BF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92D7D7902C74AE5E009D4727 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92D7D7992C74AE5E009D4727 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -782,20 +634,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		92D7D78E2C74AE5E009D4727 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92D7D7972C74AE5E009D4727 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AE4984742A1BBBD6009951E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -878,21 +716,6 @@
 			target = 9265469F2C740DFE003018BF /* EskyLab Pack */;
 			targetProxy = 926546A52C740DFF003018BF /* PBXContainerItemProxy */;
 		};
-		92D7D79E2C74AE5E009D4727 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92D7D7912C74AE5E009D4727 /* bdkFFI.framework */;
-			targetProxy = 92D7D79D2C74AE5E009D4727 /* PBXContainerItemProxy */;
-		};
-		92D7D7A02C74AE5E009D4727 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AE4984772A1BBBD6009951E2 /* CypherPunkCulture */;
-			targetProxy = 92D7D79F2C74AE5E009D4727 /* PBXContainerItemProxy */;
-		};
-		92D7D7A62C74AE5E009D4727 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92D7D7912C74AE5E009D4727 /* bdkFFI.framework */;
-			targetProxy = 92D7D7A52C74AE5E009D4727 /* PBXContainerItemProxy */;
-		};
 		AE49848A2A1BBBD8009951E2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AE4984772A1BBBD6009951E2 /* CypherPunkCulture */;
@@ -905,6 +728,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = U8C49P573P;
@@ -925,6 +749,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = U8C49P573P;
@@ -938,118 +763,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		92D7D7AB2C74AE5E009D4727 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = U8C49P573P;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 CypherPunkCulture. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bdkFFI-framework";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		92D7D7AC2C74AE5E009D4727 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = U8C49P573P;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 CypherPunkCulture. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bdkFFI-framework";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		92D7D7AF2C74AE5E009D4727 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = U8C49P573P;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bdkFFI-frameworkTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CypherPunkCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CypherPunkCulture";
-			};
-			name = Debug;
-		};
-		92D7D7B02C74AE5E009D4727 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U8C49P573P;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eskylab.bdkFFI-frameworkTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CypherPunkCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CypherPunkCulture";
 			};
 			name = Release;
 		};
@@ -1068,6 +781,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1092,7 +806,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				EAGER_LINKING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1124,7 +838,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1144,6 +858,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1208,7 +923,7 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				ASSETCATALOG_COMPILER_TARGET_STICKERS_ICON_ROLE = extension;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = CypherPunkCulture.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
@@ -1217,7 +932,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = CypherPunk;
+				INFOPLIST_KEY_CFBundleDisplayName = CypherPunkCulture;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"To scan QR codes\"";
@@ -1232,10 +947,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.bitcoinwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1250,7 +967,7 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
 				ASSETCATALOG_COMPILER_TARGET_STICKERS_ICON_ROLE = extension;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
-				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = CypherPunkCulture.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
@@ -1259,7 +976,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = CypherPunk;
+				INFOPLIST_KEY_CFBundleDisplayName = CypherPunkCulture;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"To scan QR codes\"";
@@ -1274,6 +991,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eskylab.bitcoinwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1334,24 +1052,6 @@
 			buildConfigurations = (
 				926546AA2C740DFF003018BF /* Debug */,
 				926546AB2C740DFF003018BF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		92D7D7AA2C74AE5E009D4727 /* Build configuration list for PBXNativeTarget "bdkFFI.framework" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				92D7D7AB2C74AE5E009D4727 /* Debug */,
-				92D7D7AC2C74AE5E009D4727 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		92D7D7AE2C74AE5E009D4727 /* Build configuration list for PBXNativeTarget "bdkFFI.frameworkTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				92D7D7AF2C74AE5E009D4727 /* Debug */,
-				92D7D7B02C74AE5E009D4727 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
