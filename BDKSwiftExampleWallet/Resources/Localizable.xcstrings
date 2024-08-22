@@ -290,6 +290,9 @@
         }
       }
     },
+    "CYPHERPUNK CULTURE" : {
+
+    },
     "CypherPunk Culture." : {
 
     },
@@ -690,9 +693,6 @@
           }
         }
       }
-    },
-    "Welcome to MyApp!" : {
-
     },
     "Yes" : {
       "localizations" : {

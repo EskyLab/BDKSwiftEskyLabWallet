@@ -13,23 +13,30 @@ struct SplashScreenView: View {
 
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea() // Background color or image
+            Color.bitcoinBlack.ignoresSafeArea() // Background color
+            
             VStack {
-                // Add your promotional content here
-                Image("YourAppLogo") // Replace with your app's logo
+                Spacer()
+                
+                // Logo
+                Image(systemName: "bitcoinsign.circle.fill") // Temporary SF Symbol as the logo
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200)
-                Text("Welcome to MyApp!")
+                    .frame(width: 150, height: 150) // Adjust size as needed
+                    .padding(.bottom, 20) // Space between logo and text
+                
+                // Main Text
+                Text("CYPHERPUNK CULTURE")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white) // Ensure text is visible on dark background
                 
-                // Optional: Add more promotional content or animations here
+                Spacer()
             }
         }
         .onAppear {
-            // Simulate a delay before transitioning to the next screen
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     isShowingSplash = false
