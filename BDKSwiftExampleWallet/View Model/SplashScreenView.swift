@@ -20,23 +20,21 @@ struct SplashScreenView: View {
                 Spacer() // Pushes content down to center vertically
                 
                 // Logo
-                Image("bitcoin-btc-logo-2") // Custom logo image
+                Image("bitcoin-btc-logo-2") // Your app's logo
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120) // Adjust size for visibility
-                    .padding(.bottom, 20) // Add padding below the logo
                 
                 // App Name
-                VStack(spacing: 8) {
-                    Text("CYPHERPUNK")
-                        .font(.largeTitle.bold())
-                        .foregroundColor(.primary) // Primary color for text
-                    
-                    Text("CULTURE")
-                        .font(.largeTitle.bold())
-                        .foregroundColor(.primary) // Primary color for text
-                }
-                .padding(.bottom, 40) // Spacing between text and bottom white space
+                Text("CYPHERPUNK")
+                    .font(.custom("SFProDisplay-Black", size: 40)) // Extra bold font
+                    .foregroundColor(.primary) // Primary color for text
+                    .padding(.top, 16) // Spacing from the logo
+                
+                Text("CULTURE")
+                    .font(.custom("SFProDisplay-Black", size: 40)) // Extra bold font
+                    .foregroundColor(.primary) // Primary color for text
+                    .padding(.top, 8) // Spacing from the above text
                 
                 Spacer() // Pushes content up to center vertically
                 
