@@ -191,10 +191,19 @@
         }
       }
     },
+    "Authenticating..." : {
+
+    },
     "Authentication Failed" : {
 
     },
     "BDKSwift + EskyLab" : {
+
+    },
+    "Biometric Authentication" : {
+
+    },
+    "Biometric authentication is disabled. Please log in." : {
 
     },
     "Bitcoin" : {
@@ -305,6 +314,9 @@
       }
     },
     "Done" : {
+
+    },
+    "Enable Biometric Authentication" : {
 
     },
     "Enter address to send BTC to" : {
@@ -678,6 +690,9 @@
           }
         }
       }
+    },
+    "Welcome to MyApp!" : {
+
     },
     "Yes" : {
       "localizations" : {

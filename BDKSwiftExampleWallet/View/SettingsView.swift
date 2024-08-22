@@ -45,6 +45,14 @@ struct SettingsView: View {
                     }
                 }
 
+                Section(header: Text("Biometric Authentication").font(.headline).foregroundColor(.bitcoinOrange)) {
+                    Toggle("Enable Biometric Authentication", isOn: $viewModel.isBiometricEnabled)
+                        .padding()
+                        .background(Color(UIColor.systemBackground))
+                        .cornerRadius(8)
+                        .shadow(radius: 2)
+                }
+
                 Section(header: Text("Danger Zone").font(.headline).foregroundColor(.red)) {
                     Button {
                         showingShowSeedConfirmation = true

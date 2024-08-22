@@ -11,6 +11,7 @@
 		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
 		926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 926546A02C740DFE003018BF /* EskyLab Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		92B0146E2C7755AE00FAF7C6 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
@@ -125,6 +126,7 @@
 
 /* Begin PBXFileReference section */
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CypherPunkCulture.entitlements; sourceTree = "<group>"; };
 		92FEA4702C73992F005C5FB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A733D6CF2A81113000F333B4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				AEC2CF592ABFBA19008065E4 /* BuildTransactionViewModel.swift */,
 				AE2ADD772B61EFFE00C2A823 /* SettingsViewModel.swift */,
 				AE34DDAD2B6B320F00F04AD4 /* SeedViewModel.swift */,
+				92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				AE0C30F72A804A2D008F1EAE /* WalletTransactionListView.swift in Sources */,
 				AEB905C32A7EEBF000CD0337 /* BackupInfo.swift in Sources */,
 				AE783A072AB4F7C7005F0CBA /* FeeView.swift in Sources */,
+				92B0146E2C7755AE00FAF7C6 /* SplashScreenView.swift in Sources */,
 				AE2B8C1D2A9678C900815B2F /* FeeService.swift in Sources */,
 				AEC2CF5A2ABFBA19008065E4 /* BuildTransactionViewModel.swift in Sources */,
 				AE2B8C1F2A96797300815B2F /* RecommendedFees.swift in Sources */,

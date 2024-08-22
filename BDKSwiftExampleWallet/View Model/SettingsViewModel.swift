@@ -14,6 +14,8 @@ class SettingsViewModel: ObservableObject {
     let keyClient: KeyClient
 
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
+    @AppStorage("isBiometricEnabled") var isBiometricEnabled: Bool = true // Default to true
+    @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false // Track first launch
 
     @Published var settingsError: BdkError?
     @Published var showingSettingsViewErrorAlert = false
@@ -26,6 +28,12 @@ class SettingsViewModel: ObservableObject {
     ) {
         self.bdkClient = bdkClient
         self.keyClient = keyClient
+
+        // Set biometric preference to true on first launch
+        if !hasLaunchedBefore {
+            isBiometricEnabled = true
+            hasLaunchedBefore = true
+        }
     }
 
     func delete() {
