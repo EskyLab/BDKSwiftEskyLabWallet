@@ -13,30 +13,41 @@ struct SplashScreenView: View {
 
     var body: some View {
         ZStack {
-            Color.bitcoinBlack.ignoresSafeArea() // Background color
-            
+            Color(uiColor: .systemBackground) // Background color or image
+                .ignoresSafeArea()
+
             VStack {
-                Spacer()
+                Spacer() // Pushes content down to center vertically
                 
                 // Logo
-                Image(systemName: "bitcoinsign.circle.fill") // Temporary SF Symbol as the logo
+                Image("bitcoin-btc-logo-2") // Custom logo image
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 150, height: 150) // Adjust size as needed
-                    .padding(.bottom, 20) // Space between logo and text
+                    .frame(width: 120, height: 120) // Adjust size for visibility
+                    .padding(.bottom, 20) // Add padding below the logo
                 
-                // Main Text
-                Text("CYPHERPUNK CULTURE")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white) // Ensure text is visible on dark background
+                // App Name
+                VStack(spacing: 8) {
+                    Text("CYPHERPUNK")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.primary) // Primary color for text
+                    
+                    Text("CULTURE")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.primary) // Primary color for text
+                }
+                .padding(.bottom, 40) // Spacing between text and bottom white space
                 
-                Spacer()
+                Spacer() // Pushes content up to center vertically
+                
+                // Additional white space
+                Spacer().frame(height: 60) // Adds extra space at the bottom
             }
+            .frame(maxWidth: .infinity) // Ensures VStack takes full width for centering
+            .padding(.horizontal) // Padding for horizontal spacing
         }
         .onAppear {
+            // Simulate a delay before transitioning to the next screen
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     isShowingSplash = false
