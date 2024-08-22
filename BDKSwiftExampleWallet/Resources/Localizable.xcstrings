@@ -194,12 +194,6 @@
     "Authenticating..." : {
 
     },
-    "Authentication Failed" : {
-
-    },
-    "BDKSwift + EskyLab" : {
-
-    },
     "Biometric Authentication" : {
 
     },
@@ -335,6 +329,9 @@
         }
       }
     },
+    "EskyLab" : {
+
+    },
     "Esplora Server" : {
       "localizations" : {
         "fr" : {
@@ -439,11 +436,7 @@
         }
       }
     },
-    "Onboarding" : {
-
-    },
     "Onboarding Error" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -670,9 +663,6 @@
           }
         }
       }
-    },
-    "Unable to authenticate using Face ID/Touch ID. Please try again or check your device settings." : {
-
     },
     "Unconfirmed" : {
       "localizations" : {
