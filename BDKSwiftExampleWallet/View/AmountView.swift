@@ -63,7 +63,8 @@ struct AmountView: View {
                     }
                     .frame(height: 300)
 
-                    Spacer(minLength: 60)
+                    // Add extra padding to the bottom of the screen
+                    Spacer(minLength: 80) // Adjust this value for more or less whitespace
 
                     Button {
                         feedbackGenerator.impactOccurred()
