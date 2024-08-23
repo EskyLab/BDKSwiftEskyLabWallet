@@ -6,15 +6,15 @@
 //
 
 import BitcoinDevKit
-import Foundation
 import SwiftUI
+import Combine
 
 class SettingsViewModel: ObservableObject {
     let bdkClient: BDKClient
     let keyClient: KeyClient
 
     @AppStorage("isOnboarding") var isOnboarding: Bool = true
-    @AppStorage("isBiometricEnabled") var isBiometricEnabled: Bool = true // Default to true
+    @AppStorage("isBiometricEnabled") var isBiometricEnabled: Bool = false // Set default to false
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false // Track first launch
 
     @Published var settingsError: BdkError?
@@ -31,7 +31,7 @@ class SettingsViewModel: ObservableObject {
 
         // Set biometric preference to true on first launch
         if !hasLaunchedBefore {
-            isBiometricEnabled = true
+            isBiometricEnabled = false // Default to false on first launch
             hasLaunchedBefore = true
         }
     }

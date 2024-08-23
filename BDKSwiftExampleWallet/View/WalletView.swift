@@ -14,6 +14,7 @@ struct WalletView: View {
     @State private var isAnimating: Bool = false
     @State private var isFirstAppear = true
     @State private var newTransactionSent = false
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         NavigationView {
@@ -35,7 +36,7 @@ struct WalletView: View {
                                     isAnimating = true
                                 }
                             }
-                        
+
                         // Balance display
                         VStack(spacing: 5) {
                             HStack(spacing: 10) {
@@ -48,14 +49,14 @@ struct WalletView: View {
                             }
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
-                            
+
                             // US$ price
                             Text(viewModel.satsPrice)
                                 .font(.title3.weight(.medium))
                                 .foregroundColor(.secondary)
                                 .contentTransition(.numericText())
                         }
-                        
+
                         // Sync state
                         HStack {
                             Text("Activity")
@@ -65,6 +66,18 @@ struct WalletView: View {
                             if viewModel.walletSyncState == .synced {
                                 Image(systemName: "checkmark.circle")
                                     .foregroundColor(.green)
+                            } else if viewModel.walletSyncState == .syncing {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                                    .foregroundColor(.orange)
+                                    .rotationEffect(.degrees(isAnimating ? 360 : 0))
+                                    .onAppear {
+                                        withAnimation(Animation.linear(duration: 1).repeatForever(autoreverses: false)) {
+                                            isAnimating = true
+                                        }
+                                    }
+                                    .onDisappear {
+                                        isAnimating = false
+                                    }
                             }
                         }
                         .padding(.bottom, 10)
@@ -75,10 +88,7 @@ struct WalletView: View {
                             walletSyncState: viewModel.walletSyncState
                         )
                         .refreshable {
-                            await viewModel.sync()
-                            viewModel.getBalance()
-                            viewModel.getTransactions()
-                            await viewModel.getPrices()
+                            await performSyncActions()
                         }
                         Spacer()
                     }
@@ -93,14 +103,7 @@ struct WalletView: View {
                     }
                 )
                 .task {
-                    if isFirstAppear || newTransactionSent {
-                        await viewModel.sync()
-                        isFirstAppear = false
-                        newTransactionSent = false
-                    }
-                    viewModel.getBalance()
-                    viewModel.getTransactions()
-                    await viewModel.getPrices()
+                    await performSyncActions()
                 }
 
                 // Overlay for Syncing
@@ -132,6 +135,26 @@ struct WalletView: View {
                 }
             )
         }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                // When the app becomes active, trigger the sync and data fetch
+                Task {
+                    await performSyncActions()
+                }
+            }
+        }
+    }
+
+    private func performSyncActions() async {
+        // Sync on first appear or when a new transaction is sent
+        if isFirstAppear || newTransactionSent {
+            await viewModel.sync()
+            isFirstAppear = false
+            newTransactionSent = false
+        }
+        viewModel.getBalance()
+        viewModel.getTransactions()
+        await viewModel.getPrices()
     }
 }
 

@@ -49,18 +49,20 @@ struct BuildTransactionView: View {
                                 .bold()
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Updated background
-                                .foregroundColor(isSent ? .white : .bitcoinOrange) // Updated foreground color
+                                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12))
+                                .foregroundColor(isSent ? .white : .bitcoinOrange)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isSent ? Color.red : Color.bitcoinOrange, lineWidth: 2) // Updated border color
+                                        .stroke(isSent ? Color.red : Color.bitcoinOrange, lineWidth: 2)
                                 )
                                 .shadow(radius: 4)
                         }
                         .padding()
                     } else if isSent && viewModel.buildTransactionViewError == nil {
+                        // Present SuccessView if transaction is successful
                         SuccessView(txid: viewModel.txBuilderResult?.transactionDetails.txid ?? "", onDismiss: {
-                            self.shouldPopToRootView = false
+                            // Set the shouldPopToRootView to true to trigger the navigation back to the wallet transactions view
+                            self.shouldPopToRootView = true
                         })
                     }
 
@@ -88,6 +90,13 @@ struct BuildTransactionView: View {
                     )
                 }
             }
+            .onChange(of: shouldPopToRootView) { newValue in
+                if newValue {
+                    // Navigate back to the wallet transactions view
+                    self.shouldPopToRootView = false // Reset to prevent multiple triggers
+                    // Add your custom navigation logic here if needed
+                }
+            }
         }
     }
 
@@ -108,10 +117,9 @@ struct BuildTransactionView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 if self.viewModel.buildTransactionViewError == nil {
                     self.isSent = true
-                    // Increase the delay before auto-dismiss
                     DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
                         if self.isSent {
-                            self.shouldPopToRootView = false
+                            self.shouldPopToRootView = true // Trigger the navigation back
                         }
                     }
                 } else {
@@ -184,16 +192,15 @@ struct SuccessView: View {
             .font(.caption)
             .padding()
             
-            // Button to manually dismiss
             Button(action: onDismiss) {
                 Text("Done")
                     .fontWeight(.bold)
                     .padding()
-                    .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12)) // Updated background
-                    .foregroundColor(.primary) // Updated foreground color
+                    .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundColor(.primary)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color(uiColor: .separator), lineWidth: 2) // Updated border color
+                            .stroke(Color(uiColor: .separator), lineWidth: 2)
                     )
             }
             .padding()
