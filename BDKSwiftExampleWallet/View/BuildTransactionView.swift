@@ -14,11 +14,12 @@ struct BuildTransactionView: View {
     let address: String
     let fee: Int
     @Bindable var viewModel: BuildTransactionViewModel
+    @Binding var shouldPopToRootView: Bool
     @State private var isSent: Bool = false
     @State private var isError: Bool = false
-    @Binding var shouldPopToRootView: Bool
     @State private var isCopied = false
     @State private var showCheckmark = false
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         NavigationStack {
@@ -44,7 +45,10 @@ struct BuildTransactionView: View {
 
                     // Send Button
                     if !isSent {
-                        Button(action: sendTransaction) {
+                        Button(action: {
+                            sendTransaction()
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback on send button press
+                        }) {
                             Text("Send")
                                 .bold()
                                 .frame(maxWidth: .infinity)
@@ -88,13 +92,6 @@ struct BuildTransactionView: View {
                             viewModel.buildTransactionViewError = nil
                         }
                     )
-                }
-            }
-            .onChange(of: shouldPopToRootView) { newValue in
-                if newValue {
-                    // Navigate back to the wallet transactions view
-                    self.shouldPopToRootView = false // Reset to prevent multiple triggers
-                    // Add your custom navigation logic here if needed
                 }
             }
         }
@@ -156,6 +153,7 @@ struct SuccessView: View {
     
     @State private var isCopied = false
     @State private var showCheckmark = false
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         VStack(spacing: 16) {
@@ -173,6 +171,7 @@ struct SuccessView: View {
                 Spacer()
                 Button(action: {
                     UIPasteboard.general.string = txid
+                    impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback on copy button press
                     isCopied = true
                     showCheckmark = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -192,7 +191,10 @@ struct SuccessView: View {
             .font(.caption)
             .padding()
             
-            Button(action: onDismiss) {
+            Button(action: {
+                impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback on Done button press
+                onDismiss()
+            }) {
                 Text("Done")
                     .fontWeight(.bold)
                     .padding()

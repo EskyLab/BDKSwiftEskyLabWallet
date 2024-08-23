@@ -14,6 +14,7 @@ struct AddressView: View {
     @Binding var rootIsActive: Bool
     @State private var isShowingScanner = false
     let pasteboard = UIPasteboard.general
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         NavigationStack {
@@ -24,6 +25,7 @@ struct AddressView: View {
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
                         Button(action: {
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback
                             isShowingScanner = true
                         }) {
                             Label("Scan QR Code", systemImage: "qrcode.viewfinder")
@@ -38,6 +40,7 @@ struct AddressView: View {
                         }
 
                         Button(action: {
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback
                             handlePasteboard()
                         }) {
                             Label("Paste", systemImage: "doc.on.doc")
@@ -94,6 +97,12 @@ struct AddressView: View {
                             )
                     }
                     .buttonStyle(.plain) // Ensures button style remains consistent with custom design
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback
+                            }
+                    )
                 }
                 .padding()
                 .navigationTitle("Address")
@@ -107,7 +116,7 @@ struct AddressView: View {
             )
         }
     }
-    
+
     private func handlePasteboard() {
         if pasteboard.hasStrings, let string = pasteboard.string {
             address = string.lowercased()

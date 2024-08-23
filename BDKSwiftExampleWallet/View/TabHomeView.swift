@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabHomeView: View {
     @Bindable var viewModel: TabHomeViewModel
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         ZStack {
@@ -21,7 +22,7 @@ struct TabHomeView: View {
                     .tabItem {
                         Label("Wallet", systemImage: "bitcoinsign")
                     }
-
+                
                 ReceiveView(viewModel: .init())
                     .tabItem {
                         Label("Receive", systemImage: "arrow.down")
@@ -41,6 +42,7 @@ struct TabHomeView: View {
             .onAppear {
                 viewModel.loadWallet()
                 customizeTabBarAppearance()
+                impactFeedbackGenerator.prepare() // Prepare the feedback generator
             }
         }
         .alert(isPresented: $viewModel.showingTabViewErrorAlert) {

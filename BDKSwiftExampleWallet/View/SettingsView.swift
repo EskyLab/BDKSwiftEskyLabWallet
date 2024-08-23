@@ -5,7 +5,6 @@
 //  Created by Matthew Ramsden on 1/24/24.
 //
 
-import BitcoinUI
 import SwiftUI
 
 struct SettingsView: View {
@@ -13,6 +12,7 @@ struct SettingsView: View {
     @State private var showingDeleteSeedConfirmation = false
     @State private var showingShowSeedConfirmation = false
     @State private var isSeedPresented = false
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         NavigationStack {
@@ -56,6 +56,11 @@ struct SettingsView: View {
                         .background(Color(UIColor.systemBackground))  // Background color for the toggle
                         .cornerRadius(8)  // Rounded corners
                         .shadow(radius: 2)  // Shadow for depth
+                        .onChange(of: viewModel.isBiometricEnabled) { newValue in
+                            // Handle toggle change if needed
+                            impactFeedbackGenerator.impactOccurred()
+                        }
+                        .animation(.easeInOut, value: viewModel.isBiometricEnabled) // Apply animation to toggle change
                 }
 
                 Section(header: Text("Danger Zone")
@@ -81,6 +86,7 @@ struct SettingsView: View {
                     ) {
                         Button("Yes", role: .destructive) {
                             isSeedPresented = true  // Show seed view if confirmed
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback for confirmation
                         }
                         Button("No", role: .cancel) {}  // Cancel action
                     }
@@ -105,6 +111,7 @@ struct SettingsView: View {
                     ) {
                         Button("Yes", role: .destructive) {
                             viewModel.delete()  // Call delete method on confirmation
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback for delete
                         }
                         Button("No", role: .cancel) {}  // Cancel action
                     }
