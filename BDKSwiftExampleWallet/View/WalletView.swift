@@ -5,6 +5,8 @@
 //  Created by Matthew Ramsden on 5/23/23.
 //
 
+import BitcoinDevKit
+import BitcoinUI
 import SwiftUI
 
 struct WalletView: View {
@@ -12,16 +14,17 @@ struct WalletView: View {
     @State private var isAnimating: Bool = false
     @State private var isFirstAppear = true
     @State private var newTransactionSent = false
-    @State private var isSyncing: Bool = false
 
     var body: some View {
         NavigationView {
             ZStack {
+                // Background color
                 Color(uiColor: .systemBackground)
                     .ignoresSafeArea()
 
                 VStack(spacing: 20) {
                     VStack(spacing: 10) {
+                        // Title with animation
                         Text("Bitcoin".uppercased())
                             .font(.title2.weight(.bold))
                             .fontWidth(.expanded)
@@ -33,6 +36,7 @@ struct WalletView: View {
                                 }
                             }
                         
+                        // Balance display
                         VStack(spacing: 5) {
                             HStack(spacing: 10) {
                                 Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
@@ -45,12 +49,14 @@ struct WalletView: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             
+                            // US$ price
                             Text(viewModel.satsPrice)
                                 .font(.title3.weight(.medium))
                                 .foregroundColor(.secondary)
                                 .contentTransition(.numericText())
                         }
                         
+                        // Sync state
                         HStack {
                             Text("Activity")
                                 .fontWeight(.bold)
@@ -63,12 +69,16 @@ struct WalletView: View {
                         }
                         .padding(.bottom, 10)
 
+                        // Transaction list
                         WalletTransactionListView(
                             transactionDetails: viewModel.transactionDetails,
                             walletSyncState: viewModel.walletSyncState
                         )
                         .refreshable {
-                            await refreshData()
+                            await viewModel.sync()
+                            viewModel.getBalance()
+                            viewModel.getTransactions()
+                            await viewModel.getPrices()
                         }
                         Spacer()
                     }
@@ -84,15 +94,17 @@ struct WalletView: View {
                 )
                 .task {
                     if isFirstAppear || newTransactionSent {
-                        isSyncing = true
-                        await refreshData()
-                        isSyncing = false
+                        await viewModel.sync()
                         isFirstAppear = false
                         newTransactionSent = false
                     }
+                    viewModel.getBalance()
+                    viewModel.getTransactions()
+                    await viewModel.getPrices()
                 }
 
-                if isSyncing {
+                // Overlay for Syncing
+                if viewModel.walletSyncState == .syncing {
                     ZStack {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea()
@@ -119,23 +131,6 @@ struct WalletView: View {
                     viewModel.walletViewError = nil
                 }
             )
-        }
-    }
-
-    private func refreshData() async {
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask {
-                await viewModel.sync()
-            }
-            group.addTask {
-                await viewModel.getBalance()
-            }
-            group.addTask {
-                await viewModel.getTransactions()
-            }
-            group.addTask {
-                await viewModel.getPrices()
-            }
         }
     }
 }
