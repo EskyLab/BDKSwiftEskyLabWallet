@@ -11,6 +11,7 @@
 		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
 		926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 926546A02C740DFE003018BF /* EskyLab Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		92AAE8B52C78287B00CC7CF0 /* NumpadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */; };
 		92B0146E2C7755AE00FAF7C6 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
@@ -126,6 +127,7 @@
 
 /* Begin PBXFileReference section */
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadButton.swift; sourceTree = "<group>"; };
 		92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CypherPunkCulture.entitlements; sourceTree = "<group>"; };
 		92FEA4702C73992F005C5FB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				AEB130C82A44E4850087785B /* TransactionDetailsView.swift */,
 				AE1C34232A424456008F807A /* ReceiveView.swift */,
 				AE7839FC2AB4E18D005F0CBA /* AmountView.swift */,
+				92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */,
 				AE783A022AB4ECC2005F0CBA /* AddressView.swift */,
 				AE783A062AB4F7C7005F0CBA /* FeeView.swift */,
 				AE783A002AB4E5E1005F0CBA /* BuildTransactionView.swift */,
@@ -642,6 +645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEE6C7482ABCB3AE00442ADD /* TxIn+Extensions.swift in Sources */,
+				92AAE8B52C78287B00CC7CF0 /* NumpadButton.swift in Sources */,
 				AE2ADD782B61EFFF00C2A823 /* SettingsViewModel.swift in Sources */,
 				AEAB03112ABDDB86000C9528 /* FeeViewModel.swift in Sources */,
 				AEE6C74C2ABCB3E200442ADD /* Transaction+Extensions.swift in Sources */,

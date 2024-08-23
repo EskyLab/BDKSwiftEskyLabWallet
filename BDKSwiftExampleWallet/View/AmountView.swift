@@ -12,6 +12,8 @@ struct AmountView: View {
     @State private var numpadAmount = "0"
     @State private var isActive: Bool = false
 
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -46,7 +48,6 @@ struct AmountView: View {
                     }
                     .padding(.horizontal, 16)
 
-                    // Added spacing here
                     Spacer(minLength: 20)
 
                     GeometryReader { geometry in
@@ -58,14 +59,14 @@ struct AmountView: View {
                             numpadRow([" ", "0", "<"], buttonSize: buttonSize)
                         }
                         .frame(maxWidth: .infinity)
-                        .padding(.bottom, 20) // Added padding here to raise the keypad
+                        .padding(.bottom, 20)
                     }
                     .frame(height: 300)
 
-                    // Increased bottom spacing
-                    Spacer(minLength: 60) // Increased space below keypad
+                    Spacer(minLength: 60)
 
                     Button {
+                        feedbackGenerator.impactOccurred()
                         isActive = true
                     } label: {
                         Label(
@@ -85,6 +86,8 @@ struct AmountView: View {
                     .frame(maxWidth: .infinity)
                     .navigationDestination(isPresented: $isActive) {
                         AddressView(amount: numpadAmount, rootIsActive: $isActive)
+                            .transition(.slide) // Add transition for AddressView
+                            .animation(.easeInOut, value: isActive) // Animate transition
                     }
                 }
                 .padding()
@@ -123,61 +126,3 @@ struct AmountView: View {
         }
     }
 }
-
-struct NumpadButton: View {
-    @Binding var numpadAmount: String
-    var character: String
-
-    @State private var isPressed: Bool = false
-
-    var body: some View {
-        Button {
-            if character == "<" {
-                if numpadAmount.count > 1 {
-                    numpadAmount.removeLast()
-                } else {
-                    numpadAmount = "0"
-                }
-            } else if character == " " {
-                return
-            } else {
-                if numpadAmount == "0" {
-                    numpadAmount = character
-                } else {
-                    numpadAmount.append(character)
-                }
-            }
-        } label: {
-            Text(character)
-                .font(.title2.weight(.medium))
-                .foregroundColor(.primary)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(isPressed ? Color(uiColor: .systemGray5) : Color(uiColor: .systemBackground))
-                )
-                .scaleEffect(isPressed ? 0.95 : 1.0)
-                .animation(.easeInOut(duration: 0.1), value: isPressed)
-        }
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in
-                    isPressed = true
-                }
-                .onEnded { _ in
-                    isPressed = false
-                }
-        )
-    }
-}
-
-#if DEBUG
-#Preview {
-    AmountView(viewModel: .init(bdkClient: .mock))
-}
-
-#Preview {
-    AmountView(viewModel: .init(bdkClient: .mock))
-        .environment(\.sizeCategory, .accessibilityLarge)
-}
-#endif

@@ -5,8 +5,6 @@
 //  Created by Matthew Ramsden on 5/23/23.
 //
 
-import BitcoinDevKit
-import BitcoinUI
 import SwiftUI
 
 struct WalletView: View {
@@ -14,18 +12,16 @@ struct WalletView: View {
     @State private var isAnimating: Bool = false
     @State private var isFirstAppear = true
     @State private var newTransactionSent = false
-    @Environment(\.scenePhase) private var scenePhase
+    @State private var isSyncing: Bool = false
 
     var body: some View {
         NavigationView {
             ZStack {
-                // Background color
                 Color(uiColor: .systemBackground)
                     .ignoresSafeArea()
 
                 VStack(spacing: 20) {
                     VStack(spacing: 10) {
-                        // Title with animation
                         Text("Bitcoin".uppercased())
                             .font(.title2.weight(.bold))
                             .fontWidth(.expanded)
@@ -36,8 +32,7 @@ struct WalletView: View {
                                     isAnimating = true
                                 }
                             }
-
-                        // Balance display
+                        
                         VStack(spacing: 5) {
                             HStack(spacing: 10) {
                                 Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
@@ -49,15 +44,13 @@ struct WalletView: View {
                             }
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
-
-                            // US$ price
+                            
                             Text(viewModel.satsPrice)
                                 .font(.title3.weight(.medium))
                                 .foregroundColor(.secondary)
                                 .contentTransition(.numericText())
                         }
-
-                        // Sync state
+                        
                         HStack {
                             Text("Activity")
                                 .fontWeight(.bold)
@@ -66,29 +59,16 @@ struct WalletView: View {
                             if viewModel.walletSyncState == .synced {
                                 Image(systemName: "checkmark.circle")
                                     .foregroundColor(.green)
-                            } else if viewModel.walletSyncState == .syncing {
-                                Image(systemName: "arrow.triangle.2.circlepath")
-                                    .foregroundColor(.orange)
-                                    .rotationEffect(.degrees(isAnimating ? 360 : 0))
-                                    .onAppear {
-                                        withAnimation(Animation.linear(duration: 1).repeatForever(autoreverses: false)) {
-                                            isAnimating = true
-                                        }
-                                    }
-                                    .onDisappear {
-                                        isAnimating = false
-                                    }
                             }
                         }
                         .padding(.bottom, 10)
 
-                        // Transaction list
                         WalletTransactionListView(
                             transactionDetails: viewModel.transactionDetails,
                             walletSyncState: viewModel.walletSyncState
                         )
                         .refreshable {
-                            await performSyncActions()
+                            await refreshData()
                         }
                         Spacer()
                     }
@@ -103,11 +83,16 @@ struct WalletView: View {
                     }
                 )
                 .task {
-                    await performSyncActions()
+                    if isFirstAppear || newTransactionSent {
+                        isSyncing = true
+                        await refreshData()
+                        isSyncing = false
+                        isFirstAppear = false
+                        newTransactionSent = false
+                    }
                 }
 
-                // Overlay for Syncing
-                if viewModel.walletSyncState == .syncing {
+                if isSyncing {
                     ZStack {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea()
@@ -135,26 +120,23 @@ struct WalletView: View {
                 }
             )
         }
-        .onChange(of: scenePhase) { newPhase in
-            if newPhase == .active {
-                // When the app becomes active, trigger the sync and data fetch
-                Task {
-                    await performSyncActions()
-                }
-            }
-        }
     }
 
-    private func performSyncActions() async {
-        // Sync on first appear or when a new transaction is sent
-        if isFirstAppear || newTransactionSent {
-            await viewModel.sync()
-            isFirstAppear = false
-            newTransactionSent = false
+    private func refreshData() async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask {
+                await viewModel.sync()
+            }
+            group.addTask {
+                await viewModel.getBalance()
+            }
+            group.addTask {
+                await viewModel.getTransactions()
+            }
+            group.addTask {
+                await viewModel.getPrices()
+            }
         }
-        viewModel.getBalance()
-        viewModel.getTransactions()
-        await viewModel.getPrices()
     }
 }
 
