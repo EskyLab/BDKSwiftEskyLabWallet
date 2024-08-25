@@ -27,105 +27,77 @@ struct WalletView: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 20) {
-                    VStack(spacing: 10) {
-                        // Title with animation
-                        Text("Bitcoin".uppercased())
-                            .font(.title2.weight(.bold))
-                            .fontWidth(.expanded)
-                            .foregroundColor(.bitcoinOrange)
-                            .scaleEffect(isAnimating ? 1.0 : 0.6)
-                            .onAppear {
-                                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                                    isAnimating = true
-                                }
+                    // Title with animation
+                    Text("Bitcoin".uppercased())
+                        .font(.title2.weight(.bold))
+                        .fontWidth(.expanded)
+                        .foregroundColor(.bitcoinOrange)
+                        .scaleEffect(isAnimating ? 1.0 : 0.6)
+                        .onAppear {
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                isAnimating = true
                             }
+                        }
 
-                        // Balance display
-                        VStack(spacing: 5) {
-                            HStack(spacing: 10) {
-                                Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
-                                    .font(.system(size: 40, weight: .bold, design: .monospaced))
-                                    .foregroundColor(viewModel.balanceTotal == 0 ? .secondary : .primary)
-                                    .contentTransition(.numericText())
-                                Text("sats")
-                                    .foregroundColor(.secondary)
-                            }
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-
-                            // US$ price in Satoshis equivalent
-                            Text(viewModel.satsPrice)
-                                .font(.title3.weight(.medium))
-                                .foregroundColor(.secondary)
+                    // Balance display
+                    VStack(spacing: 5) {
+                        HStack(spacing: 10) {
+                            Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
+                                .font(.system(size: 40, weight: .bold, design: .monospaced))
+                                .foregroundColor(viewModel.balanceTotal == 0 ? .secondary : .primary)
                                 .contentTransition(.numericText())
+                            Text("sats")
+                                .foregroundColor(.secondary)
                         }
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
 
-                        // Sync state
-                        HStack {
-                            Text("Activity")
-                                .fontWeight(.bold)
-                                .font(.headline)
-                            Spacer()
-                            if viewModel.walletSyncState == .syncing || isRefreshing {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle())
-                                    .padding(.trailing, 5)
-                                    .onAppear {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            // Additional logic if needed when the spinner appears
-                                        }
-                                    }
-                                    .onDisappear {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            // Additional logic if needed when the spinner disappears
-                                        }
-                                    }
-                                Text(activityText)
-                                    .foregroundColor(.orange)
-                                    .font(.caption)
-                            } else if viewModel.walletSyncState == .synced {
-                                Image(systemName: "checkmark.circle")
-                                    .foregroundColor(.green)
-                                Text("Wallet Synced")
-                                    .foregroundColor(.green)
-                                    .font(.caption)
-                            }
-                        }
-                        .padding(.bottom, 10)
-
-                        // Transaction list
-                        WalletTransactionListView(
-                            transactionDetails: viewModel.transactionDetails,
-                            walletSyncState: viewModel.walletSyncState
-                        )
-                        .refreshable {
-                            isRefreshing = true
-                            await performDataFetch()
-                            isRefreshing = false
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                showSyncOverlay = true // Show the overlay during refresh
-                            }
-                        }
-                        Spacer()
+                        // US$ price in Satoshis equivalent
+                        Text(viewModel.satsPrice)
+                            .font(.title3.weight(.medium))
+                            .foregroundColor(.secondary)
+                            .contentTransition(.numericText())
                     }
-                    .padding(.top, 40.0)
-                    .padding(.bottom, 20.0)
+
+                    // Sync state
+                    HStack {
+                        Text("Activity")
+                            .fontWeight(.bold)
+                            .font(.headline)
+                        Spacer()
+                        if viewModel.walletSyncState == .syncing || isRefreshing {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .padding(.trailing, 5)
+                            Text(activityText)
+                                .foregroundColor(.orange)
+                                .font(.caption)
+                        } else if viewModel.walletSyncState == .synced {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.green)
+                            Text("Wallet Synced")
+                                .foregroundColor(.green)
+                                .font(.caption)
+                        }
+                    }
+                    .padding(.bottom, 10)
+
+                    // Transaction list
+                    WalletTransactionListView(
+                        transactionDetails: viewModel.transactionDetails,
+                        walletSyncState: viewModel.walletSyncState
+                    )
+                    .refreshable {
+                        isRefreshing = true
+                        await performDataFetch() // Trigger data fetch on refresh
+                        isRefreshing = false
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            showSyncOverlay = true // Show the overlay during refresh
+                        }
+                    }
+                    Spacer()
                 }
                 .padding()
-                .onReceive(
-                    NotificationCenter.default.publisher(for: Notification.Name("TransactionSent")),
-                    perform: { _ in
-                        newTransactionSent = true
-                        // Delay for a few seconds before returning to the initial tab view
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            newTransactionSent = false
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                showSyncOverlay = false
-                            }
-                            presentationMode.wrappedValue.dismiss() // Navigate back to the initial view
-                        }
-                    }
-                )
                 .task {
                     if isFirstAppear || newTransactionSent {
                         await performInitialSyncAndFetch()
@@ -208,7 +180,29 @@ struct WalletView: View {
         }
     }
 
-    // A method to handle syncing and fetching all relevant data
+    // A method to fetch data when the user pulls down to refresh
+    private func performDataFetch() async {
+        print("Starting data fetch...")
+        await viewModel.sync()
+        viewModel.getBalance()
+        viewModel.getTransactions()
+        await viewModel.getPrices()
+        print("Data fetch completed. Fetched balance: \(viewModel.balanceTotal)")
+        print("Fetched transactions: \(viewModel.transactionDetails)")
+
+        // Display block height immediately after fetching transactions
+        if let height = viewModel.transactionDetails.first?.confirmationTime?.height {
+            print("Block height: \(height)") // Check in console
+        } else {
+            print("Block height not available.")
+        }
+
+        withAnimation(.easeInOut(duration: 0.5)) {
+            showSyncOverlay = false // Hide the overlay after refresh completes
+        }
+    }
+
+    // Existing method for the initial sync and fetch
     private func performInitialSyncAndFetch() async {
         print("Starting initial sync...")
         await viewModel.sync()
@@ -219,21 +213,7 @@ struct WalletView: View {
         print("Fetched balance: \(viewModel.balanceTotal)")
         print("Fetched transactions: \(viewModel.transactionDetails)")
     }
-
-    // A method to fetch data when the user pulls down to refresh
-    private func performDataFetch() async {
-        print("Starting data fetch...")
-        await viewModel.sync()
-        viewModel.getBalance()
-        viewModel.getTransactions()
-        await viewModel.getPrices()
-        print("Data fetch completed. Fetched balance: \(viewModel.balanceTotal)")
-        print("Fetched transactions: \(viewModel.transactionDetails)")
-        withAnimation(.easeInOut(duration: 0.5)) {
-            showSyncOverlay = false // Hide the overlay after refresh completes
-        }
-    }
-
+    
     // Determine the appropriate text for the activity view
     private var activityText: String {
         if newTransactionSent {
