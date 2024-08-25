@@ -369,6 +369,9 @@
         }
       }
     },
+    "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
+
+    },
     "Loading..." : {
 
     },
@@ -671,6 +674,9 @@
         }
       }
     },
+    "User Education" : {
+
+    },
     "Wallet" : {
 
     },
@@ -696,6 +702,9 @@
           }
         }
       }
+    },
+    "Your seed words are crucial for restoring your wallet. Please ensure you have securely backed them up." : {
+
     },
     "Your transaction has been sent successfully." : {
 
