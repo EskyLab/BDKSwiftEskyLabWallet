@@ -9,6 +9,7 @@ import BitcoinDevKit
 import Foundation
 
 extension Network {
+    // Computed property to return a string description of the network
     var description: String {
         switch self {
         case .bitcoin: return "bitcoin"
@@ -18,6 +19,7 @@ extension Network {
         }
     }
 
+    // Failable initializer to create a Network enum from a string
     init?(stringValue: String) {
         switch stringValue {
         case "bitcoin": self = .bitcoin
@@ -30,5 +32,6 @@ extension Network {
 }
 
 #if DEBUG
+    // Mock network for debugging purposes
     let mockKeyClientNetwork = Network.regtest
 #endif

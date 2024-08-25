@@ -9,7 +9,12 @@ import Foundation
 
 extension Bundle {
     var displayName: String {
-        return Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Bundle.main
-            .bundleIdentifier ?? "Unknown Bundle"
+        if let displayName = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+            return displayName
+        }
+        if let bundleName = Bundle.main.infoDictionary?["CFBundleName"] as? String {
+            return bundleName
+        }
+        return Bundle.main.bundleIdentifier ?? "Unknown Bundle"
     }
 }

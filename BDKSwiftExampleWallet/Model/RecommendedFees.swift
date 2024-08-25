@@ -16,11 +16,11 @@ struct RecommendedFees: Codable, Equatable {
 }
 
 #if DEBUG
-    let currentFeesMock = RecommendedFees(
-        fastestFee: 10,
-        halfHourFee: 8,
-        hourFee: 6,
-        economyFee: 4,
-        minimumFee: 2
-    )
+let currentFeesMock = RecommendedFees(
+    fastestFee: 10,
+    halfHourFee: 8,
+    hourFee: 6,
+    economyFee: 4,
+    minimumFee: 2
+)
 #endif

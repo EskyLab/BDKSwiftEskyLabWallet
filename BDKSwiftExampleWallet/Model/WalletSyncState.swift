@@ -32,18 +32,16 @@ enum WalletSyncState: CustomStringConvertible, Equatable, Hashable {
         switch (lhs, rhs) {
         case (.error(let error1), .error(let error2)):
             return error1.localizedDescription == error2.localizedDescription
-        case (.notStarted, .notStarted):
-            return true
-        case (.synced, .synced):
-            return true
-        case (.syncing, .syncing):
+        case (.notStarted, .notStarted),
+             (.synced, .synced),
+             (.syncing, .syncing):
             return true
         default:
             return false
         }
     }
 
-    // Hashable implementation for better performance in collections that require hashing
+    // Hashable implementation for performance in collections
     func hash(into hasher: inout Hasher) {
         switch self {
         case .error(let error):

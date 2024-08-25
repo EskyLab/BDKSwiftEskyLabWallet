@@ -2,13 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
     <key>NSFaceIDUsageDescription</key>
     <string>This app uses Face ID to securely authenticate users and provide a personalized experience.</string>
-	<key>NSPasteboardUsageDescription</key>
-	<string>&quot;To allow users to copy and paste text between the app and other apps&quot;</string>
-	<key></key>
-	<string></string>
+    <key>NSPasteboardUsageDescription</key>
+    <string>To allow users to copy and paste text between the app and other apps</string>
 </dict>
 </plist>
