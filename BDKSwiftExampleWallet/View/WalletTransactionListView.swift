@@ -15,42 +15,65 @@ struct WalletTransactionListView: View {
 
     var body: some View {
         List {
-            if transactionDetails.isEmpty && walletSyncState == .syncing {
+            content
+        }
+        .listStyle(.plain)
+    }
+
+    private var content: some View {
+        if transactionDetails.isEmpty {
+            return AnyView(emptyStateView)
+        } else {
+            return AnyView(transactionListView)
+        }
+    }
+
+    private var emptyStateView: some View {
+        Group {
+            if walletSyncState == .syncing {
                 WalletTransactionsListItemView(transaction: mockTransactionDetail, isRedacted: true)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-            } else if transactionDetails.isEmpty {
+            } else {
                 Text("No Transactions")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-            } else {
-                ForEach(
-                    transactionDetails.sorted(
-                        by: {
-                            $0.confirmationTime?.timestamp ?? $0.received > $1.confirmationTime?.timestamp ?? $1.received
-                        }
-                    ),
-                    id: \.txid
-                ) { transaction in
-                    NavigationLink(
-                        destination: TransactionDetailsView(
-                            viewModel: .init(),
-                            transaction: transaction,
-                            amount: transaction.sent > 0
-                                ? transaction.sent - transaction.received
-                                : transaction.received - transaction.sent
-                        )
-                    ) {
-                        WalletTransactionsListItemView(transaction: transaction)
-                    }
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
             }
         }
-        .listStyle(.plain)
+        .applyStandardRowStyle()
+    }
+
+    private var transactionListView: some View {
+        ForEach(sortedTransactions, id: \.txid) { transaction in
+            NavigationLink(
+                destination: TransactionDetailsView(
+                    viewModel: .init(),
+                    transaction: transaction,
+                    amount: UInt64(transactionAmount(for: transaction))
+                )
+            ) {
+                WalletTransactionsListItemView(transaction: transaction)
+            }
+            .applyStandardRowStyle()
+        }
+    }
+
+    private var sortedTransactions: [TransactionDetails] {
+        transactionDetails.sorted {
+            $0.confirmationTime?.timestamp ?? $0.received > $1.confirmationTime?.timestamp ?? $1.received
+        }
+    }
+
+    private func transactionAmount(for transaction: TransactionDetails) -> Int {
+        Int(transaction.sent > 0
+            ? transaction.sent - transaction.received
+            : transaction.received - transaction.sent)
+    }
+}
+
+extension View {
+    func applyStandardRowStyle() -> some View {
+        self
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
     }
 }
 
@@ -66,65 +89,81 @@ struct WalletTransactionsListItemView: View {
 
     var body: some View {
         HStack(spacing: 15) {
-            // Transaction Icon
-            Image(systemName: isRedacted ? "circle.fill" : (transaction.sent > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill"))
-                .font(.largeTitle)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(
-                    isRedacted ? Color.gray.opacity(0.5) : (transaction.confirmationTime != nil ? Color.bitcoinOrange : Color.secondary),
-                    Color.gray.opacity(0.05)
-                )
-
-            VStack(alignment: .leading, spacing: 5) {
-                // Transaction ID
-                Text(transaction.txid)
-                    .truncationMode(.middle)
-                    .lineLimit(1)
-                    .fontDesign(.monospaced)
-                    .fontWeight(.semibold)
-                    .font(.title)
-                    .foregroundColor(.primary)
-                
-                // Confirmation Date or Status
-                Text(transaction.confirmationTime?.timestamp.toDate().formatted(.dateTime.day().month().hour().minute()) ?? "Unconfirmed")
-                    .lineLimit(sizeCategory > .accessibilityMedium ? 2 : 1)
-                    .foregroundColor(.secondary)
-                    .font(.subheadline)
-            }
-            .redacted(reason: isRedacted ? .placeholder : [])
-
+            transactionIcon
+            transactionDetailsView
             Spacer()
+            transactionAmountView
+        }
+        .padding(.vertical, 10)
+        .minimumScaleFactor(0.5)
+    }
 
-            // Transaction Amount
-            Text(transaction.sent > 0
-                    ? "- \(transaction.sent - transaction.received) sats"
-                    : "+ \(transaction.received - transaction.sent) sats"
+    private var transactionIcon: some View {
+        Image(systemName: isRedacted ? "circle.fill" : transactionIconName)
+            .font(.largeTitle)
+            .symbolRenderingMode(.palette)
+            .foregroundStyle(
+                isRedacted ? Color.gray.opacity(0.5) : iconColor,
+                Color.gray.opacity(0.05)
             )
+    }
+
+    private var transactionIconName: String {
+        transaction.sent > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill"
+    }
+
+    private var iconColor: Color {
+        transaction.confirmationTime != nil ? .bitcoinOrange : .secondary
+    }
+
+    private var transactionDetailsView: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(transaction.txid)
+                .truncationMode(.middle)
+                .lineLimit(1)
+                .fontDesign(.monospaced)
+                .fontWeight(.semibold)
+                .font(.title)
+                .foregroundColor(.primary)
+
+            Text(transaction.confirmationTime?.timestamp.toDate().formatted(.dateTime.day().month().hour().minute()) ?? "Unconfirmed")
+                .lineLimit(sizeCategory > .accessibilityMedium ? 2 : 1)
+                .foregroundColor(.secondary)
+                .font(.subheadline)
+        }
+        .redacted(reason: isRedacted ? .placeholder : [])
+    }
+
+    private var transactionAmountView: some View {
+        Text(transactionAmount)
             .font(.subheadline)
             .fontWeight(.semibold)
             .fontDesign(.rounded)
             .lineLimit(1)
             .foregroundColor(transaction.sent > 0 ? .red : .green)
             .redacted(reason: isRedacted ? .placeholder : [])
-        }
-        .padding(.vertical, 10)
-        .minimumScaleFactor(0.5)
+    }
+
+    private var transactionAmount: String {
+        transaction.sent > 0
+            ? "- \(transaction.sent - transaction.received) sats"
+            : "+ \(transaction.received - transaction.sent) sats"
     }
 }
 
 #if DEBUG
-    #Preview {
-        WalletTransactionListView(
-            transactionDetails: mockTransactionDetails,
-            walletSyncState: .synced
-        )
-    }
+#Preview {
+    WalletTransactionListView(
+        transactionDetails: mockTransactionDetails,
+        walletSyncState: .synced
+    )
+}
 
-    #Preview {
-        WalletTransactionListView(
-            transactionDetails: mockTransactionDetails,
-            walletSyncState: .synced
-        )
-        .environment(\.sizeCategory, .accessibilityLarge)
-    }
+#Preview {
+    WalletTransactionListView(
+        transactionDetails: mockTransactionDetails,
+        walletSyncState: .synced
+    )
+    .environment(\.sizeCategory, .accessibilityLarge)
+}
 #endif

@@ -13,26 +13,30 @@ struct SeedView: View {
     @State private var showCheckmark = false
 
     var body: some View {
-
         ZStack {
             Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 16) {
-                // Displaying seed words
-                ForEach(
-                    Array(viewModel.seed.mnemonic.components(separatedBy: " ").enumerated()),
-                    id: \.element
-                ) { index, word in
-                    HStack {
-                        Text("\(index + 1). \(word)")
-                            .font(.body)
-                            .foregroundColor(.primary)
-                        Spacer()
+            VStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        // Displaying seed words
+                        ForEach(
+                            Array(viewModel.seed.mnemonic.components(separatedBy: " ").enumerated()),
+                            id: \.element
+                        ) { index, word in
+                            HStack {
+                                Text("\(index + 1). \(word)")
+                                    .font(.body)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 16)
+                        }
                     }
-                    .padding(.horizontal, 16)
+                    .padding()
                 }
-                
+
                 // Copy button
                 HStack {
                     Spacer()
@@ -72,7 +76,6 @@ struct SeedView: View {
                 }
             )
         }
-
     }
 }
 

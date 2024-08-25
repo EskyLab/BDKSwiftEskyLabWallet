@@ -46,6 +46,7 @@
       }
     },
     "- %llu sats" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -97,6 +98,7 @@
       }
     },
     "+ %llu sats" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
