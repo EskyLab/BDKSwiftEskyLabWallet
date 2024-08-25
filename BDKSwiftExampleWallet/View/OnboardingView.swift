@@ -35,6 +35,7 @@ struct OnboardingView: View {
                         .textStyle(BitcoinBody1())
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
+                        .opacity(0.3) // Reduce opacity to make the text less prominent
                 }
 
                 VStack {
