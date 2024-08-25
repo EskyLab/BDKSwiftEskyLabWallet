@@ -16,7 +16,7 @@ struct WalletView: View {
     @State private var newTransactionSent = false
     @State private var isFirstTimeUser = true
     @State private var isRefreshing = false
-    @State private var showSyncOverlay = true
+    @State private var showSyncOverlay = false  // No overlay spinner
     @Environment(\.presentationMode) var presentationMode // For navigating back
 
     var body: some View {
@@ -66,7 +66,7 @@ struct WalletView: View {
                             .font(.headline)
                         Spacer()
                         if viewModel.walletSyncState == .syncing || isRefreshing {
-                            ProgressView()
+                            ProgressView()  // Keep this spinner
                                 .progressViewStyle(CircularProgressViewStyle())
                                 .padding(.trailing, 5)
                             Text(activityText)
@@ -87,13 +87,12 @@ struct WalletView: View {
                         transactionDetails: viewModel.transactionDetails,
                         walletSyncState: viewModel.walletSyncState
                     )
+                    .blur(radius: showSyncOverlay ? 5 : 0) // Blur effect (if needed)
+                    .opacity(showSyncOverlay ? 0.5 : 1.0) // Translucent effect (if needed)
                     .refreshable {
                         isRefreshing = true
                         await performDataFetch() // Trigger data fetch on refresh
                         isRefreshing = false
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            showSyncOverlay = true // Show the overlay during refresh
-                        }
                     }
                     Spacer()
                 }
@@ -106,65 +105,6 @@ struct WalletView: View {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             showSyncOverlay = false // Hide the overlay with animation after syncing
                         }
-                    }
-                }
-
-                // Overlay for Syncing, Fetching, or Transaction Sent
-                if showSyncOverlay && (viewModel.walletSyncState == .syncing || isFirstAppear || newTransactionSent || (isFirstTimeUser && !isRefreshing) || isRefreshing) {
-                    ZStack {
-                        Color.black.opacity(0.3)
-                            .ignoresSafeArea()
-                        VStack(spacing: 20) {
-                            if isFirstTimeUser && !isRefreshing {
-                                Image(systemName: "star.fill")
-                                    .font(.system(size: 40))
-                                    .foregroundColor(.yellow)
-                                Text("Welcome to your new Bitcoin Wallet!")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("We're setting up your wallet. This may take a few moments.")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.8))
-                                Text("Once syncing is complete, your transactions and balance will be displayed here.")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.8))
-                                    .multilineTextAlignment(.center)
-                                    .padding(.top, 5)
-                                Button("Got it!") {
-                                    isFirstTimeUser = false
-                                    withAnimation(.easeInOut(duration: 0.5)) {
-                                        showSyncOverlay = false // Hide overlay with animation
-                                    }
-                                }
-                                .padding(.top, 10)
-                                .buttonStyle(.borderedProminent)
-                                .tint(.bitcoinOrange)
-                            } else {
-                                Image(systemName: newTransactionSent ? "paperplane.fill" : "chart.bar.fill")
-                                    .font(.system(size: 40))
-                                    .foregroundColor(.bitcoinOrange)
-                                    .symbolEffect(.pulse.byLayer)
-                                Text(activityText)  // Updated to display appropriate activity
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("This may take a few moments.")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.8))
-                                // Displaying Block Height - brighter and bold
-                                if let height = viewModel.transactionDetails.first?.confirmationTime?.height {
-                                    Text("Block \(height.delimiter)")
-                                        .foregroundColor(.yellow)  // Brighter color
-                                        .font(.headline.weight(.bold))  // Bold font
-                                } else {
-                                    Text("Block height unavailable")
-                                        .foregroundColor(.red)
-                                        .font(.caption)
-                                }
-                            }
-                        }
-                        .padding()
-                        .background(Color.black.opacity(0.7).cornerRadius(10))
-                        .transition(.opacity) // Smooth opacity transition for overlay
                     }
                 }
             }
@@ -197,6 +137,7 @@ struct WalletView: View {
             print("Block height not available.")
         }
 
+        // Ensure the transactions are unblurred and fully visible after the overlay ends
         withAnimation(.easeInOut(duration: 0.5)) {
             showSyncOverlay = false // Hide the overlay after refresh completes
         }
@@ -212,14 +153,28 @@ struct WalletView: View {
         await viewModel.getPrices()
         print("Fetched balance: \(viewModel.balanceTotal)")
         print("Fetched transactions: \(viewModel.transactionDetails)")
+
+        // Display block height immediately after fetching transactions
+        if let height = viewModel.transactionDetails.first?.confirmationTime?.height {
+            print("Block height: \(height)") // Check in console
+        } else {
+            print("Block height not available.")
+        }
+
+        // Ensure the transactions are unblurred and fully visible after the overlay ends
+        withAnimation(.easeInOut(duration: 0.5)) {
+            showSyncOverlay = false // Hide the overlay with animation after syncing
+        }
     }
     
     // Determine the appropriate text for the activity view
     private var activityText: String {
         if newTransactionSent {
             return "Sending Transaction..."
+        } else if viewModel.transactionDetails.contains(where: { $0.sent == 0 && $0.confirmationTime == nil }) {
+            return "Receiving Transaction..."
         } else if isRefreshing {
-            return "Fetching data..."
+            return "Starting data fetch..."
         } else {
             return "Syncing Wallet..."
         }
