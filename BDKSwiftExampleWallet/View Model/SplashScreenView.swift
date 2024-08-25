@@ -37,7 +37,7 @@ struct SplashScreenView: View {
                     .foregroundColor(.primary) // Primary color for text
                     .padding(.top, 16) // Spacing from the logo
                     .opacity(isAnimating ? 1.0 : 0.0) // Fade-in effect
-                    .animation(.easeIn(duration: 1.0).delay(0.5), value: isAnimating) // Animation for app name
+                    .animation(.easeIn(duration: 2.0).delay(0.5), value: isAnimating) // Animation for app name
                 
                 // Culture Text without animation
                 if showCulture {

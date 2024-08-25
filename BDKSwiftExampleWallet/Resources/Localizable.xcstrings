@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     " High Priority - %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -13,7 +12,6 @@
       }
     },
     " Low Priority - %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -24,7 +22,6 @@
       }
     },
     " Med Priority - %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -35,7 +32,6 @@
       }
     },
     " No Priority - %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -46,7 +42,6 @@
       }
     },
     "- %llu sats" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -57,7 +52,6 @@
       }
     },
     "..." : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -87,6 +81,9 @@
         }
       }
     },
+    "%llu sats" : {
+
+    },
     "%llu sats fee" : {
       "localizations" : {
         "fr" : {
@@ -98,7 +95,6 @@
       }
     },
     "+ %llu sats" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -225,6 +221,9 @@
         }
       }
     },
+    "Block height unavailable" : {
+
+    },
     "Build Transaction Error" : {
       "localizations" : {
         "fr" : {
@@ -315,9 +314,6 @@
         }
       }
     },
-    "Done" : {
-
-    },
     "Enable Biometric Authentication" : {
 
     },
@@ -345,7 +341,6 @@
       }
     },
     "Fee" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -365,9 +360,6 @@
         }
       }
     },
-    "Fee rate: %lld sat/vb" : {
-
-    },
     "Fees" : {
       "localizations" : {
         "fr" : {
@@ -377,6 +369,9 @@
           }
         }
       }
+    },
+    "Got it!" : {
+
     },
     "Network" : {
       "localizations" : {
@@ -448,6 +443,9 @@
         }
       }
     },
+    "Once syncing is complete, your transactions and balance will be displayed here." : {
+
+    },
     "Paste" : {
 
     },
@@ -492,7 +490,6 @@
       }
     },
     "sat/vb" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -590,9 +587,6 @@
         }
       }
     },
-    "Syncing..." : {
-
-    },
     "TabView Error" : {
       "localizations" : {
         "fr" : {
@@ -613,8 +607,10 @@
         }
       }
     },
+    "This may take a few moments." : {
+
+    },
     "To" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -655,6 +651,9 @@
         }
       }
     },
+    "Transaction Sent" : {
+
+    },
     "Transactions" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -689,6 +688,15 @@
         }
       }
     },
+    "Wallet Synced" : {
+
+    },
+    "We're setting up your wallet. This may take a few moments." : {
+
+    },
+    "Welcome to your new Bitcoin Wallet!" : {
+
+    },
     "Yes" : {
       "localizations" : {
         "fr" : {
@@ -698,6 +706,9 @@
           }
         }
       }
+    },
+    "Your transaction has been sent successfully." : {
+
     }
   },
   "version" : "1.0"
