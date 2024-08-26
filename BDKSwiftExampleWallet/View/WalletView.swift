@@ -165,7 +165,7 @@ struct WalletView: View {
                 transactionDetails: viewModel.transactionDetails,
                 walletSyncState: viewModel.walletSyncState
             )
-            .blur(radius: showSyncOverlay ? 5 : 0) // Blur effect (if needed)
+            .blur(radius: showSyncOverlay ? 2 : 0) // Blur effect (if needed)
             .opacity(showSyncOverlay ? 0.5 : 1.0) // Translucent effect (if needed)
             .refreshable {
                 isRefreshing = true

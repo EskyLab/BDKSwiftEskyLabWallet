@@ -74,24 +74,21 @@ struct BuildTransactionView: View {
                 if !isSent {
                     Button {
                         let feeRate: Float? = Float(fee)
-                        if let rate = feeRate {
-                            if let amt = UInt64(amount) {
-                                viewModel.buildTransactionViewError = nil
-                                viewModel.send(address: address, amount: amt, feeRate: rate)
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    if self.viewModel.buildTransactionViewError == nil {
-                                        self.isSent = true
-                                        self.showSentOverlay = true
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                            self.shouldPopToRootView = false
-                                        }
-                                    } else {
-                                        self.isSent = false
-                                        self.isError = true
+                        if let rate = feeRate, let amt = UInt64(amount) {
+                            viewModel.buildTransactionViewError = nil
+                            isSent = true // Disable the button
+                            viewModel.send(address: address, amount: amt, feeRate: rate)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                if self.viewModel.buildTransactionViewError == nil {
+                                    self.isSent = true
+                                    self.showSentOverlay = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                        self.shouldPopToRootView = false
                                     }
+                                } else {
+                                    self.isSent = false
+                                    self.isError = true
                                 }
-                            } else {
-                                self.isError = true
                             }
                         } else {
                             self.isError = true
@@ -104,6 +101,7 @@ struct BuildTransactionView: View {
                     }
                     .buttonStyle(BitcoinFilled(tintColor: .bitcoinOrange, isCapsule: true))
                     .padding()
+                    .disabled(isSent) // Disable button while transaction is processing
 
                 } else if isSent && viewModel.buildTransactionViewError == nil {
                     VStack {
@@ -165,6 +163,7 @@ struct BuildTransactionView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
                             showSentOverlay = false
+                            isSent = false // Reset to allow new transactions
                         }
                     }
                 }
@@ -184,6 +183,7 @@ struct BuildTransactionView: View {
                 message: Text(viewModel.buildTransactionViewError?.description ?? "Unknown"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.buildTransactionViewError = nil
+                    isSent = false // Reset to allow new transactions
                 }
             )
         }
@@ -216,4 +216,3 @@ struct BuildTransactionView: View {
     .environment(\.sizeCategory, .accessibilityLarge)
 }
 #endif
-
