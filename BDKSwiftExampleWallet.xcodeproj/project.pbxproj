@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -201,7 +201,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		926546A82C740DFF003018BF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		926546A82C740DFF003018BF /* Exceptions for "EskyLab Pack" folder in "EskyLab Pack" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -211,7 +211,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		926546A12C740DFE003018BF /* EskyLab Pack */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (926546A82C740DFF003018BF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "EskyLab Pack"; sourceTree = "<group>"; };
+		926546A12C740DFE003018BF /* EskyLab Pack */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				926546A82C740DFF003018BF /* Exceptions for "EskyLab Pack" folder in "EskyLab Pack" target */,
+			);
+			path = "EskyLab Pack";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,7 +585,6 @@
 				};
 			};
 			buildConfigurationList = AE4984732A1BBBD6009951E2 /* Build configuration list for PBXProject "BDKSwiftExampleWallet" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -593,6 +599,7 @@
 				AEB735D12B2CC4B900F99DBB /* XCRemoteSwiftPackageReference "BitcoinUI" */,
 				AEAF83B42B7BD4D10019B23B /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = AE4984792A1BBBD6009951E2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
