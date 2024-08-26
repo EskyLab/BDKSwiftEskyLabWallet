@@ -372,6 +372,9 @@
     "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
 
     },
+    "Got it!" : {
+
+    },
     "Loading..." : {
 
     },
@@ -444,6 +447,9 @@
           }
         }
       }
+    },
+    "Once syncing is complete, your transactions and balance will be displayed here." : {
+
     },
     "Paste" : {
 
@@ -609,6 +615,9 @@
         }
       }
     },
+    "This may take a few moments." : {
+
+    },
     "To" : {
       "localizations" : {
         "fr" : {
@@ -691,6 +700,12 @@
       }
     },
     "Wallet Synced" : {
+
+    },
+    "We're setting up your wallet. This may take a few moments." : {
+
+    },
+    "Welcome to your new Bitcoin Wallet!" : {
 
     },
     "Yes" : {

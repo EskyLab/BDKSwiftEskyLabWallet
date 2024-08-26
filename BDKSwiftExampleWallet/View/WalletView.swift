@@ -19,6 +19,7 @@ struct WalletView: View {
     @State private var isRefreshing = false
     @State private var showSyncOverlay = false
     @State private var isAuthenticated = false
+    @State private var blockHeight: UInt32? = nil // Updated to match your block height type
     @Environment(\.presentationMode) var presentationMode // For navigating back
 
     var body: some View {
@@ -32,6 +33,62 @@ struct WalletView: View {
                     mainWalletView
                 } else {
                     authenticateUser()
+                }
+
+                // Overlay for Syncing, Fetching, or Transaction Sent
+                if showSyncOverlay {
+                    ZStack {
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                        VStack(spacing: 20) {
+                            if isFirstTimeUser && !isRefreshing {
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.yellow)
+                                Text("Welcome to your new Bitcoin Wallet!")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                Text("We're setting up your wallet. This may take a few moments.")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                                Text("Once syncing is complete, your transactions and balance will be displayed here.")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, 5)
+                                Button("Got it!") {
+                                    isFirstTimeUser = false
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                        showSyncOverlay = false // Hide overlay with animation
+                                    }
+                                }
+                                .padding(.top, 10)
+                                .buttonStyle(.borderedProminent)
+                                .tint(.bitcoinOrange)
+                            } else {
+                                Image(systemName: newTransactionSent ? "paperplane.fill" : "chart.bar.fill")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.bitcoinOrange)
+                                    .symbolEffect(.pulse.byLayer)
+                                Text(activityText)  // Updated to display appropriate activity
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                Text("This may take a few moments.")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                                
+                                // Displaying Block Height - using the correct method
+                                if let height = blockHeight {
+                                    Text("Block \(height.delimiter)")
+                                        .foregroundColor(.yellow)  // Brighter color
+                                        .font(.headline.weight(.bold))  // Bold font
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color.black.opacity(0.7).cornerRadius(10))
+                        .transition(.opacity) // Smooth opacity transition for overlay
+                    }
                 }
             }
         }
@@ -172,6 +229,7 @@ struct WalletView: View {
 
     // A method to fetch data when the user pulls down to refresh
     private func performDataFetch() async {
+        showSyncOverlay = true
         await viewModel.sync()
         viewModel.getBalance()
         viewModel.getTransactions()
@@ -179,8 +237,10 @@ struct WalletView: View {
 
         // Display block height immediately after fetching transactions
         if let height = viewModel.transactionDetails.first?.confirmationTime?.height {
+            blockHeight = height
             print("Block height: \(height)")
         } else {
+            blockHeight = nil
             print("Block height not available.")
         }
 
@@ -192,6 +252,7 @@ struct WalletView: View {
 
     // Existing method for the initial sync and fetch
     private func performInitialSyncAndFetch() async {
+        showSyncOverlay = true
         await viewModel.sync()
         viewModel.getBalance()
         viewModel.getTransactions()
@@ -199,8 +260,10 @@ struct WalletView: View {
 
         // Display block height immediately after fetching transactions
         if let height = viewModel.transactionDetails.first?.confirmationTime?.height {
+            blockHeight = height
             print("Block height: \(height)")
         } else {
+            blockHeight = nil
             print("Block height not available.")
         }
 
