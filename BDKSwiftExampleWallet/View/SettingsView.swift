@@ -12,13 +12,13 @@ struct SettingsView: View {
     @State private var showingDeleteSeedConfirmation = false
     @State private var showingShowSeedConfirmation = false
     @State private var isSeedPresented = false
-    
+
     var body: some View {
         NavigationStack {
             Form {
                 networkSection
                 biometricAuthenticationSection
-                userEducationSection   // New section added for user education
+                userEducationSection  // Make sure this section is properly defined
                 dangerZoneSection
             }
             .navigationTitle("Settings")
@@ -43,7 +43,7 @@ struct SettingsView: View {
             }
         }
     }
-    
+
     private var networkSection: some View {
         Section(header: Text("Network")
             .font(.headline)
@@ -70,7 +70,7 @@ struct SettingsView: View {
                 }
             }
     }
-    
+
     private var biometricAuthenticationSection: some View {
         Section(header: Text("Biometric Authentication")
             .font(.headline)
@@ -81,12 +81,16 @@ struct SettingsView: View {
                 .cornerRadius(8)
                 .shadow(radius: 2)
                 .onChange(of: viewModel.isBiometricEnabled) { _, isBiometricEnabled in
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    if isBiometricEnabled {
+                        enableBiometricAuthentication()
+                    } else {
+                        disableBiometricAuthentication()
+                    }
                 }
                 .animation(.easeInOut, value: viewModel.isBiometricEnabled)
         }
     }
-    
+
     // New User Education Section
     private var userEducationSection: some View {
         Section(header: Text("User Education")
@@ -107,7 +111,7 @@ struct SettingsView: View {
             .padding(.vertical, 10)
         }
     }
-    
+
     private var dangerZoneSection: some View {
         Section(header: Text("Danger Zone")
             .font(.headline)
@@ -163,6 +167,16 @@ struct SettingsView: View {
                     Button("No", role: .cancel) {}
                 }
             }
+    }
+
+    private func enableBiometricAuthentication() {
+        // Your logic to enable biometric authentication
+        viewModel.isBiometricEnabled = true
+    }
+
+    private func disableBiometricAuthentication() {
+        // Your logic to disable biometric authentication
+        viewModel.isBiometricEnabled = false
     }
 }
 

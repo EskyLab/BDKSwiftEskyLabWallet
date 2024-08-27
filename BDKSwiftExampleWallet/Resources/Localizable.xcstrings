@@ -139,6 +139,7 @@
       }
     },
     "Activity" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -213,9 +214,6 @@
         }
       }
     },
-    "Bitcoin: A Peer-to-Peer Electronic Cash System." : {
-
-    },
     "Block %@" : {
       "localizations" : {
         "fr" : {
@@ -225,6 +223,9 @@
           }
         }
       }
+    },
+    "BTC Price: $%.2f" : {
+
     },
     "Build Transaction Error" : {
       "localizations" : {
@@ -303,9 +304,6 @@
 
     },
     "CYPHERPUNK" : {
-
-    },
-    "CypherPunk Culture Bitcoin Wallet!" : {
 
     },
     "CypherPunk Culture." : {
@@ -391,9 +389,6 @@
     "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
 
     },
-    "Got it!" : {
-
-    },
     "Loading..." : {
 
     },
@@ -466,9 +461,6 @@
           }
         }
       }
-    },
-    "Once syncing is complete, your transactions and balance will be displayed here." : {
-
     },
     "Paste" : {
 
@@ -617,6 +609,9 @@
         }
       }
     },
+    "Syncing Wallet..." : {
+
+    },
     "Syncing..." : {
 
     },
@@ -727,9 +722,6 @@
           }
         }
       }
-    },
-    "Wallet Synced" : {
-
     },
     "What would you like to do?" : {
 

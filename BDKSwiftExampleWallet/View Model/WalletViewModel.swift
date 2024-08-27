@@ -19,7 +19,6 @@ class WalletViewModel {
     var walletSyncState: WalletSyncState = .notStarted
     var transactionDetails: [TransactionDetails] = []
     var price: Double = 0.00
-    var time: Int?
     var satsPrice: String {
         let usdValue = Double(balanceTotal).valueInUSD(price: price)
         return usdValue
@@ -39,7 +38,6 @@ class WalletViewModel {
         do {
             let price = try await priceClient.fetchPrice()
             self.price = price.usd
-            self.time = price.time
         } catch {
             self.walletViewError = .Generic(message: "Error Getting Prices")
             self.showingWalletViewErrorAlert = true
@@ -88,5 +86,4 @@ class WalletViewModel {
             self.showingWalletViewErrorAlert = true
         }
     }
-
 }
