@@ -7,14 +7,19 @@
 
 import BitcoinUI
 import SwiftUI
+import MessageUI
 
 struct ReceiveView: View {
     @Bindable var viewModel: ReceiveViewModel
     @State private var isCopied = false
     @State private var showCheckmark = false
+    @State private var showMessageCompose = false
+    @State private var showMailCompose = false
+    @State private var showAlert = false
+    @State private var showMailErrorAlert = false
+    @State private var showMessageErrorAlert = false
 
     var body: some View {
-
         ZStack {
             // Background color
             Color(uiColor: .systemBackground)
@@ -56,13 +61,7 @@ struct ReceiveView: View {
                         .lineLimit(1)
                         .truncationMode(.middle)
                     Button {
-                        UIPasteboard.general.string = viewModel.address
-                        isCopied = true
-                        showCheckmark = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            isCopied = false
-                            showCheckmark = false
-                        }
+                        showAlert = true
                     } label: {
                         HStack {
                             Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
@@ -78,6 +77,48 @@ struct ReceiveView: View {
             .onAppear {
                 viewModel.getAddress()
             }
+            .confirmationDialog("What would you like to do?", isPresented: $showAlert) {
+                Button("Copy Address") {
+                    UIPasteboard.general.string = viewModel.address
+                    isCopied = true
+                    showCheckmark = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        isCopied = false
+                        showCheckmark = false
+                    }
+                }
+                Button("Share via iMessage") {
+                    if MFMessageComposeViewController.canSendText() {
+                        showMessageCompose = true
+                    } else {
+                        showMessageErrorAlert = true
+                    }
+                }
+                Button("Share via Email") {
+                    if MFMailComposeViewController.canSendMail() {
+                        showMailCompose = true
+                    } else {
+                        showMailErrorAlert = true
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            }
+            .sheet(isPresented: $showMessageCompose) {
+                MessageComposeView(address: viewModel.address)
+            }
+            .sheet(isPresented: $showMailCompose) {
+                MailComposeView(address: viewModel.address)
+            }
+            .alert("Cannot Send Mail", isPresented: $showMailErrorAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("This device is not configured to send emails.")
+            }
+            .alert("Cannot Send Messages", isPresented: $showMessageErrorAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("This device is not configured to send iMessages.")
+            }
         }
         .alert(isPresented: $viewModel.showingReceiveViewErrorAlert) {
             Alert(
@@ -91,18 +132,79 @@ struct ReceiveView: View {
     }
 }
 
+// View for MessageCompose
+struct MessageComposeView: UIViewControllerRepresentable {
+    let address: String
+
+    func makeUIViewController(context: Context) -> MFMessageComposeViewController {
+        let vc = MFMessageComposeViewController()
+        vc.body = "Here's my Bitcoin address: \(address)"
+        vc.messageComposeDelegate = context.coordinator
+        return vc
+    }
+
+    func updateUIViewController(_ uiViewController: MFMessageComposeViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, MFMessageComposeViewControllerDelegate {
+        let parent: MessageComposeView
+
+        init(_ parent: MessageComposeView) {
+            self.parent = parent
+        }
+
+        func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+            controller.dismiss(animated: true)
+        }
+    }
+}
+
+// View for MailCompose
+struct MailComposeView: UIViewControllerRepresentable {
+    let address: String
+
+    func makeUIViewController(context: Context) -> MFMailComposeViewController {
+        let vc = MFMailComposeViewController()
+        vc.setSubject("My Bitcoin Address")
+        vc.setMessageBody("Here's my Bitcoin address: \(address)", isHTML: false)
+        vc.mailComposeDelegate = context.coordinator
+        return vc
+    }
+
+    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        let parent: MailComposeView
+
+        init(_ parent: MailComposeView) {
+            self.parent = parent
+        }
+
+        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+            controller.dismiss(animated: true)
+        }
+    }
+}
+
 #if DEBUG
-    #Preview("ReceiveView - en") {
-        ReceiveView(viewModel: .init(bdkClient: .mock))
-    }
+#Preview("ReceiveView - en") {
+    ReceiveView(viewModel: .init(bdkClient: .mock))
+}
 
-    #Preview("ReceiveView - en - Large") {
-        ReceiveView(viewModel: .init(bdkClient: .mock))
-            .environment(\.sizeCategory, .accessibilityLarge)
-    }
+#Preview("ReceiveView - en - Large") {
+    ReceiveView(viewModel: .init(bdkClient: .mock))
+        .environment(\.sizeCategory, .accessibilityLarge)
+}
 
-    #Preview("ReceiveView - fr") {
-        ReceiveView(viewModel: .init(bdkClient: .mock))
-            .environment(\.locale, .init(identifier: "fr"))
-    }
+#Preview("ReceiveView - fr") {
+    ReceiveView(viewModel: .init(bdkClient: .mock))
+        .environment(\.locale, .init(identifier: "fr"))
+}
 #endif

@@ -213,7 +213,7 @@
         }
       }
     },
-    "Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments." : {
+    "Bitcoin: A Peer-to-Peer Electronic Cash System." : {
 
     },
     "Block %@" : {
@@ -235,6 +235,15 @@
           }
         }
       }
+    },
+    "Cancel" : {
+
+    },
+    "Cannot Send Mail" : {
+
+    },
+    "Cannot Send Messages" : {
+
     },
     "Choose your Network." : {
       "localizations" : {
@@ -276,6 +285,9 @@
           }
         }
       }
+    },
+    "Copy Address" : {
+
     },
     "Create Wallet" : {
       "localizations" : {
@@ -558,6 +570,12 @@
         }
       }
     },
+    "Share via Email" : {
+
+    },
+    "Share via iMessage" : {
+
+    },
     "Show Seed" : {
       "localizations" : {
         "fr" : {
@@ -621,6 +639,12 @@
           }
         }
       }
+    },
+    "This device is not configured to send emails." : {
+
+    },
+    "This device is not configured to send iMessages." : {
+
     },
     "This may take a few moments." : {
 
@@ -705,6 +729,9 @@
       }
     },
     "Wallet Synced" : {
+
+    },
+    "What would you like to do?" : {
 
     },
     "Yes" : {

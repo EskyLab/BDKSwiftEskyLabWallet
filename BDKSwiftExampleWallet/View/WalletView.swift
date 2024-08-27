@@ -48,7 +48,7 @@ struct WalletView: View {
                                 Text("CypherPunk Culture Bitcoin Wallet!")
                                     .font(.headline)
                                     .foregroundColor(.white)
-                                Text("Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments.")
+                                Text("Bitcoin: A Peer-to-Peer Electronic Cash System.")
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.8))
                                 Text("Once syncing is complete, your transactions and balance will be displayed here.")
