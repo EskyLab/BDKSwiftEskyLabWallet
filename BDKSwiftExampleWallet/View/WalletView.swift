@@ -5,9 +5,9 @@
 //  Created by Matthew Ramsden on 5/23/23.
 //
 
+import SwiftUI
 import BitcoinDevKit
 import BitcoinUI
-import SwiftUI
 import LocalAuthentication
 
 struct WalletView: View {
@@ -18,8 +18,7 @@ struct WalletView: View {
     @State private var isFirstTimeUser = true
     @State private var isRefreshing = false
     @State private var showSyncOverlay = false
-    @State private var isAuthenticated = false
-    @Environment(\.presentationMode) var presentationMode
+    @AppStorage("isBiometricEnabled") private var isBiometricEnabled: Bool = false
 
     var body: some View {
         NavigationView {
@@ -27,11 +26,7 @@ struct WalletView: View {
                 Color(uiColor: .systemBackground)
                     .ignoresSafeArea()
 
-                if isAuthenticated {
-                    mainWalletView
-                } else {
-                    authenticateUser()
-                }
+                mainWalletView
 
                 if showSyncOverlay {
                     overlayView
@@ -125,36 +120,6 @@ struct WalletView: View {
                     showSyncOverlay = false
                 }
             }
-        }
-    }
-
-    private func authenticateUser() -> some View {
-        Text("Authenticating...").onAppear {
-            authenticateWithBiometrics { success in
-                if success {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        isAuthenticated = true
-                    }
-                } else {
-                    isAuthenticated = true
-                }
-            }
-        }
-    }
-
-    private func authenticateWithBiometrics(completion: @escaping (Bool) -> Void) {
-        let context = LAContext()
-        var error: NSError?
-
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate to access your wallet."
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
-                DispatchQueue.main.async {
-                    completion(success)
-                }
-            }
-        } else {
-            completion(false)
         }
     }
 

@@ -17,8 +17,7 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 networkSection
-                biometricAuthenticationSection
-                userEducationSection  // Make sure this section is properly defined
+                userEducationSection
                 dangerZoneSection
             }
             .navigationTitle("Settings")
@@ -47,7 +46,7 @@ struct SettingsView: View {
     private var networkSection: some View {
         Section(header: Text("Network")
             .font(.headline)
-            .foregroundColor(.black)) {  // Set the title color to black
+            .foregroundColor(.black)) {
                 if let network = viewModel.network, let url = viewModel.esploraURL {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(network.uppercased())
@@ -71,31 +70,10 @@ struct SettingsView: View {
             }
     }
 
-    private var biometricAuthenticationSection: some View {
-        Section(header: Text("Biometric Authentication")
-            .font(.headline)
-            .foregroundColor(.black)) {  // Set the title color to black
-            Toggle("Enable Biometric Authentication", isOn: $viewModel.isBiometricEnabled)
-                .padding()
-                .background(Color(UIColor.systemBackground))
-                .cornerRadius(8)
-                .shadow(radius: 2)
-                .onChange(of: viewModel.isBiometricEnabled) { _, isBiometricEnabled in
-                    if isBiometricEnabled {
-                        enableBiometricAuthentication()
-                    } else {
-                        disableBiometricAuthentication()
-                    }
-                }
-                .animation(.easeInOut, value: viewModel.isBiometricEnabled)
-        }
-    }
-
-    // New User Education Section
     private var userEducationSection: some View {
         Section(header: Text("User Education")
             .font(.headline)
-            .foregroundColor(.black)) {  // Set the title color to black
+            .foregroundColor(.black)) {
                 
             VStack(alignment: .leading, spacing: 10) {
                 Text("Your seed words are crucial for restoring your wallet. Please ensure you have securely backed them up.")
@@ -115,7 +93,7 @@ struct SettingsView: View {
     private var dangerZoneSection: some View {
         Section(header: Text("Danger Zone")
             .font(.headline)
-            .foregroundColor(.black)) {  // Set the title color to black
+            .foregroundColor(.black)) {
                 
                 Button {
                     showingShowSeedConfirmation = true
@@ -167,16 +145,6 @@ struct SettingsView: View {
                     Button("No", role: .cancel) {}
                 }
             }
-    }
-
-    private func enableBiometricAuthentication() {
-        // Your logic to enable biometric authentication
-        viewModel.isBiometricEnabled = true
-    }
-
-    private func disableBiometricAuthentication() {
-        // Your logic to disable biometric authentication
-        viewModel.isBiometricEnabled = false
     }
 }
 
