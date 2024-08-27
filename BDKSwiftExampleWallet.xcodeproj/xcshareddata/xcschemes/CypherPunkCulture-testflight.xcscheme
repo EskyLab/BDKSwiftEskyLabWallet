@@ -21,6 +21,20 @@
                ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AE4984872A1BBBD8009951E2"
+               BuildableName = "CypherPunkCultureTests.xctest"
+               BlueprintName = "CypherPunkCultureTests"
+               ReferencedContainer = "container:BDKSwiftExampleWallet.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

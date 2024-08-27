@@ -4,17 +4,24 @@
       "id" : "00F39286-0E0B-477C-BF34-B2E9FE336CFC",
       "name" : "Test Scheme Action",
       "options" : {
-
+        "addressSanitizer" : {
+          "enabled" : false
+        }
       }
     }
   ],
   "defaultOptions" : {
+    "addressSanitizer" : {
+      "enabled" : true
+    },
+    "distributor" : "com.apple.TestFlight",
     "environmentVariableEntries" : [
       {
         "key" : "Name: CORESVG_VERBOSE",
         "value" : "Value: 1"
       }
     ],
+    "guardMallocEnabled" : true,
     "targetForVariableExpansion" : {
       "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
       "identifier" : "AE4984772A1BBBD6009951E2",
@@ -23,7 +30,6 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
         "identifier" : "AE4984872A1BBBD8009951E2",
@@ -31,7 +37,7 @@
       }
     },
     {
-      "parallelizable" : true,
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
         "identifier" : "92D7D79A2C74AE5E009D4727",
