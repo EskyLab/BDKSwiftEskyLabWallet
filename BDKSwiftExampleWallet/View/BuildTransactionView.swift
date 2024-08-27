@@ -19,173 +19,172 @@ struct BuildTransactionView: View {
     @Binding var shouldPopToRootView: Bool
     @State private var isCopied = false
     @State private var showCheckmark = false
-    @State private var showGreenTick = false
-    @State private var showSentOverlay = false
 
     var body: some View {
         ZStack {
-            Color(uiColor: .systemBackground).ignoresSafeArea()
+            Color(uiColor: .systemBackground)
+                .ignoresSafeArea()
 
-            VStack {
-                Spacer()
-
-                VStack {
-                    HStack {
-                        Text("To")
-                        Spacer()
-                        Text(address)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                            .frame(maxWidth: 150)
-                    }
-                    HStack {
-                        Text("Send")
-                        Spacer()
-                        Text("\(amount) sats")
-                    }
-                    HStack {
-                        Text("Fee")
-                        Spacer()
-                        if let fee = viewModel.txBuilderResult?.transactionDetails.fee {
-                            Text("\(fee) sats")
-                        } else {
-                            Text("...")
-                        }
-                    }
-                    HStack {
-                        Text("Total")
-                        Spacer()
-                        if let sentAmount = UInt64(amount),
-                           let feeAmount = viewModel.txBuilderResult?.transactionDetails.fee {
-                            let total = sentAmount + feeAmount
-                            Text("\(total) sats")
-                        } else {
-                            Text("...")
-                        }
-                    }
-                }
-                .font(.caption)
-                .fontWeight(.light)
-                .foregroundColor(.secondary)
-                .padding()
-
-                Spacer()
+            VStack(spacing: 20) {
+                transactionDetailsSection
 
                 if !isSent {
-                    Button {
-                        let feeRate: Float? = Float(fee)
-                        if let rate = feeRate, let amt = UInt64(amount) {
-                            viewModel.buildTransactionViewError = nil
-                            isSent = true // Disable the button
-                            viewModel.send(address: address, amount: amt, feeRate: rate)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                if self.viewModel.buildTransactionViewError == nil {
-                                    self.isSent = true
-                                    self.showSentOverlay = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                        self.shouldPopToRootView = false
-                                    }
-                                } else {
-                                    self.isSent = false
-                                    self.isError = true
-                                }
-                            }
-                        } else {
-                            self.isError = true
-                        }
-                    } label: {
-                        Text("Send")
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                            .padding(.all, 8)
-                    }
-                    .buttonStyle(BitcoinFilled(tintColor: .bitcoinOrange, isCapsule: true))
-                    .padding()
-                    .disabled(isSent) // Disable button while transaction is processing
-
+                    sendButton
                 } else if isSent && viewModel.buildTransactionViewError == nil {
-                    VStack {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.green)
-                        if let transaction = viewModel.txBuilderResult?.transactionDetails {
-                            HStack {
-                                Text(transaction.txid)
-                                    .lineLimit(1)
-                                    .truncationMode(.middle)
-                                Spacer()
-                                Button {
-                                    UIPasteboard.general.string = transaction.txid
-                                    isCopied = true
-                                    showCheckmark = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                        isCopied = false
-                                        showCheckmark = false
-                                    }
-                                } label: {
-                                    HStack {
-                                        withAnimation {
-                                            Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
-                                        }
-                                    }
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.bitcoinOrange)
-                                }
-                            }
-                            .fontDesign(.monospaced)
-                            .font(.caption)
-                            .padding()
-                        }
-                    }
+                    transactionSentView
                 }
-            }
 
-            // Sent Transaction Overlay
-            if showSentOverlay {
-                ZStack {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
-                    VStack(spacing: 20) {
-                        Image(systemName: "paperplane.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.bitcoinOrange)
-                        Text("Transaction Sent")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("Your transaction has been sent successfully.")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    .padding()
-                    .background(Color.black.opacity(0.7).cornerRadius(10))
-                }
-                .transition(.opacity)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        withAnimation {
-                            showSentOverlay = false
-                            isSent = false // Reset to allow new transactions
-                        }
-                    }
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("Transaction")
+            .onAppear {
+                let feeRate: Float? = Float(fee)
+                if let rate = feeRate {
+                    viewModel.buildTransaction(address: address, amount: UInt64(amount) ?? 0, feeRate: rate)
                 }
             }
+            .alert(isPresented: $viewModel.showingBuildTransactionViewErrorAlert) {
+                Alert(
+                    title: Text("Build Transaction Error"),
+                    message: Text(viewModel.buildTransactionViewError?.description ?? "Unknown"),
+                    dismissButton: .default(Text("OK")) {
+                        viewModel.buildTransactionViewError = nil
+                    }
+                )
+            }
+        }
+    }
+
+    private var transactionDetailsSection: some View {
+        VStack(spacing: 16) {
+            transactionDetailRow(label: "To", value: address)
+            transactionDetailRow(label: "Send", value: amount.formattedWithSeparator)
+            transactionDetailRow(label: "Fee", value: feeText)
+            transactionDetailRow(label: "Total", value: totalText)
         }
         .padding()
-        .navigationTitle("Transaction")
-        .onAppear {
-            let feeRate: Float? = Float(fee)
-            if let rate = feeRate {
-                viewModel.buildTransaction(address: address, amount: UInt64(amount) ?? 0, feeRate: rate)
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color(uiColor: .secondarySystemBackground))
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        )
+        .padding(.horizontal)
+    }
+
+    private func transactionDetailRow(label: String, value: String) -> some View {
+        HStack {
+            Text(label)
+                .font(.body.weight(.semibold))
+                .foregroundColor(.primary)
+            Spacer()
+            Text(value)
+                .font(.body.weight(.regular))
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+                .truncationMode(.middle)
+        }
+    }
+
+    private var feeText: String {
+        if let fee = viewModel.txBuilderResult?.transactionDetails.fee {
+            return fee.delimiter
+        } else {
+            return "..."
+        }
+    }
+
+    private var totalText: String {
+        if let sentAmount = UInt64(amount),
+           let feeAmount = viewModel.txBuilderResult?.transactionDetails.fee {
+            let total = sentAmount + feeAmount
+            return total.delimiter
+        } else {
+            return "..."
+        }
+    }
+
+    private var sendButton: some View {
+        Button {
+            sendTransaction()
+        } label: {
+            Text("Send")
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentColor)
+                .cornerRadius(12)
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal)
+        .disabled(isSent)
+    }
+
+    private func sendTransaction() {
+        let feeRate: Float? = Float(fee)
+        if let rate = feeRate, let amt = UInt64(amount) {
+            viewModel.buildTransactionViewError = nil
+            isSent = true
+            viewModel.send(address: address, amount: amt, feeRate: rate)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                if viewModel.buildTransactionViewError == nil {
+                    isSent = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        shouldPopToRootView = false
+                    }
+                } else {
+                    isSent = false
+                    isError = true
+                }
+            }
+        } else {
+            isError = true
+        }
+    }
+
+    private var transactionSentView: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 60))
+                .foregroundColor(.green)
+                .padding()
+
+            if let transaction = viewModel.txBuilderResult?.transactionDetails {
+                HStack {
+                    Text(transaction.txid)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                        .fontDesign(.monospaced)
+                        .font(.caption)
+
+                    Spacer()
+
+                    Button {
+                        copyTransactionID(transaction.txid)
+                    } label: {
+                        Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                            .foregroundColor(showCheckmark ? .green : .primary)
+                            .fontWeight(.semibold)
+                    }
+                }
+                .padding()
             }
         }
-        .alert(isPresented: $viewModel.showingBuildTransactionViewErrorAlert) {
-            Alert(
-                title: Text("Build Transaction Error"),
-                message: Text(viewModel.buildTransactionViewError?.description ?? "Unknown"),
-                dismissButton: .default(Text("OK")) {
-                    viewModel.buildTransactionViewError = nil
-                    isSent = false // Reset to allow new transactions
-                }
-            )
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color(uiColor: .secondarySystemBackground))
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        )
+        .padding(.horizontal)
+    }
+
+    private func copyTransactionID(_ txid: String) {
+        UIPasteboard.general.string = txid
+        isCopied = true
+        showCheckmark = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isCopied = false
+            showCheckmark = false
         }
     }
 }

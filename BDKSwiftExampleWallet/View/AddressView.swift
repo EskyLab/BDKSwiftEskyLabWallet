@@ -90,10 +90,10 @@ struct AddressView: View {
                             .font(.title2)
                             .padding()
                             .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
-                            .foregroundColor(.bitcoinOrange) // Change foreground color
+                            .foregroundColor(.primary)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.bitcoinOrange, lineWidth: 2) // Change outline color
+                                    .stroke(Color(uiColor: .separator), lineWidth: 2)
                             )
                     }
                     .buttonStyle(.plain) // Ensures button style remains consistent with custom design

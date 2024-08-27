@@ -5,16 +5,15 @@
 //  Created by Matthew Ramsden on 6/22/23.
 //
 
-import BitcoinDevKit
-import BitcoinUI
 import SwiftUI
+import BitcoinDevKit
 
 struct TransactionDetailsView: View {
     @ObservedObject var viewModel: TransactionDetailsViewModel
     let transaction: TransactionDetails
     let amount: UInt64
+
     @State private var isCopied = false
-    @State private var showCheckmark = false
 
     var body: some View {
         VStack(spacing: 20) {
@@ -42,7 +41,7 @@ struct TransactionDetailsView: View {
                     .fontWeight(.semibold)
                 
                 Text(transaction.confirmationTime == nil ? "Unconfirmed" : "Confirmed")
-                    .foregroundColor(transaction.confirmationTime == nil ? .secondary : .green)
+                    .foregroundColor(transaction.confirmationTime == nil ? .red : .green)
             }
             .font(.caption)
 
@@ -68,7 +67,7 @@ struct TransactionDetailsView: View {
 
             VStack(spacing: 4) {
                 if let timestamp = transaction.confirmationTime?.timestamp {
-                    Text(timestamp.toDate().formatted(date: .abbreviated, time: .shortened))
+                    Text(formatDate(from: timestamp))
                         .foregroundColor(.secondary)
                         .font(.callout)
                 }
@@ -84,14 +83,12 @@ struct TransactionDetailsView: View {
 
     private var transactionActions: some View {
         HStack {
-            if viewModel.network != Network.regtest.description {
-                Button(action: openTransactionInBrowser) {
-                    Image(systemName: "safari")
-                        .font(.title2)
-                        .foregroundColor(.bitcoinOrange)
-                }
-                Spacer()
+            Button(action: openTransactionInBrowser) {
+                Image(systemName: "safari")
+                    .font(.title2)
+                    .foregroundColor(.bitcoinOrange)
             }
+            Spacer()
 
             Text(transaction.txid)
                 .lineLimit(1)
@@ -101,13 +98,21 @@ struct TransactionDetailsView: View {
             Spacer()
 
             Button(action: copyTransactionID) {
-                Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
+                Image(systemName: isCopied ? "checkmark" : "doc.on.doc")
                     .font(.title2)
                     .foregroundColor(.bitcoinOrange)
             }
         }
         .font(.caption)
         .padding()
+    }
+
+    private func formatDate(from unixTime: UInt64) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
     }
 
     private func openTransactionInBrowser() {
@@ -122,31 +127,8 @@ struct TransactionDetailsView: View {
     private func copyTransactionID() {
         UIPasteboard.general.string = transaction.txid
         isCopied = true
-        withAnimation {
-            showCheckmark = true
-        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation {
-                isCopied = false
-                showCheckmark = false
-            }
+            isCopied = false
         }
     }
-}
-
-#Preview {
-    TransactionDetailsView(
-        viewModel: .init(),
-        transaction: mockTransactionDetail,
-        amount: UInt64(10_000_000)
-    )
-}
-
-#Preview {
-    TransactionDetailsView(
-        viewModel: .init(),
-        transaction: mockTransactionDetail,
-        amount: UInt64(10_000_000)
-    )
-    .environment(\.sizeCategory, .accessibilityLarge)
 }

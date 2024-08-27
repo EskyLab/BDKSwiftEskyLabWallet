@@ -21,7 +21,8 @@ struct AmountView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack(spacing: 40) {
-                    Spacer()
+                    // Reduce the space above to lift everything up
+                    Spacer(minLength: 10)  // Reduced Spacer length
 
                     VStack(spacing: 8) {
                         Text("\(numpadAmount.formattedWithSeparator) sats")
@@ -48,7 +49,8 @@ struct AmountView: View {
                     }
                     .padding(.horizontal, 16)
 
-                    Spacer(minLength: 20)
+                    // Reduced Spacer to move keypad up
+                    Spacer(minLength: 10)
 
                     GeometryReader { geometry in
                         let buttonSize = geometry.size.width / 4
@@ -63,8 +65,8 @@ struct AmountView: View {
                     }
                     .frame(height: 300)
 
-                    // Add extra padding to the bottom of the screen
-                    Spacer(minLength: 80) // Adjust this value for more or less whitespace
+                    // Possibly adjust or remove this spacer if additional height adjustment is needed
+                    Spacer(minLength: 40)  // Adjust this value based on your needs
 
                     Button {
                         feedbackGenerator.impactOccurred()
@@ -87,8 +89,8 @@ struct AmountView: View {
                     .frame(maxWidth: .infinity)
                     .navigationDestination(isPresented: $isActive) {
                         AddressView(amount: numpadAmount, rootIsActive: $isActive)
-                            .transition(.slide) // Add transition for AddressView
-                            .animation(.easeInOut, value: isActive) // Animate transition
+                            .transition(.slide)
+                            .animation(.easeInOut, value: isActive)
                     }
                 }
                 .padding()

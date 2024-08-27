@@ -42,13 +42,13 @@ struct WalletView: View {
                             .ignoresSafeArea()
                         VStack(spacing: 20) {
                             if isFirstTimeUser && !isRefreshing {
-                                Image(systemName: "star.fill")
+                                Image(systemName: "network")
                                     .font(.system(size: 40))
-                                    .foregroundColor(.yellow)
-                                Text("Welcome to your new Bitcoin Wallet!")
+                                    .foregroundColor(.bitcoinOrange)
+                                Text("CypherPunk Culture Bitcoin Wallet!")
                                     .font(.headline)
                                     .foregroundColor(.white)
-                                Text("We're setting up your wallet. This may take a few moments.")
+                                Text("Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments.")
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.8))
                                 Text("Once syncing is complete, your transactions and balance will be displayed here.")

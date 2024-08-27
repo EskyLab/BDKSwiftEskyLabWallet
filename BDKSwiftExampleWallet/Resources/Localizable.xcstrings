@@ -213,6 +213,9 @@
         }
       }
     },
+    "Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments." : {
+
+    },
     "Block %@" : {
       "localizations" : {
         "fr" : {
@@ -290,6 +293,9 @@
     "CYPHERPUNK" : {
 
     },
+    "CypherPunk Culture Bitcoin Wallet!" : {
+
+    },
     "CypherPunk Culture." : {
 
     },
@@ -340,6 +346,7 @@
       }
     },
     "Fee" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -619,6 +626,7 @@
 
     },
     "To" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -658,9 +666,6 @@
           }
         }
       }
-    },
-    "Transaction Sent" : {
-
     },
     "Transactions" : {
       "extractionState" : "manual",
@@ -702,12 +707,6 @@
     "Wallet Synced" : {
 
     },
-    "We're setting up your wallet. This may take a few moments." : {
-
-    },
-    "Welcome to your new Bitcoin Wallet!" : {
-
-    },
     "Yes" : {
       "localizations" : {
         "fr" : {
@@ -719,9 +718,6 @@
       }
     },
     "Your seed words are crucial for restoring your wallet. Please ensure you have securely backed them up." : {
-
-    },
-    "Your transaction has been sent successfully." : {
 
     }
   },

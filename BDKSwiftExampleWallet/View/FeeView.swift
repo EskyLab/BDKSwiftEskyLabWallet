@@ -56,7 +56,7 @@ struct FeeView: View {
                         .tag(3)
                     }
                     .pickerStyle(.automatic)
-                    .tint(.bitcoinOrange)
+                    .tint(.primary) // Use primary color that adapts to the system mode
                     Text("sat/vb")
                         .foregroundColor(.secondary)
                         .fontWeight(.thin)
