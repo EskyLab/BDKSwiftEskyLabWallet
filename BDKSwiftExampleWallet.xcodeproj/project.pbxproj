@@ -11,6 +11,7 @@
 		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
 		926546A72C740DFF003018BF /* EskyLab Pack.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 926546A02C740DFE003018BF /* EskyLab Pack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		929570B42C7E04B900B2251A /* bdkFFI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929570B32C7E04B900B2251A /* bdkFFI.framework */; };
 		92AAE8B52C78287B00CC7CF0 /* NumpadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */; };
 		92B0146E2C7755AE00FAF7C6 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
@@ -128,6 +129,7 @@
 /* Begin PBXFileReference section */
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		929570AF2C7DF98500B2251A /* CypherPunkCulture.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CypherPunkCulture.xctestplan; sourceTree = "<group>"; };
+		929570B32C7E04B900B2251A /* bdkFFI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = bdkFFI.framework; sourceTree = "<group>"; };
 		92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadButton.swift; sourceTree = "<group>"; };
 		92B0146D2C7755AE00FAF7C6 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CypherPunkCulture.entitlements; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				AE4984A92A1BD425009951E2 /* BitcoinDevKit in Frameworks */,
 				AEB735D32B2CC4B900F99DBB /* BitcoinUI in Frameworks */,
 				AE7D5A0E2A7EE62200EAC8CE /* KeychainAccess in Frameworks */,
+				929570B42C7E04B900B2251A /* bdkFFI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +336,7 @@
 		AE235D0D2A9CEF69000C1C55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				929570B32C7E04B900B2251A /* bdkFFI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -819,7 +823,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				"DYLIB_COMPATIBILITY_VERSION[arch=*]" = "";
 				EAGER_LINKING = YES;
-				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -899,7 +903,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				"DYLIB_COMPATIBILITY_VERSION[arch=*]" = "";
 				EAGER_LINKING = YES;
-				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -947,6 +951,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
 				DEVELOPMENT_TEAM = U8C49P573P;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CypherPunkCulture;
@@ -991,6 +999,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BDKSwiftExampleWallet/Preview Content\"";
 				DEVELOPMENT_TEAM = U8C49P573P;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BDKSwiftExampleWallet/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CypherPunkCulture;
