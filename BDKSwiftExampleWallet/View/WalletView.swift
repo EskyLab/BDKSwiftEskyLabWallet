@@ -7,16 +7,19 @@
 
 import BitcoinDevKit
 import BitcoinUI
-import LocalAuthentication
 import SwiftUI
+import LocalAuthentication
 
 struct WalletView: View {
-    @Bindable var viewModel: WalletViewModel
+    @ObservedObject var viewModel: WalletViewModel
     @State private var isAnimating: Bool = false
     @State private var isFirstAppear = true
+    @State private var newTransactionSent = false
+    @State private var isFirstTimeUser = true
     @State private var isRefreshing = false
     @State private var showSyncOverlay = false
     @State private var isAuthenticated = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -26,15 +29,12 @@ struct WalletView: View {
 
                 if isAuthenticated {
                     mainWalletView
-                        .transition(.opacity.animation(.easeInOut(duration: 0.5)))
                 } else {
                     authenticateUser()
-                        .transition(.opacity.animation(.easeInOut(duration: 0.5)))
                 }
 
                 if showSyncOverlay {
-                    syncOverlay
-                        .transition(.opacity.animation(.easeInOut(duration: 0.5)))
+                    overlayView
                 }
             }
         }
@@ -53,6 +53,7 @@ struct WalletView: View {
         VStack(spacing: 20) {
             Text("Bitcoin".uppercased())
                 .font(.title2.weight(.bold))
+                .fontWidth(.expanded)
                 .foregroundColor(.bitcoinOrange)
                 .scaleEffect(isAnimating ? 1.0 : 0.6)
                 .onAppear {
@@ -66,6 +67,7 @@ struct WalletView: View {
                     Text(viewModel.balanceTotal == 0 ? "0" : viewModel.balanceTotal.formattedSatoshis())
                         .font(.system(size: 40, weight: .bold, design: .monospaced))
                         .foregroundColor(viewModel.balanceTotal == 0 ? .secondary : .primary)
+                        .contentTransition(.numericText())
                     Text("sats")
                         .foregroundColor(.secondary)
                 }
@@ -75,7 +77,30 @@ struct WalletView: View {
                 Text(viewModel.satsPrice)
                     .font(.title3.weight(.medium))
                     .foregroundColor(.secondary)
+                    .contentTransition(.numericText())
             }
+
+            HStack {
+                Text("Activity")
+                    .fontWeight(.bold)
+                    .font(.headline)
+                Spacer()
+                if viewModel.walletSyncState == .syncing || isRefreshing {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding(.trailing, 5)
+                    Text(activityText)
+                        .foregroundColor(.orange)
+                        .font(.caption)
+                } else if viewModel.walletSyncState == .synced {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(.green)
+                    Text("Wallet Synced")
+                        .foregroundColor(.green)
+                        .font(.caption)
+                }
+            }
+            .padding(.bottom, 10)
 
             WalletTransactionListView(
                 transactionDetails: viewModel.transactionDetails,
@@ -92,9 +117,10 @@ struct WalletView: View {
         }
         .padding()
         .task {
-            if isFirstAppear {
+            if isFirstAppear || newTransactionSent {
                 await performInitialSyncAndFetch()
                 isFirstAppear = false
+                isFirstTimeUser = false
                 withAnimation(.easeInOut(duration: 0.5)) {
                     showSyncOverlay = false
                 }
@@ -156,26 +182,52 @@ struct WalletView: View {
         }
     }
 
-    private var syncOverlay: some View {
+    private var overlayView: some View {
         ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                Image(systemName: "chart.bar.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(.bitcoinOrange)
-                Text("Syncing Wallet...")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                Text("This may take a few moments.")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.8))
+                if isFirstTimeUser && !isRefreshing {
+                    Image(systemName: "network")
+                        .font(.system(size: 40))
+                        .foregroundColor(.bitcoinOrange)
+                    Text("CypherPunk Culture Bitcoin Wallet!")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text("Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments.")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
+                    Text("Once syncing is complete, your transactions and balance will be displayed here.")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 5)
+                    Button("Got it!") {
+                        isFirstTimeUser = false
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            showSyncOverlay = false
+                        }
+                    }
+                    .padding(.top, 10)
+                    .buttonStyle(.borderedProminent)
+                    .tint(.bitcoinOrange)
+                } else {
+                    Image(systemName: newTransactionSent ? "paperplane.fill" : "chart.bar.fill")
+                        .font(.system(size: 40))
+                        .foregroundColor(.bitcoinOrange)
+                        .symbolEffect(.pulse.byLayer)
+                    Text(activityText)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text("This may take a few moments.")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.8))
 
-                // Displaying Bitcoin price in USD
-                if viewModel.price > 0 {
-                    Text("BTC Price: $\(viewModel.price, specifier: "%.2f")")
-                        .font(.title2.weight(.medium))
-                        .foregroundColor(.yellow)
+                    if viewModel.price > 0 {
+                        Text("BTC Price: $\(viewModel.price, specifier: "%.2f")")
+                            .font(.title2.weight(.medium))
+                            .foregroundColor(.yellow)
+                    }
                 }
             }
             .padding()
@@ -185,8 +237,12 @@ struct WalletView: View {
     }
 
     private var activityText: String {
-        if isRefreshing {
-            return "Refreshing Wallet..."
+        if newTransactionSent {
+            return "Sending Transaction..."
+        } else if viewModel.transactionDetails.contains(where: { $0.sent == 0 && $0.confirmationTime == nil }) {
+            return "Receiving Transaction..."
+        } else if isRefreshing {
+            return "Starting data fetch..."
         } else {
             return "Syncing Wallet..."
         }

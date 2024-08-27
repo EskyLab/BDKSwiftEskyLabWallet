@@ -139,7 +139,6 @@
       }
     },
     "Activity" : {
-      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -158,6 +157,9 @@
           }
         }
       }
+    },
+    "All Transactions" : {
+
     },
     "Amount" : {
 
@@ -214,6 +216,9 @@
         }
       }
     },
+    "Bitcoin: A Peer-to-Peer Electronic Cash System, We're setting up your wallet. This may take a few moments." : {
+
+    },
     "Block %@" : {
       "localizations" : {
         "fr" : {
@@ -255,6 +260,9 @@
           }
         }
       }
+    },
+    "Close" : {
+
     },
     "confirmed" : {
       "extractionState" : "stale",
@@ -304,6 +312,9 @@
 
     },
     "CYPHERPUNK" : {
+
+    },
+    "CypherPunk Culture Bitcoin Wallet!" : {
 
     },
     "CypherPunk Culture." : {
@@ -389,6 +400,9 @@
     "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
 
     },
+    "Got it!" : {
+
+    },
     "Loading..." : {
 
     },
@@ -461,6 +475,9 @@
           }
         }
       }
+    },
+    "Once syncing is complete, your transactions and balance will be displayed here." : {
+
     },
     "Paste" : {
 
@@ -568,6 +585,9 @@
     "Share via iMessage" : {
 
     },
+    "Show All Transactions" : {
+
+    },
     "Show Seed" : {
       "localizations" : {
         "fr" : {
@@ -608,9 +628,6 @@
           }
         }
       }
-    },
-    "Syncing Wallet..." : {
-
     },
     "Syncing..." : {
 
@@ -722,6 +739,9 @@
           }
         }
       }
+    },
+    "Wallet Synced" : {
+
     },
     "What would you like to do?" : {
 

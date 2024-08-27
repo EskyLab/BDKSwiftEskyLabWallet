@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9201B7822C7E7E2C0084322B /* FullTransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9201B7812C7E7E2C0084322B /* FullTransactionHistoryView.swift */; };
 		924B759C2C716E65008CA7CD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759B2C716E65008CA7CD /* KeychainAccess */; };
 		924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759D2C716E6B008CA7CD /* BitcoinUI */; };
 		924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 924B759F2C716E70008CA7CD /* CodeScanner */; };
@@ -127,6 +128,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9201B7812C7E7E2C0084322B /* FullTransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTransactionHistoryView.swift; sourceTree = "<group>"; };
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		929570AF2C7DF98500B2251A /* CypherPunkCulture.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CypherPunkCulture.xctestplan; sourceTree = "<group>"; };
 		929570B32C7E04B900B2251A /* bdkFFI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = bdkFFI.framework; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				AE783A002AB4E5E1005F0CBA /* BuildTransactionView.swift */,
 				AE2ADD732B61E8F500C2A823 /* SettingsView.swift */,
 				AE34DDAB2B6B31ED00F04AD4 /* SeedView.swift */,
+				9201B7812C7E7E2C0084322B /* FullTransactionHistoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 				AE1C34242A424456008F807A /* ReceiveView.swift in Sources */,
 				AEB130C92A44E4850087785B /* TransactionDetailsView.swift in Sources */,
 				AE6715FD2A9AC056005C193F /* PriceServiceError.swift in Sources */,
+				9201B7822C7E7E2C0084322B /* FullTransactionHistoryView.swift in Sources */,
 				AE34DDAC2B6B31ED00F04AD4 /* SeedView.swift in Sources */,
 				AE2ADD742B61E8F500C2A823 /* SettingsView.swift in Sources */,
 				AE6F34D82AA6C1800087E700 /* Network+Extensions.swift in Sources */,

@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-
 class OnboardingViewModel: ObservableObject {
     let bdkClient: BDKClient
 
@@ -96,6 +95,7 @@ class OnboardingViewModel: ObservableObject {
         do {
             try bdkClient.createWallet(words)
             isOnboarding = false
+            // You can transition to the WalletView here after the wallet is created.
         } catch {
             DispatchQueue.main.async {
                 self.onboardingViewError = .Generic(message: "Error Creating Wallet")
