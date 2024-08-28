@@ -18,6 +18,7 @@ struct ReceiveView: View {
     @State private var showAlert = false
     @State private var showMailErrorAlert = false
     @State private var showMessageErrorAlert = false
+    @State private var showShareSheet = false
 
     var body: some View {
         ZStack {
@@ -101,6 +102,9 @@ struct ReceiveView: View {
                         showMailErrorAlert = true
                     }
                 }
+                Button("Share via AirDrop") {
+                    showShareSheet = true
+                }
                 Button("Cancel", role: .cancel) {}
             }
             .sheet(isPresented: $showMessageCompose) {
@@ -108,6 +112,9 @@ struct ReceiveView: View {
             }
             .sheet(isPresented: $showMailCompose) {
                 MailComposeView(address: viewModel.address)
+            }
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(activityItems: [viewModel.address])
             }
             .alert("Cannot Send Mail", isPresented: $showMailErrorAlert) {
                 Button("OK", role: .cancel) {}
@@ -191,6 +198,17 @@ struct MailComposeView: UIViewControllerRepresentable {
             controller.dismiss(animated: true)
         }
     }
+}
+
+// View for ShareSheet (AirDrop and others)
+struct ShareSheet: UIViewControllerRepresentable {
+    var activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 #if DEBUG
