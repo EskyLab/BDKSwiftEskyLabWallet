@@ -14,6 +14,7 @@ struct FeeView: View {
     let address: String
     @Bindable var viewModel: FeeViewModel
     @Binding var rootIsActive: Bool
+    @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
         ZStack {
@@ -63,8 +64,10 @@ struct FeeView: View {
                     Spacer()
                 }
 
+                // Spacer to push the content to the top, leaving room below
                 Spacer()
 
+                // Centered "Next" button below the Picker
                 NavigationLink(
                     destination: BuildTransactionView(
                         amount: amount,
@@ -74,15 +77,27 @@ struct FeeView: View {
                         shouldPopToRootView: self.$rootIsActive
                     )
                 ) {
-                    Label(
-                        title: { Text("Next") },
-                        icon: { Image(systemName: "arrow.right") }
-                    )
-                    .labelStyle(.iconOnly)
+                    Label("Next", systemImage: "arrow.right")
+                        .labelStyle(.iconOnly)
+                        .font(.title2)
+                        .padding()
+                        .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
+                        .foregroundColor(.primary)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(uiColor: .separator), lineWidth: 2)
+                        )
                 }
-                .isDetailLink(false)
-                .buttonStyle(BitcoinOutlined(width: 100, isCapsule: true))
+                .buttonStyle(.plain) // Ensures button style remains consistent with custom design
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded {
+                            impactFeedbackGenerator.impactOccurred() // Trigger haptic feedback
+                        }
+                )
+                .padding(.bottom, 40) // Adds space at the bottom
 
+                Spacer()
             }
             .padding()
             .navigationTitle("Fees")

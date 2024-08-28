@@ -28,6 +28,8 @@ struct BuildTransactionView: View {
             VStack(spacing: 20) {
                 transactionDetailsSection
 
+                Spacer()
+
                 if !isSent {
                     sendButton
                 } else if isSent && viewModel.buildTransactionViewError == nil {
@@ -108,15 +110,27 @@ struct BuildTransactionView: View {
         Button {
             sendTransaction()
         } label: {
-            Text("Send")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
+            Label("Send", systemImage: "paperplane.fill")
+                .labelStyle(.iconOnly)
+                .font(.title2)
                 .padding()
-                .background(Color.accentColor)
-                .cornerRadius(12)
-                .foregroundColor(.white)
+                .frame(maxWidth: .infinity) // Make the button take the full available width
+                .background(Color(uiColor: .systemFill), in: RoundedRectangle(cornerRadius: 10))
+                .foregroundColor(.primary)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color(uiColor: .separator), lineWidth: 2)
+                )
         }
-        .padding(.horizontal)
+        .buttonStyle(.plain) // Consistent button style with custom design
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred() // Haptic feedback
+                }
+        )
+        .padding(.horizontal, 40) // Adjust the horizontal padding to control the width
+        .padding(.bottom, 40) // Adjusts position to be centered vertically
         .disabled(isSent)
     }
 
