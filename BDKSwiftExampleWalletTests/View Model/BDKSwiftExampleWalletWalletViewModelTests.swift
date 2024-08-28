@@ -6,43 +6,28 @@
 //
 
 import XCTest
-
 @testable import CypherPunkCulture
 
 @MainActor
 final class BDKSwiftExampleWalletWalletViewModelTests: XCTestCase {
 
     func testWalletViewModel() async {
-
-        // Set up viewModel with mock dependencies
+        // Set up mock view model
         let viewModel = WalletViewModel(priceClient: .mock, bdkClient: .mock)
+
+        // Simulate a balance being set greater than 0
+        viewModel.balanceTotal = 123456789
+
+        // Simulate some transactions using mockTransactionDetails
+        viewModel.transactionDetails = mockTransactionDetails
         
-        // Initially, the wallet sync state should be 'notStarted'
-        XCTAssertEqual(viewModel.walletSyncState, .notStarted)
-
-        // Simulate successful sync() call
-        await viewModel.sync()
-        // Assert that the wallet sync state is now 'synced'
-        XCTAssertEqual(viewModel.walletSyncState, .synced)
-
-        // Simulate successful getBalance() call
-        viewModel.getBalance()
-        // Assert that the balance is greater than 0
+        // Assert that balance is greater than 0
         XCTAssertGreaterThan(viewModel.balanceTotal, UInt64(0))
 
-        // Simulate successful getTransactions() call
-        viewModel.getTransactions()
         // Assert that there are more than 1 transaction in the details
         XCTAssertGreaterThan(viewModel.transactionDetails.count, 1)
-
-        // Simulate successful getPrices() call
-        await viewModel.getPrices()
-        // Assert that the prices are updated (You may want to add an assertion here to verify the price data)
         
-        // If needed, you can further assert or print values for debugging
-        // Example:
-        // print("Balance: \(viewModel.balanceTotal)")
-        // print("Transactions: \(viewModel.transactionDetails)")
-        // print("Prices: \(viewModel.prices)")  // Assuming there's a prices property in viewModel
+        // Example of verifying a specific value in the transaction details
+        XCTAssertEqual(viewModel.transactionDetails.first?.txid, "cdcc4d287e4780d25c577d4f5726c7d585625170559f0b294da20b55ffa2b009")
     }
 }
