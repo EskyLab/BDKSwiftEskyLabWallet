@@ -47,27 +47,26 @@ struct SettingsView: View {
         Section(header: Text("Network")
             .font(.headline)
             .foregroundColor(.black)) {
-                if let network = viewModel.network, let url = viewModel.esploraURL {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(network.uppercased())
-                            .font(.title2)
-                            .foregroundColor(.bitcoinOrange)
-                        Text(
-                            url.replacingOccurrences(of: "https://", with: "")
-                                .replacingOccurrences(of: "http://", with: "")
-                        )
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                    }
-                    .padding(.vertical, 8)
-                } else {
-                    HStack {
-                        Text("No Network")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                    }
+                
+            if let network = viewModel.network, let url = viewModel.esploraURL {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(network.uppercased())
+                        .font(.title2)
+                        .foregroundColor(.bitcoinOrange)
+                    Text(
+                        url.replacingOccurrences(of: "https://", with: "")
+                            .replacingOccurrences(of: "http://", with: "")
+                    )
+                    .font(.body)
+                    .foregroundColor(.secondary)
                 }
+                .padding(.vertical, 8)
+            } else {
+                Text("No Network")
+                    .font(.body)
+                    .foregroundColor(.secondary)
             }
+        }
     }
 
     private var userEducationSection: some View {
@@ -95,56 +94,52 @@ struct SettingsView: View {
             .font(.headline)
             .foregroundColor(.black)) {
                 
-                Button {
-                    showingShowSeedConfirmation = true
-                } label: {
-                    HStack {
-                        Image(systemName: "eye")
-                        Text("Show Seed")
-                            .foregroundColor(.red)
-                            .fontWeight(.semibold)
-                    }
-                    .padding()
-                    .background(Color(UIColor.systemBackground))
-                    .cornerRadius(8)
-                    .shadow(radius: 2)
+            Button(action: { showingShowSeedConfirmation = true }) {
+                HStack {
+                    Image(systemName: "eye")
+                    Text("Show Seed")
+                        .foregroundColor(.red)
+                        .fontWeight(.semibold)
                 }
-                .alert(
-                    "Are you sure you want to view the seed?",
-                    isPresented: $showingShowSeedConfirmation
-                ) {
-                    Button("Yes", role: .destructive) {
-                        isSeedPresented = true
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    }
-                    Button("No", role: .cancel) {}
-                }
-                
-                Button {
-                    showingDeleteSeedConfirmation = true
-                } label: {
-                    HStack {
-                        Image(systemName: "trash")
-                        Text("Delete Seed")
-                            .foregroundColor(.red)
-                            .fontWeight(.semibold)
-                    }
-                    .padding()
-                    .background(Color(UIColor.systemBackground))
-                    .cornerRadius(8)
-                    .shadow(radius: 2)
-                }
-                .alert(
-                    "Are you sure you want to delete the seed?",
-                    isPresented: $showingDeleteSeedConfirmation
-                ) {
-                    Button("Yes", role: .destructive) {
-                        viewModel.delete()
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    }
-                    Button("No", role: .cancel) {}
-                }
+                .padding()
+                .background(Color(UIColor.systemBackground))
+                .cornerRadius(8)
+                .shadow(radius: 2)
             }
+            .alert(
+                "Are you sure you want to view the seed?",
+                isPresented: $showingShowSeedConfirmation
+            ) {
+                Button("Yes", role: .destructive) {
+                    isSeedPresented = true
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                }
+                Button("No", role: .cancel) {}
+            }
+
+            Button(action: { showingDeleteSeedConfirmation = true }) {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("Delete Seed")
+                        .foregroundColor(.red)
+                        .fontWeight(.semibold)
+                }
+                .padding()
+                .background(Color(UIColor.systemBackground))
+                .cornerRadius(8)
+                .shadow(radius: 2)
+            }
+            .alert(
+                "Are you sure you want to delete the seed?",
+                isPresented: $showingDeleteSeedConfirmation
+            ) {
+                Button("Yes", role: .destructive) {
+                    viewModel.delete()
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                }
+                Button("No", role: .cancel) {}
+            }
+        }
     }
 }
 
