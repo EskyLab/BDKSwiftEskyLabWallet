@@ -42,7 +42,7 @@
       }
     },
     "- %llu sats" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -115,18 +115,6 @@
           }
         }
       }
-    },
-    "100% open-source & open-design" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "100% open-source et open-design"
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "100% open-source & open-design ₿" : {
       "localizations" : {
@@ -358,7 +346,7 @@
       }
     },
     "Fee" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

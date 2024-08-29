@@ -5,8 +5,10 @@
       "name" : "Test Scheme Action",
       "options" : {
         "addressSanitizer" : {
-          "enabled" : false
-        }
+          "enabled" : true
+        },
+        "guardMallocEnabled" : false,
+        "threadSanitizerEnabled" : false
       }
     }
   ],
@@ -26,7 +28,8 @@
       "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
       "identifier" : "AE4984772A1BBBD6009951E2",
       "name" : "CypherPunkCulture"
-    }
+    },
+    "threadSanitizerEnabled" : true
   },
   "testTargets" : [
     {
