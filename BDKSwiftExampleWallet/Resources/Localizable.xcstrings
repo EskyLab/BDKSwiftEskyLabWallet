@@ -104,7 +104,8 @@
             "value" : "+ %llu sats"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "12 Word Seed Phrase (Optional)" : {
       "localizations" : {
@@ -255,7 +256,8 @@
             "value" : "confirmé"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Confirmed" : {
       "localizations" : {
@@ -652,7 +654,8 @@
             "value" : "\nÀ"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "total" : {
       "extractionState" : "stale",
@@ -663,7 +666,8 @@
             "value" : "total"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Total" : {
       "localizations" : {
