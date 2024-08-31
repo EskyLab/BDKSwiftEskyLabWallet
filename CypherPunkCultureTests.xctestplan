@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "14A6DC5B-F5C5-47D0-8F96-868CC80569A0",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:BDKSwiftExampleWallet.xcodeproj",
+        "identifier" : "AE4984872A1BBBD8009951E2",
+        "name" : "CypherPunkCultureTests"
+      }
+    }
+  ],
+  "version" : 1
+}
