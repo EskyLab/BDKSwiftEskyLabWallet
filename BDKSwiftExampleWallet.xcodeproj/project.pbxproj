@@ -129,7 +129,6 @@
 /* Begin PBXFileReference section */
 		9201B7812C7E7E2C0084322B /* FullTransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTransactionHistoryView.swift; sourceTree = "<group>"; };
 		926546A02C740DFE003018BF /* EskyLab Pack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EskyLab Pack.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		929570AF2C7DF98500B2251A /* CypherPunkCulture.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CypherPunkCulture.xctestplan; sourceTree = "<group>"; };
 		929570B32C7E04B900B2251A /* bdkFFI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = bdkFFI.framework; sourceTree = "<group>"; };
 		92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadButton.swift; sourceTree = "<group>"; };
 		92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CypherPunkCulture.entitlements; sourceTree = "<group>"; };
@@ -344,7 +343,6 @@
 		AE49846F2A1BBBD6009951E2 = {
 			isa = PBXGroup;
 			children = (
-				929570AF2C7DF98500B2251A /* CypherPunkCulture.xctestplan */,
 				92D7D78C2C741EA3009D4727 /* CypherPunkCulture.entitlements */,
 				AE4984A52A1BBCB8009951E2 /* README.md */,
 				AE49847A2A1BBBD6009951E2 /* BDKSwiftExampleWallet */,
