@@ -21,17 +21,24 @@ struct BDKSwiftExampleWalletApp: App {
     var body: some Scene {
         WindowGroup {
             if isShowingSplash {
-                SplashScreenView(isShowingSplash: $isShowingSplash)
+                SplashScreenView(isShowingSplash: $isShowingSplash, authenticateUser: authenticateUser)
             } else if !isAuthenticated {
                 // Attempt biometric authentication if enabled, otherwise proceed
                 if isBiometricEnabled && !hasAttemptedBiometricAuth {
                     BiometricAuthView(authenticateUser: authenticateUser)
                 } else {
                     // Biometric authentication is disabled, proceed to onboarding or main screen
-                    OnboardingView(viewModel: .init())
-                        .onAppear {
-                            isAuthenticated = true
-                        }
+                    if isOnboarding {
+                        OnboardingView(viewModel: .init())
+                            .onAppear {
+                                isAuthenticated = true
+                            }
+                    } else {
+                        TabHomeView(viewModel: .init())
+                            .onAppear {
+                                isAuthenticated = true
+                            }
+                    }
                 }
             } else if isOnboarding {
                 OnboardingView(viewModel: .init())
@@ -42,6 +49,13 @@ struct BDKSwiftExampleWalletApp: App {
     }
 
     func authenticateUser(completion: @escaping (Bool) -> Void) {
+        #if targetEnvironment(simulator)
+        // Automatically authenticate in the simulator
+        DispatchQueue.main.async {
+            self.isAuthenticated = true
+            completion(true)
+        }
+        #else
         let context = LAContext()
         var error: NSError?
 
@@ -65,125 +79,111 @@ struct BDKSwiftExampleWalletApp: App {
             // Biometric is not available, proceed
             completion(false)
         }
+        #endif
     }
 
     func handleAuthenticationFailure(error: LAError?) {
         // If biometric fails, don't proceed
         print("Biometric authentication failed.")
     }
-}
+    
+    // Define SplashScreenView directly in this file
+    struct SplashScreenView: View {
+        @Binding var isShowingSplash: Bool
+        @State private var isAnimating = false
+        @State private var showCulture = false
+        @State private var isAuthenticated = false
+        var authenticateUser: (@escaping (Bool) -> Void) -> Void
 
-struct SplashScreenView: View {
-    @Binding var isShowingSplash: Bool
-    @State private var isAnimating = false
-    @State private var showCulture = false
-    @State private var isAuthenticated = false
+        var body: some View {
+            ZStack {
+                Color(UIColor.systemBackground)
+                    .ignoresSafeArea()
 
-    var body: some View {
-        ZStack {
-            Color(UIColor.systemBackground)
-                .ignoresSafeArea()
-            
-            VStack {
-                Spacer()
-                
-                Image("bitcoin-btc-logo-2")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 120)
-                    .scaleEffect(isAnimating ? 1.0 : 0.8)
-                    .opacity(isAnimating ? 1.0 : 0.0)
-                    .animation(.easeIn(duration: 1.0), value: isAnimating)
-                
-                Text("CYPHERPUNK")
-                    .font(.custom("SFProDisplay-Black", size: 40))
-                    .foregroundColor(.primary)
-                    .padding(.top, 16)
-                    .opacity(isAnimating ? 1.0 : 0.0)
-                    .animation(.easeIn(duration: 2.0).delay(0.5), value: isAnimating)
-                
-                if showCulture {
-                    Text("CULTURE")
+                VStack {
+                    Spacer()
+
+                    Image("bitcoin-btc-logo-2")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 120, height: 120)
+                        .scaleEffect(isAnimating ? 1.0 : 0.8)
+                        .opacity(isAnimating ? 1.0 : 0.0)
+                        .animation(.easeIn(duration: 1.0), value: isAnimating)
+
+                    Text("CYPHERPUNK")
                         .font(.custom("SFProDisplay-Black", size: 40))
                         .foregroundColor(.primary)
-                        .padding(.top, 8)
-                        .opacity(showCulture ? 1.0 : 0.0)
-                        .animation(.easeInOut(duration: 0.8), value: showCulture)
+                        .padding(.top, 16)
+                        .opacity(isAnimating ? 1.0 : 0.0)
+                        .animation(.easeIn(duration: 2.0).delay(0.5), value: isAnimating)
+
+                    if showCulture {
+                        Text("CULTURE")
+                            .font(.custom("SFProDisplay-Black", size: 40))
+                            .foregroundColor(.primary)
+                            .padding(.top, 8)
+                            .opacity(showCulture ? 1.0 : 0.0)
+                            .animation(.easeInOut(duration: 0.8), value: showCulture)
+                    }
+
+                    Spacer()
+
+                    Spacer().frame(height: 60)
                 }
-
-                Spacer()
-
-                Spacer().frame(height: 60)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal)
-        }
-        .onAppear {
-            startAnimations()
-            authenticateUser()
-        }
-    }
-    
-    private func startAnimations() {
-        isAnimating = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation {
-                showCulture = true
-            }
-        }
-    }
-
-    private func authenticateUser() {
-        let context = LAContext()
-        var error: NSError?
-
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate to access your wallet."
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
-                DispatchQueue.main.async {
+            .onAppear {
+                startAnimations()
+                authenticateUser { success in
                     if success {
-                        self.isAuthenticated = true
                         proceedToNextScreen()
                     } else {
-                        // Authentication failed, do not proceed
                         handleAuthenticationFailure()
                     }
                 }
             }
-        } else {
-            // Biometric is not available, proceed
-            proceedToNextScreen()
+        }
+
+        private func startAnimations() {
+            isAnimating = true
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    showCulture = true
+                }
+            }
+        }
+
+        private func proceedToNextScreen() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    isShowingSplash = false
+                }
+            }
+        }
+
+        private func handleAuthenticationFailure() {
+            // Handle what happens if biometric authentication fails
+            print("Biometric authentication failed. Access denied.")
+            // Optionally, you can show an alert or simply stop the app flow here
         }
     }
     
-    private func proceedToNextScreen() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation(.easeOut(duration: 0.5)) {
-                isShowingSplash = false
-            }
-        }
-    }
+    struct BiometricAuthView: View {
+        var authenticateUser: (@escaping (Bool) -> Void) -> Void
 
-    private func handleAuthenticationFailure() {
-        // Handle what happens if biometric authentication fails
-        print("Biometric authentication failed. Access denied.")
-        // Optionally, you can show an alert or simply stop the app flow here
-    }
-}
-
-struct BiometricAuthView: View {
-    var authenticateUser: (@escaping (Bool) -> Void) -> Void
-
-    var body: some View {
-        Text("Authenticating...")
-            .onAppear {
-                authenticateUser { success in
-                    if !success {
-                        // Authentication failed, no further action
-                        print("Biometric authentication failed. Access denied.")
+        var body: some View {
+            Text("Authenticating...")
+                .onAppear {
+                    authenticateUser { success in
+                        if !success {
+                            // Authentication failed, no further action
+                            print("Biometric authentication failed. Access denied.")
+                        }
                     }
                 }
-            }
+        }
     }
 }

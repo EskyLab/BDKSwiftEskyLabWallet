@@ -68,7 +68,7 @@ struct ReceiveView: View {
             .padding()
             .onAppear {
                 Task {
-                    await fetchAddress()
+                    await viewModel.getAddress()
                 }
             }
             .confirmationDialog("What would you like to do?", isPresented: $showAlert) {
