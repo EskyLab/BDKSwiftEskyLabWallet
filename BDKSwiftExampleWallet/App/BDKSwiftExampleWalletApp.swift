@@ -109,14 +109,14 @@ struct BDKSwiftExampleWalletApp: App {
                         .frame(width: 120, height: 120)
                         .scaleEffect(isAnimating ? 1.0 : 0.8)
                         .opacity(isAnimating ? 1.0 : 0.0)
-                        .animation(.easeIn(duration: 1.0), value: isAnimating)
+                        .animation(.easeIn(duration: 2.0), value: isAnimating)
 
                     Text("CYPHERPUNK")
                         .font(.custom("SFProDisplay-Black", size: 40))
                         .foregroundColor(.primary)
                         .padding(.top, 16)
                         .opacity(isAnimating ? 1.0 : 0.0)
-                        .animation(.easeIn(duration: 2.0).delay(0.5), value: isAnimating)
+                        .animation(.easeIn(duration: 2.5).delay(1.0), value: isAnimating)
 
                     if showCulture {
                         Text("CULTURE")
@@ -124,7 +124,7 @@ struct BDKSwiftExampleWalletApp: App {
                             .foregroundColor(.primary)
                             .padding(.top, 8)
                             .opacity(showCulture ? 1.0 : 0.0)
-                            .animation(.easeInOut(duration: 0.8), value: showCulture)
+                            .animation(.easeInOut(duration: 1.5).delay(0.5), value: showCulture)
                     }
 
                     Spacer()
@@ -149,7 +149,7 @@ struct BDKSwiftExampleWalletApp: App {
         private func startAnimations() {
             isAnimating = true
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 withAnimation {
                     showCulture = true
                 }
@@ -157,7 +157,7 @@ struct BDKSwiftExampleWalletApp: App {
         }
 
         private func proceedToNextScreen() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                 withAnimation(.easeOut(duration: 0.5)) {
                     isShowingSplash = false
                 }
