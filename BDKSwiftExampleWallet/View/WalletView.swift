@@ -15,10 +15,10 @@ struct WalletView: View {
     @State private var isAnimating: Bool = false
     @State private var isFirstAppear = true
     @State private var newTransactionSent = false
-    @State private var isFirstTimeUser = true
     @State private var isRefreshing = false
     @State private var showSyncOverlay = false
     @AppStorage("isBiometricEnabled") private var isBiometricEnabled: Bool = false
+    @AppStorage("hasShownWelcomeMessage") private var hasShownWelcomeMessage: Bool = false
 
     var body: some View {
         NavigationView {
@@ -115,7 +115,6 @@ struct WalletView: View {
             if isFirstAppear || newTransactionSent {
                 await performInitialSyncAndFetch()
                 isFirstAppear = false
-                isFirstTimeUser = false
                 withAnimation(.easeInOut(duration: 0.5)) {
                     showSyncOverlay = false
                 }
@@ -142,8 +141,15 @@ struct WalletView: View {
         viewModel.getTransactions()
         await viewModel.getPrices()
 
-        withAnimation(.easeInOut(duration: 0.5)) {
-            showSyncOverlay = false
+        if !hasShownWelcomeMessage {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                showSyncOverlay = true
+                hasShownWelcomeMessage = true
+            }
+        } else {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                showSyncOverlay = false
+            }
         }
     }
 
@@ -152,7 +158,7 @@ struct WalletView: View {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                if isFirstTimeUser && !isRefreshing {
+                if !hasShownWelcomeMessage && !isRefreshing {
                     Image(systemName: "network")
                         .font(.system(size: 40))
                         .foregroundColor(.bitcoinOrange)
@@ -168,7 +174,7 @@ struct WalletView: View {
                         .multilineTextAlignment(.center)
                         .padding(.top, 5)
                     Button("Got it!") {
-                        isFirstTimeUser = false
+                        hasShownWelcomeMessage = true
                         withAnimation(.easeInOut(duration: 0.5)) {
                             showSyncOverlay = false
                         }
