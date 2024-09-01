@@ -9,16 +9,16 @@ import BitcoinDevKit
 import Foundation
 
 @MainActor
-@Observable
-class FeeViewModel {
+class FeeViewModel: ObservableObject {
     let feeClient: FeeClient
     let bdkClient: BDKClient
 
-    var txBuilderResult: TxBuilderResult?
-    var recommendedFees: RecommendedFees?
-    var feeViewError: BdkError?
-    var showingFeeViewErrorAlert = false
-    var selectedFeeIndex: Int = 2
+    @Published var txBuilderResult: TxBuilderResult?
+    @Published var recommendedFees: RecommendedFees?
+    @Published var feeViewError: BdkError?
+    @Published var showingFeeViewErrorAlert = false
+    @Published var selectedFeeIndex: Int = 2
+
     var selectedFee: Int? {
         guard let fees = recommendedFees else {
             return nil
@@ -30,6 +30,7 @@ class FeeViewModel {
         default: return fees.fastestFee
         }
     }
+
     var selectedFeeDescription: String {
         guard let selectedFee = selectedFee else {
             return "Failed to load fees"
@@ -67,5 +68,4 @@ class FeeViewModel {
             return ""
         }
     }
-
 }

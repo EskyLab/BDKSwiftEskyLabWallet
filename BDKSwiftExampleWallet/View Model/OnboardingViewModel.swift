@@ -37,7 +37,11 @@ class OnboardingViewModel: ObservableObject {
         didSet {
             DispatchQueue.main.async {
                 do {
-                    try KeyClient.live.saveEsploraURL(self.selectedURL)
+                    if !self.selectedURL.isEmpty {
+                        try KeyClient.live.saveEsploraURL(self.selectedURL)
+                    } else {
+                        self.onboardingViewError = .Esplora(message: "Invalid Esplora URL")
+                    }
                 } catch {
                     self.onboardingViewError = .Esplora(message: "Error Selecting Esplora")
                 }
@@ -48,16 +52,18 @@ class OnboardingViewModel: ObservableObject {
     @Published var isSyncing: Bool = false
 
     var availableURLs: [String] {
+        let urls: [String]
         switch selectedNetwork {
         case .bitcoin:
-            return Constants.Config.EsploraServerURLNetwork.Bitcoin.allValues
+            urls = Constants.Config.EsploraServerURLNetwork.Bitcoin.allValues
         case .testnet:
-            return Constants.Config.EsploraServerURLNetwork.Testnet.allValues
+            urls = Constants.Config.EsploraServerURLNetwork.Testnet.allValues
         case .regtest:
-            return Constants.Config.EsploraServerURLNetwork.Regtest.allValues
+            urls = Constants.Config.EsploraServerURLNetwork.Regtest.allValues
         case .signet:
-            return Constants.Config.EsploraServerURLNetwork.Signet.allValues
+            urls = Constants.Config.EsploraServerURLNetwork.Signet.allValues
         }
+        return urls.isEmpty ? ["default_url"] : urls
     }
 
     var buttonColor: Color {
@@ -93,6 +99,8 @@ class OnboardingViewModel: ObservableObject {
             }
         }
     }
+
+    // Rest of the class remains unchanged
 
     func createWallet() {
         DispatchQueue.main.async {

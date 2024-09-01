@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabHomeView: View {
-    @Bindable var viewModel: TabHomeViewModel
+    @ObservedObject var viewModel: TabHomeViewModel
     @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
     var body: some View {
@@ -18,22 +18,22 @@ struct TabHomeView: View {
                 .ignoresSafeArea()
 
             TabView {
-                WalletView(viewModel: .init())
+                WalletView(viewModel: WalletViewModel())
                     .tabItem {
                         Label("Wallet", systemImage: "bitcoinsign")
                     }
                 
-                ReceiveView(viewModel: .init())
+                ReceiveView(viewModel: ReceiveViewModel())
                     .tabItem {
                         Label("Receive", systemImage: "arrow.down")
                     }
 
-                AmountView(viewModel: .init())
+                AmountView(viewModel: AmountViewModel())
                     .tabItem {
                         Label("Amount", systemImage: "arrow.up")
                     }
 
-                SettingsView(viewModel: .init())
+                SettingsView(viewModel: SettingsViewModel())
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
@@ -56,7 +56,7 @@ struct TabHomeView: View {
         }
     }
 
-    // Custom function to adjust the Tab Bar appearance for iOS 18
+    // Custom function to adjust the Tab Bar appearance for iOS 15+
     private func customizeTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -68,10 +68,10 @@ struct TabHomeView: View {
 }
 
 #Preview {
-    TabHomeView(viewModel: .init())
+    TabHomeView(viewModel: TabHomeViewModel())
 }
 
 #Preview {
-    TabHomeView(viewModel: .init())
+    TabHomeView(viewModel: TabHomeViewModel())
         .environment(\.sizeCategory, .accessibilityLarge)
 }

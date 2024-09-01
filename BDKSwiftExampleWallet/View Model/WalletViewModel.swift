@@ -37,6 +37,7 @@ class WalletViewModel: ObservableObject {
         self.bdkClient = bdkClient
     }
 
+    // Fetch the current price
     func getPrices() async {
         do {
             let price = try await priceClient.fetchPrice()
@@ -51,6 +52,7 @@ class WalletViewModel: ObservableObject {
         }
     }
 
+    // Fetch the balance from the wallet
     func getBalance() {
         do {
             let balance = try bdkClient.getBalance()
@@ -75,6 +77,7 @@ class WalletViewModel: ObservableObject {
         }
     }
 
+    // Fetch the transactions from the wallet
     func getTransactions() {
         do {
             let transactionDetails = try bdkClient.getTransactions()
@@ -99,6 +102,7 @@ class WalletViewModel: ObservableObject {
         }
     }
 
+    // Sync the wallet with the network
     func sync() async {
         DispatchQueue.main.async {
             self.isSyncing = true
@@ -117,6 +121,7 @@ class WalletViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.walletSyncState = .error(error)
                 self.activityText = "Sync Failed"
+                self.walletViewError = .Generic(message: "Error during sync")
                 self.showingWalletViewErrorAlert = true
                 self.isSyncing = false
             }

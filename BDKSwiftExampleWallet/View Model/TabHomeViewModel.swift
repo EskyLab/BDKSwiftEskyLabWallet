@@ -7,14 +7,14 @@
 
 import BitcoinDevKit
 import Foundation
+import SwiftUI
 
 @MainActor
-@Observable
 class TabHomeViewModel: ObservableObject {
     let bdkClient: BDKClient
 
-    var tabViewError: BdkError?
-    var showingTabViewErrorAlert = false
+    @Published var tabViewError: BdkError?
+    @Published var showingTabViewErrorAlert = false
 
     init(bdkClient: BDKClient = .live) {
         self.bdkClient = bdkClient
@@ -30,9 +30,8 @@ class TabHomeViewModel: ObservableObject {
             self.tabViewError = .Generic(message: error.description)
             self.showingTabViewErrorAlert = true
         } catch {
-            self.tabViewError = .Generic(message: "Error Getting Balance")
+            self.tabViewError = .Generic(message: "Unknown error occurred")
             self.showingTabViewErrorAlert = true
         }
     }
-
 }

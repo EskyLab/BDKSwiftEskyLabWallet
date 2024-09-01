@@ -127,7 +127,7 @@ struct SplashScreenView: View {
     private func startAnimations() {
         isAnimating = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation {
                 showCulture = true
             }
@@ -158,7 +158,7 @@ struct SplashScreenView: View {
     }
     
     private func proceedToNextScreen() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation(.easeOut(duration: 0.5)) {
                 isShowingSplash = false
             }

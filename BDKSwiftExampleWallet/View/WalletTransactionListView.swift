@@ -13,7 +13,7 @@ struct WalletTransactionListView: View {
     let transactionDetails: [TransactionDetails]
     let walletSyncState: WalletSyncState
     @State private var showAllTransactions = false
-
+    
     var body: some View {
         List {
             if transactionDetails.isEmpty && walletSyncState == .syncing {
@@ -51,7 +51,7 @@ struct WalletTransactionListView: View {
             FullTransactionHistoryView(transactionDetails: transactionDetails)
         }
     }
-
+    
     private var loadingStateView: some View {
         HStack(spacing: 15) {
             Image(systemName: "circle.fill")
@@ -83,26 +83,27 @@ struct WalletTransactionListView: View {
         .listRowInsets(EdgeInsets())
         .listRowSeparator(.hidden)
     }
-
+    
     private func transactionRow(for transaction: TransactionDetails) -> some View {
         NavigationLink(
             destination: TransactionDetailsView(
                 viewModel: .init(),
                 transaction: transaction,
                 amount: transaction.sent > 0
-                    ? transaction.sent - transaction.received
-                    : transaction.received - transaction.sent
+                ? transaction.sent - transaction.received
+                : transaction.received - transaction.sent
             )
         ) {
             HStack(spacing: 15) {
+                // Display appropriate arrow based on the transaction type
                 Image(systemName: transaction.sent > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
                     .font(.largeTitle)
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(
-                        transaction.confirmationTime != nil ? Color.bitcoinOrange : Color.secondary,
+                        transaction.sent > 0 ? Color.red : Color.green,  // Red for sent, Green for received
                         Color.gray.opacity(0.05)
                     )
-
+                
                 VStack(alignment: .leading, spacing: 5) {
                     Text(transaction.txid)
                         .truncationMode(.middle)
@@ -111,18 +112,18 @@ struct WalletTransactionListView: View {
                         .fontWeight(.semibold)
                         .font(.title)
                         .foregroundColor(.primary)
-
+                    
                     // Display confirmation time or "Unconfirmed" in red
                     Text(
                         transaction.confirmationTime?.timestamp.toDate().formatted(.dateTime.day().month().hour().minute())
-                            ?? "Unconfirmed"
+                        ?? "Unconfirmed"
                     )
                     .foregroundColor(transaction.confirmationTime == nil ? .red : .secondary)
                     .font(.subheadline)
                 }
-
+                
                 Spacer()
-
+                
                 Text(
                     "\(transaction.sent > 0 ? transaction.sent - transaction.received : transaction.received - transaction.sent) sats"
                 )

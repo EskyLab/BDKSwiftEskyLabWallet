@@ -28,19 +28,19 @@ struct OnboardingView: View {
                         .foregroundColor(.bitcoinOrange)
                         .frame(width: 100, height: 100, alignment: .center)
                     Text("Bitcoin Wallet")
-                        .font(.title) // Use standard font modifier
+                        .font(.title)
                         .multilineTextAlignment(.center)
-                        .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+                        .padding(.horizontal, 12)
                     Text("CypherPunk Culture.")
-                        .font(.body) // Use standard font modifier
+                        .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
-                        .opacity(0.3) // Reduce opacity to make the text less prominent
+                        .opacity(0.3)
                 }
 
                 VStack {
                     Text("Choose your Network.")
-                        .font(.subheadline) // Use standard font modifier
+                        .font(.subheadline)
                         .multilineTextAlignment(.center)
 
                     VStack {
@@ -60,10 +60,14 @@ struct OnboardingView: View {
                             "Esplora Server",
                             selection: $viewModel.selectedURL
                         ) {
-                            ForEach(viewModel.availableURLs, id: \.self) { url in
-                                Text(url.replacingOccurrences(of: "https://", with: "")
-                                    .replacingOccurrences(of: "http://", with: ""))
-                                .tag(url)
+                            if viewModel.availableURLs.isEmpty {
+                                Text("No available URLs").tag("")
+                            } else {
+                                ForEach(viewModel.availableURLs, id: \.self) { url in
+                                    Text(url.replacingOccurrences(of: "https://", with: "")
+                                        .replacingOccurrences(of: "http://", with: ""))
+                                    .tag(url)
+                                }
                             }
                         }
                         .pickerStyle(.automatic)
@@ -88,26 +92,26 @@ struct OnboardingView: View {
 
                 VStack {
                     Text("EskyLab")
-                        .font(.subheadline) // Use standard font modifier
+                        .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Text("100% open-source & open-design ₿")
-                        .font(.subheadline) // Use standard font modifier
+                        .font(.subheadline)
                         .multilineTextAlignment(.center)
                 }
-                .padding(EdgeInsets(top: 32, leading: 32, bottom: 8, trailing: 32))
+                .padding(.horizontal, 32)
             }
         }
         .alert(isPresented: $showingOnboardingViewErrorAlert) {
-            Alert(
-                title: Text("Onboarding Error"),
-                message: Text(viewModel.onboardingViewError?.description ?? "Unknown"),
-                dismissButton: .default(Text("OK")) {
-                    viewModel.onboardingViewError = nil
+                    Alert(
+                        title: Text("Onboarding Error"),
+                        message: Text(viewModel.onboardingViewError?.localizedDescription ?? "Unknown error"),
+                        dismissButton: .default(Text("OK")) {
+                            viewModel.onboardingViewError = nil
+                        }
+                    )
                 }
-            )
+            }
         }
-    }
-}
 
 #if DEBUG
     #Preview("OnboardingView - en") {

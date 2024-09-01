@@ -12,7 +12,7 @@ import SwiftUI
 struct FeeView: View {
     let amount: String
     let address: String
-    @Bindable var viewModel: FeeViewModel
+    @ObservedObject var viewModel: FeeViewModel  // Corrected from @Bindable to @ObservedObject
     @Binding var rootIsActive: Bool
     @State private var impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium) // Haptic feedback generator
 
@@ -29,30 +29,22 @@ struct FeeView: View {
                     Picker("Select Fee", selection: $viewModel.selectedFeeIndex) {
                         HStack {
                             Image(systemName: "gauge.with.dots.needle.0percent")
-                            Text(
-                                " No Priority - \(viewModel.recommendedFees?.minimumFee ?? 1)"
-                            )
+                            Text(" No Priority - \(viewModel.recommendedFees?.minimumFee ?? 1)")
                         }
                         .tag(0)
                         HStack {
                             Image(systemName: "gauge.with.dots.needle.33percent")
-                            Text(
-                                " Low Priority - \(viewModel.recommendedFees?.hourFee ?? 1)"
-                            )
+                            Text(" Low Priority - \(viewModel.recommendedFees?.hourFee ?? 1)")
                         }
                         .tag(1)
                         HStack {
                             Image(systemName: "gauge.with.dots.needle.50percent")
-                            Text(
-                                " Med Priority - \(viewModel.recommendedFees?.halfHourFee ?? 1)"
-                            )
+                            Text(" Med Priority - \(viewModel.recommendedFees?.halfHourFee ?? 1)")
                         }
                         .tag(2)
                         HStack {
                             Image(systemName: "gauge.with.dots.needle.67percent")
-                            Text(
-                                " High Priority - \(viewModel.recommendedFees?.fastestFee ?? 1)"
-                            )
+                            Text(" High Priority - \(viewModel.recommendedFees?.fastestFee ?? 1)")
                         }
                         .tag(3)
                     }
@@ -64,7 +56,6 @@ struct FeeView: View {
                     Spacer()
                 }
 
-                // Spacer to push the content to the top, leaving room below
                 Spacer()
 
                 // Centered "Next" button below the Picker
