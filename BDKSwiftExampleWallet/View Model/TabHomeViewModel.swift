@@ -24,14 +24,16 @@ class TabHomeViewModel: ObservableObject {
         do {
             try bdkClient.loadWallet()
         } catch let error as WalletError {
-            self.tabViewError = .Generic(message: error.localizedDescription)
-            self.showingTabViewErrorAlert = true
+            handleError(.Generic(message: error.localizedDescription))
         } catch let error as BdkError {
-            self.tabViewError = .Generic(message: error.description)
-            self.showingTabViewErrorAlert = true
+            handleError(error)
         } catch {
-            self.tabViewError = .Generic(message: "Unknown error occurred")
-            self.showingTabViewErrorAlert = true
+            handleError(.Generic(message: "Unknown error occurred"))
         }
+    }
+
+    private func handleError(_ error: BdkError) {
+        self.tabViewError = error
+        self.showingTabViewErrorAlert = true
     }
 }

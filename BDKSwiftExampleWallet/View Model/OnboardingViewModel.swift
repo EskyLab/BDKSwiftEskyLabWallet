@@ -12,6 +12,7 @@ import Combine
 
 class OnboardingViewModel: ObservableObject {
     let bdkClient: BDKClient
+    let keyClient: KeyClient // Dependency injection for KeyClient
 
     @AppStorage("isOnboarding") var isOnboarding: Bool?
 
@@ -20,112 +21,95 @@ class OnboardingViewModel: ObservableObject {
     @Published var words: String = ""
     @Published var selectedNetwork: Network = .testnet {
         didSet {
-            DispatchQueue.main.async {
-                do {
-                    let networkString = self.selectedNetwork.description
-                    try KeyClient.live.saveNetwork(networkString)
-                    // Ensure selectedURL is a valid URL for the new network
-                    self.selectedURL = self.availableURLs.first ?? ""
-                    try KeyClient.live.saveEsploraURL(self.selectedURL)
-                } catch {
-                    self.onboardingViewError = .InvalidNetwork(message: "Error Selecting Network")
-                }
-            }
+            saveNetworkSelection()
         }
     }
     @Published var selectedURL: String = "" {
         didSet {
-            DispatchQueue.main.async {
-                do {
-                    if !self.selectedURL.isEmpty {
-                        try KeyClient.live.saveEsploraURL(self.selectedURL)
-                    } else {
-                        self.onboardingViewError = .Esplora(message: "Invalid Esplora URL")
-                    }
-                } catch {
-                    self.onboardingViewError = .Esplora(message: "Error Selecting Esplora")
-                }
-            }
+            saveEsploraURL()
         }
     }
     @Published var showingOnboardingViewErrorAlert: Bool = false
     @Published var isSyncing: Bool = false
 
+    private let networkURLs: [Network: [String]] = [
+        .bitcoin: Constants.Config.EsploraServerURLNetwork.Bitcoin.allValues,
+        .testnet: Constants.Config.EsploraServerURLNetwork.Testnet.allValues,
+        .regtest: Constants.Config.EsploraServerURLNetwork.Regtest.allValues,
+        .signet: Constants.Config.EsploraServerURLNetwork.Signet.allValues
+    ]
+
+    private let networkColors: [Network: Color] = [
+        .bitcoin: Constants.BitcoinNetworkColor.bitcoin.color,
+        .testnet: Constants.BitcoinNetworkColor.testnet.color,
+        .signet: Constants.BitcoinNetworkColor.signet.color,
+        .regtest: Constants.BitcoinNetworkColor.regtest.color
+    ]
+
     var availableURLs: [String] {
-        let urls: [String]
-        switch selectedNetwork {
-        case .bitcoin:
-            urls = Constants.Config.EsploraServerURLNetwork.Bitcoin.allValues
-        case .testnet:
-            urls = Constants.Config.EsploraServerURLNetwork.Testnet.allValues
-        case .regtest:
-            urls = Constants.Config.EsploraServerURLNetwork.Regtest.allValues
-        case .signet:
-            urls = Constants.Config.EsploraServerURLNetwork.Signet.allValues
-        }
-        return urls.isEmpty ? ["default_url"] : urls
+        networkURLs[selectedNetwork] ?? ["default_url"]
     }
 
     var buttonColor: Color {
-        switch selectedNetwork {
-        case .bitcoin:
-            return Constants.BitcoinNetworkColor.bitcoin.color
-        case .testnet:
-            return Constants.BitcoinNetworkColor.testnet.color
-        case .signet:
-            return Constants.BitcoinNetworkColor.signet.color
-        case .regtest:
-            return Constants.BitcoinNetworkColor.regtest.color
-        }
+        networkColors[selectedNetwork] ?? .gray
     }
 
-    init(bdkClient: BDKClient = .live) {
+    init(bdkClient: BDKClient = .live, keyClient: KeyClient = .live) {
         self.bdkClient = bdkClient
-        DispatchQueue.main.async {
-            do {
-                if let networkString = try KeyClient.live.getNetwork() {
-                    self.selectedNetwork = Network(stringValue: networkString) ?? .testnet
-                } else {
-                    self.selectedNetwork = .testnet
-                }
-                if let esploraURL = try KeyClient.live.getEsploraURL() {
-                    self.selectedURL = esploraURL
-                } else {
-                    // Ensure selectedURL is set to a valid default
-                    self.selectedURL = self.availableURLs.first ?? ""
-                }
-            } catch {
-                self.onboardingViewError = .Esplora(message: "Error Selecting Esplora")
-            }
+        self.keyClient = keyClient
+        loadInitialSettings()
+    }
+
+    private func loadInitialSettings() {
+        do {
+            self.selectedNetwork = try keyClient.getNetwork().flatMap { Network(stringValue: $0) } ?? .testnet
+            self.selectedURL = try keyClient.getEsploraURL() ?? availableURLs.first ?? ""
+        } catch {
+            setError(.Esplora(message: "Error Selecting Esplora"))
         }
     }
 
-    // Rest of the class remains unchanged
+    private func saveNetworkSelection() {
+        do {
+            let networkString = selectedNetwork.description
+            try keyClient.saveNetwork(networkString)
+            selectedURL = availableURLs.first ?? ""
+            try keyClient.saveEsploraURL(selectedURL)
+        } catch {
+            setError(.InvalidNetwork(message: "Error Selecting Network"))
+        }
+    }
+
+    private func saveEsploraURL() {
+        do {
+            guard !selectedURL.isEmpty else {
+                setError(.Esplora(message: "Invalid Esplora URL"))
+                return
+            }
+            try keyClient.saveEsploraURL(selectedURL)
+        } catch {
+            setError(.Esplora(message: "Error Selecting Esplora"))
+        }
+    }
 
     func createWallet() {
-        DispatchQueue.main.async {
-            do {
-                try self.bdkClient.createWallet(self.words)
-                self.isOnboarding = false
-                // Start background synchronization after wallet creation
-                self.startBackgroundSync()
-            } catch {
-                self.onboardingViewError = .Generic(message: "Error Creating Wallet")
-            }
+        do {
+            try bdkClient.createWallet(words)
+            isOnboarding = false
+            startBackgroundSync()
+        } catch {
+            setError(.Generic(message: "Error Creating Wallet"))
         }
     }
 
     private func startBackgroundSync() {
+        isSyncing = true
         DispatchQueue.global(qos: .background).async {
-            DispatchQueue.main.async {
-                self.isSyncing = true
-            }
             do {
-                // Replace with actual synchronization logic
                 try self.syncWithServer()
             } catch {
                 DispatchQueue.main.async {
-                    self.onboardingViewError = .Generic(message: "Error During Synchronization")
+                    self.setError(.Generic(message: "Error During Synchronization"))
                 }
             }
             DispatchQueue.main.async {
@@ -138,5 +122,11 @@ class OnboardingViewModel: ObservableObject {
         // Simulate network delay
         sleep(2)
         // Add your synchronization logic here
+    }
+
+    private func setError(_ error: BdkError) {
+        DispatchQueue.main.async {
+            self.onboardingViewError = error
+        }
     }
 }
