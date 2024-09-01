@@ -25,13 +25,13 @@ final class BDKSwiftExampleWalletReceiveViewModelTests: XCTestCase {
         return addressPredicate.evaluate(with: address)
     }
 
-    func testReceiveViewModel() {
+    func testReceiveViewModel() async {
         // Set up viewModel
         let viewModel = ReceiveViewModel(bdkClient: .mock)
         XCTAssertEqual(viewModel.address, "")
 
         // Simulate successful getAddress() call
-        viewModel.getAddress()
+        await viewModel.getAddress()
         XCTAssertEqual(
             viewModel.address,
             "tb1pd8jmenqpe7rz2mavfdx7uc8pj7vskxv4rl6avxlqsw2u8u7d4gfs97durt"

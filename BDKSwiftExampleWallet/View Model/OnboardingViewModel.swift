@@ -20,13 +20,14 @@ class OnboardingViewModel: ObservableObject {
     @Published var words: String = ""
     @Published var selectedNetwork: Network = .testnet {
         didSet {
-            do {
-                let networkString = selectedNetwork.description
-                try KeyClient.live.saveNetwork(networkString)
-                selectedURL = availableURLs.first ?? ""
-                try KeyClient.live.saveEsploraURL(selectedURL)
-            } catch {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                do {
+                    let networkString = self.selectedNetwork.description
+                    try KeyClient.live.saveNetwork(networkString)
+                    // Ensure selectedURL is a valid URL for the new network
+                    self.selectedURL = self.availableURLs.first ?? ""
+                    try KeyClient.live.saveEsploraURL(self.selectedURL)
+                } catch {
                     self.onboardingViewError = .InvalidNetwork(message: "Error Selecting Network")
                 }
             }
@@ -34,16 +35,17 @@ class OnboardingViewModel: ObservableObject {
     }
     @Published var selectedURL: String = "" {
         didSet {
-            do {
-                try KeyClient.live.saveEsploraURL(selectedURL)
-            } catch {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                do {
+                    try KeyClient.live.saveEsploraURL(self.selectedURL)
+                } catch {
                     self.onboardingViewError = .Esplora(message: "Error Selecting Esplora")
                 }
             }
         }
     }
     @Published var showingOnboardingViewErrorAlert: Bool = false
+    @Published var isSyncing: Bool = false
 
     var availableURLs: [String] {
         switch selectedNetwork {
@@ -73,33 +75,60 @@ class OnboardingViewModel: ObservableObject {
 
     init(bdkClient: BDKClient = .live) {
         self.bdkClient = bdkClient
-        do {
-            if let networkString = try KeyClient.live.getNetwork() {
-                self.selectedNetwork = Network(stringValue: networkString) ?? .testnet
-            } else {
-                self.selectedNetwork = .testnet
-            }
-            if let esploraURL = try KeyClient.live.getEsploraURL() {
-                self.selectedURL = esploraURL
-            } else {
-                self.selectedURL = availableURLs.first ?? ""
-            }
-        } catch {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            do {
+                if let networkString = try KeyClient.live.getNetwork() {
+                    self.selectedNetwork = Network(stringValue: networkString) ?? .testnet
+                } else {
+                    self.selectedNetwork = .testnet
+                }
+                if let esploraURL = try KeyClient.live.getEsploraURL() {
+                    self.selectedURL = esploraURL
+                } else {
+                    // Ensure selectedURL is set to a valid default
+                    self.selectedURL = self.availableURLs.first ?? ""
+                }
+            } catch {
                 self.onboardingViewError = .Esplora(message: "Error Selecting Esplora")
             }
         }
     }
 
     func createWallet() {
-        do {
-            try bdkClient.createWallet(words)
-            isOnboarding = false
-            // You can transition to the WalletView here after the wallet is created.
-        } catch {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            do {
+                try self.bdkClient.createWallet(self.words)
+                self.isOnboarding = false
+                // Start background synchronization after wallet creation
+                self.startBackgroundSync()
+            } catch {
                 self.onboardingViewError = .Generic(message: "Error Creating Wallet")
             }
         }
+    }
+
+    private func startBackgroundSync() {
+        DispatchQueue.global(qos: .background).async {
+            DispatchQueue.main.async {
+                self.isSyncing = true
+            }
+            do {
+                // Replace with actual synchronization logic
+                try self.syncWithServer()
+            } catch {
+                DispatchQueue.main.async {
+                    self.onboardingViewError = .Generic(message: "Error During Synchronization")
+                }
+            }
+            DispatchQueue.main.async {
+                self.isSyncing = false
+            }
+        }
+    }
+
+    private func syncWithServer() throws {
+        // Simulate network delay
+        sleep(2)
+        // Add your synchronization logic here
     }
 }

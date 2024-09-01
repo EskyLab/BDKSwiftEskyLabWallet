@@ -5,9 +5,9 @@
 //  Created by Matthew Ramsden on 6/20/23.
 //
 
-import BitcoinUI
 import SwiftUI
 import MessageUI
+import BitcoinUI
 
 struct ReceiveView: View {
     @Bindable var viewModel: ReceiveViewModel
@@ -15,19 +15,17 @@ struct ReceiveView: View {
     @State private var showCheckmark = false
     @State private var showMessageCompose = false
     @State private var showMailCompose = false
+    @State private var showShareSheet = false
     @State private var showAlert = false
     @State private var showMailErrorAlert = false
     @State private var showMessageErrorAlert = false
-    @State private var showShareSheet = false
 
     var body: some View {
         ZStack {
-            // Background color
             Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
 
             VStack(spacing: 20) {
-                // Header with Bitcoin icon and title
                 VStack(spacing: 8) {
                     Image(systemName: "bitcoinsign.circle.fill")
                         .resizable()
@@ -42,19 +40,12 @@ struct ReceiveView: View {
                 
                 Spacer()
                 
-                // QR Code View
-                if viewModel.address.isEmpty {
-                    QRCodeView(qrCodeType: .bitcoin(viewModel.address))
-                        .blur(radius: 15)
-                        .transition(.opacity)
-                } else {
-                    QRCodeView(qrCodeType: .bitcoin(viewModel.address))
-                        .transition(.opacity)
-                }
+                QRCodeView(qrCodeType: .bitcoin(viewModel.address))
+                    .blur(radius: viewModel.address.isEmpty ? 15 : 0)
+                    .transition(.opacity)
                 
                 Spacer()
                 
-                // Address and copy button
                 HStack {
                     Text(viewModel.address.isEmpty ? "No address" : viewModel.address)
                         .font(.body.monospaced())
@@ -76,7 +67,9 @@ struct ReceiveView: View {
             }
             .padding()
             .onAppear {
-                viewModel.getAddress()
+                Task {
+                    await fetchAddress()
+                }
             }
             .confirmationDialog("What would you like to do?", isPresented: $showAlert) {
                 Button("Copy Address") {
@@ -136,6 +129,10 @@ struct ReceiveView: View {
                 }
             )
         }
+    }
+
+    private func fetchAddress() async {
+        await viewModel.getAddress()
     }
 }
 

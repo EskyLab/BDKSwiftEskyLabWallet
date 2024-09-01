@@ -28,11 +28,11 @@ struct OnboardingView: View {
                         .foregroundColor(.bitcoinOrange)
                         .frame(width: 100, height: 100, alignment: .center)
                     Text("Bitcoin Wallet")
-                        .textStyle(BitcoinTitle1())
+                        .font(.title) // Use standard font modifier
                         .multilineTextAlignment(.center)
                         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
                     Text("CypherPunk Culture.")
-                        .textStyle(BitcoinBody1())
+                        .font(.body) // Use standard font modifier
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                         .opacity(0.3) // Reduce opacity to make the text less prominent
@@ -40,7 +40,7 @@ struct OnboardingView: View {
 
                 VStack {
                     Text("Choose your Network.")
-                        .textStyle(BitcoinBody4())
+                        .font(.subheadline) // Use standard font modifier
                         .multilineTextAlignment(.center)
 
                     VStack {
@@ -61,15 +61,8 @@ struct OnboardingView: View {
                             selection: $viewModel.selectedURL
                         ) {
                             ForEach(viewModel.availableURLs, id: \.self) { url in
-                                Text(
-                                    url.replacingOccurrences(
-                                        of: "https://",
-                                        with: ""
-                                    ).replacingOccurrences(
-                                        of: "http://",
-                                        with: ""
-                                    )
-                                )
+                                Text(url.replacingOccurrences(of: "https://", with: "")
+                                    .replacingOccurrences(of: "http://", with: ""))
                                 .tag(url)
                             }
                         }
@@ -95,10 +88,10 @@ struct OnboardingView: View {
 
                 VStack {
                     Text("EskyLab")
-                        .textStyle(BitcoinBody4())
+                        .font(.subheadline) // Use standard font modifier
                         .multilineTextAlignment(.center)
                     Text("100% open-source & open-design ₿")
-                        .textStyle(BitcoinBody4())
+                        .font(.subheadline) // Use standard font modifier
                         .multilineTextAlignment(.center)
                 }
                 .padding(EdgeInsets(top: 32, leading: 32, bottom: 8, trailing: 32))
