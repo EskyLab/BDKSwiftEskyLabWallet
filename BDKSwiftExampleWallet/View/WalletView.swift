@@ -105,7 +105,7 @@ struct WalletView: View {
             .opacity(showSyncOverlay ? 0.5 : 1.0)
             .refreshable {
                 isRefreshing = true
-                await performDataFetch()
+                await fetchWalletData()
                 isRefreshing = false
             }
             Spacer()
@@ -113,43 +113,31 @@ struct WalletView: View {
         .padding()
         .task {
             if isFirstAppear || newTransactionSent {
-                await performInitialSyncAndFetch()
+                await fetchWalletData()
                 isFirstAppear = false
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    showSyncOverlay = false
-                }
             }
         }
     }
 
-    private func performDataFetch() async {
-        showSyncOverlay = true
+    private func fetchWalletData() async {
+        toggleSyncOverlay(show: true)
         await viewModel.sync()
         viewModel.getBalance()
         viewModel.getTransactions()
         await viewModel.getPrices()
 
-        withAnimation(.easeInOut(duration: 0.5)) {
-            showSyncOverlay = false
-        }
-    }
-
-    private func performInitialSyncAndFetch() async {
-        showSyncOverlay = true
-        await viewModel.sync()
-        viewModel.getBalance()
-        viewModel.getTransactions()
-        await viewModel.getPrices()
-
-        if !hasShownWelcomeMessage {
+        if isFirstAppear && !hasShownWelcomeMessage {
             withAnimation(.easeInOut(duration: 0.5)) {
-                showSyncOverlay = true
                 hasShownWelcomeMessage = true
             }
-        } else {
-            withAnimation(.easeInOut(duration: 0.5)) {
-                showSyncOverlay = false
-            }
+        }
+
+        toggleSyncOverlay(show: false)
+    }
+
+    private func toggleSyncOverlay(show: Bool) {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            showSyncOverlay = show
         }
     }
 

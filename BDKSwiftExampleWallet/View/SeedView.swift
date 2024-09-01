@@ -6,79 +6,44 @@
 //
 
 import SwiftUI
+import BitcoinDevKit
 
 struct SeedView: View {
-    @Bindable var viewModel: SeedViewModel
-    @State private var isCopied = false
-    @State private var showCheckmark = false
+    @ObservedObject var viewModel: SeedViewModel
 
     var body: some View {
-        ZStack {
-            Color(uiColor: .systemBackground)
-                .ignoresSafeArea()
+        VStack(spacing: 20) {
+            if viewModel.seed.mnemonic.isEmpty {
+                Text("No seed available.")
+            } else {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Mnemonic: \(viewModel.seed.mnemonic)")
+                        .font(.body)
+                        .foregroundColor(.primary)
 
-            VStack {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        // Displaying seed words
-                        ForEach(
-                            Array(viewModel.seed.mnemonic.components(separatedBy: " ").enumerated()),
-                            id: \.element
-                        ) { index, word in
-                            HStack {
-                                Text("\(index + 1). \(word)")
-                                    .font(.body)
-                                    .foregroundColor(.primary)
-                                Spacer()
-                            }
-                            .padding(.horizontal, 16)
-                        }
-                    }
-                    .padding()
-                }
+                    Text("Descriptor: \(viewModel.seed.descriptor)")
+                        .font(.body)
+                        .foregroundColor(.secondary)
 
-                // Copy button
-                HStack {
-                    Spacer()
-                    Button {
-                        UIPasteboard.general.string = viewModel.seed.mnemonic
-                        isCopied = true
-                        showCheckmark = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            isCopied = false
-                            showCheckmark = false
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: showCheckmark ? "checkmark" : "doc.on.doc")
-                            Text("Copy")
-                        }
-                        .font(.body.weight(.semibold))
-                        .foregroundColor(.white)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.bitcoinOrange)
-                    Spacer()
+                    Text("Change Descriptor: \(viewModel.seed.changeDescriptor)")
+                        .font(.body)
+                        .foregroundColor(.secondary)
                 }
                 .padding()
             }
-            .padding()
-            .onAppear {
-                viewModel.getSeed()
-            }
+        }
+        .onAppear {
+            viewModel.getSeed()
         }
         .alert(isPresented: $viewModel.showingSeedViewErrorAlert) {
             Alert(
-                title: Text("Showing Seed Error"),
-                message: Text(viewModel.seedViewError?.description ?? "Unknown Error"),
-                dismissButton: .default(Text("OK")) {
-                    viewModel.seedViewError = nil
-                }
+                title: Text("Error"),
+                message: Text(viewModel.seedViewError?.description ?? "An unknown error occurred."),
+                dismissButton: .default(Text("OK"))
             )
         }
     }
 }
-
 #if DEBUG
     #Preview("SeedView - en") {
         SeedView(viewModel: .init())

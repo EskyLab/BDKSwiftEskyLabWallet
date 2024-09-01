@@ -84,7 +84,7 @@ struct AmountView: View {
             }
             .padding()
             .task {
-                viewModel.getBalance()
+                await viewModel.getBalance()
             }
         }
         .alert(isPresented: $viewModel.showingAmountViewErrorAlert) {
@@ -98,7 +98,7 @@ struct AmountView: View {
         }
     }
 
-    func numpadRow(_ characters: [String]) -> some View {
+    func numpadRow(_ characters: [String], isLastRow: Bool = false) -> some View {
         HStack(spacing: 20) {
             ForEach(characters, id: \.self) { character in
                 NumpadButton(numpadAmount: $numpadAmount, character: character)
@@ -108,7 +108,27 @@ struct AmountView: View {
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                     )
+                    .onTapGesture {
+                        handleNumpadInput(character)
+                    }
             }
+        }
+    }
+
+    private func handleNumpadInput(_ character: String) {
+        DispatchQueue.main.async {
+            if character == "<" {
+                if !numpadAmount.isEmpty {
+                    numpadAmount.removeLast()
+                }
+            } else if character != " " {
+                if numpadAmount == "0" {
+                    numpadAmount = character
+                } else {
+                    numpadAmount.append(character)
+                }
+            }
+            impactFeedbackGenerator.impactOccurred()
         }
     }
 }

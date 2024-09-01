@@ -24,15 +24,7 @@ class ReceiveViewModel {
     // Updated to async
     func getAddress() async {
         do {
-            // Wrap the synchronous call in a Task to support async/await
-            self.address = try await withCheckedThrowingContinuation { continuation in
-                do {
-                    let address = try bdkClient.getAddress()
-                    continuation.resume(returning: address)
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
+            self.address = try bdkClient.getAddress()
         } catch let error as WalletError {
             self.receiveViewError = .Generic(message: error.localizedDescription)
             self.showingReceiveViewErrorAlert = true

@@ -116,16 +116,19 @@ struct TransactionDetailsView: View {
     }
 
     private func openTransactionInBrowser() {
-        if let esploraURL = viewModel.esploraURL {
-            let urlString = "\(esploraURL)/tx/\(transaction.txid)".replacingOccurrences(of: "/api", with: "")
-            if let url = URL(string: urlString) {
-                UIApplication.shared.open(url)
-            }
+        guard let esploraURL = viewModel.esploraURL else { return }
+        let urlString = "\(esploraURL)/tx/\(transaction.txid)".replacingOccurrences(of: "/api", with: "")
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 
     private func copyTransactionID() {
         UIPasteboard.general.string = transaction.txid
+        provideCopyFeedback()
+    }
+
+    private func provideCopyFeedback() {
         isCopied = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             isCopied = false

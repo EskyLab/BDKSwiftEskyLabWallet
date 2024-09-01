@@ -45,10 +45,7 @@ class WalletViewModel: ObservableObject {
                 self.price = price.usd
             }
         } catch {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: "Error Getting Prices")
-                self.showingWalletViewErrorAlert = true
-            }
+            self.handleError(error, message: "Error Getting Prices")
         }
     }
 
@@ -59,21 +56,8 @@ class WalletViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.balanceTotal = balance.total
             }
-        } catch let error as WalletError {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: error.localizedDescription)
-                self.showingWalletViewErrorAlert = true
-            }
-        } catch let error as BdkError {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: error.description)
-                self.showingWalletViewErrorAlert = true
-            }
         } catch {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: "Error Getting Balance")
-                self.showingWalletViewErrorAlert = true
-            }
+            self.handleError(error, message: "Error Getting Balance")
         }
     }
 
@@ -84,47 +68,48 @@ class WalletViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.transactionDetails = transactionDetails
             }
-        } catch let error as WalletError {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: error.localizedDescription)
-                self.showingWalletViewErrorAlert = true
-            }
-        } catch let error as BdkError {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: error.description)
-                self.showingWalletViewErrorAlert = true
-            }
         } catch {
-            DispatchQueue.main.async {
-                self.walletViewError = .Generic(message: "Error Getting Transactions")
-                self.showingWalletViewErrorAlert = true
-            }
+            self.handleError(error, message: "Error Getting Transactions")
         }
     }
 
     // Sync the wallet with the network
     func sync() async {
-        DispatchQueue.main.async {
-            self.isSyncing = true
-            self.activityText = "Syncing Wallet..."
-            self.walletSyncState = .syncing
-        }
+        updateSyncState(isSyncing: true, text: "Syncing Wallet...", state: .syncing)
+
         do {
             try await bdkClient.sync()
-            DispatchQueue.main.async {
-                self.walletSyncState = .synced
-                self.isConfirmed = true
-                self.activityText = "Wallet Synced"
-                self.isSyncing = false
-            }
+            updateSyncState(isSyncing: false, text: "Wallet Synced", state: .synced, isConfirmed: true)
         } catch {
-            DispatchQueue.main.async {
-                self.walletSyncState = .error(error)
-                self.activityText = "Sync Failed"
-                self.walletViewError = .Generic(message: "Error during sync")
-                self.showingWalletViewErrorAlert = true
-                self.isSyncing = false
-            }
+            handleSyncError(error)
+        }
+    }
+
+    // MARK: - Private Helpers
+
+    private func updateSyncState(isSyncing: Bool, text: String, state: WalletSyncState, isConfirmed: Bool = false) {
+        DispatchQueue.main.async {
+            self.isSyncing = isSyncing
+            self.activityText = text
+            self.walletSyncState = state
+            self.isConfirmed = isConfirmed
+        }
+    }
+
+    private func handleError(_ error: Error, message: String) {
+        DispatchQueue.main.async {
+            self.walletViewError = .Generic(message: message)
+            self.showingWalletViewErrorAlert = true
+        }
+    }
+
+    private func handleSyncError(_ error: Error) {
+        DispatchQueue.main.async {
+            self.walletSyncState = .error(error)
+            self.activityText = "Sync Failed"
+            self.walletViewError = .Generic(message: "Error during sync")
+            self.showingWalletViewErrorAlert = true
+            self.isSyncing = false
         }
     }
 }

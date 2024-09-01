@@ -12,12 +12,12 @@ import XCTest
 final class BDKSwiftExampleWalletSendViewModelTests: XCTestCase {
 
     // Test for AmountViewModel
-    func testAmountViewModel() {
+    func testAmountViewModel() async throws {  // Mark the function as async
         // Set up viewModel with mock client
         let viewModel = AmountViewModel(bdkClient: .mock)
 
         // Perform getBalance
-        viewModel.getBalance()
+        await viewModel.getBalance()  // Use await since it's an async function
 
         // Assert that the balance is greater than 0
         if let balance = viewModel.balanceTotal {
@@ -28,12 +28,12 @@ final class BDKSwiftExampleWalletSendViewModelTests: XCTestCase {
     }
 
     // Test for FeeViewModel
-    func testFeeViewModel() async {
+    func testFeeViewModel() async throws {  // Mark the function as async
         // Set up viewModel with mock clients
         let viewModel = FeeViewModel(feeClient: .mock, bdkClient: .mock)
 
         // Perform getFees
-        await viewModel.getFees()
+        await viewModel.getFees()  // Use await since it's an async function
 
         // Assert that the recommended fastest fee is as expected
         if let fees = viewModel.recommendedFees {
@@ -44,7 +44,7 @@ final class BDKSwiftExampleWalletSendViewModelTests: XCTestCase {
     }
 
     // Test for BuildTransactionViewModel
-    func testBuildTransactionViewModel() {
+    func testBuildTransactionViewModel() async throws {  // Mark the function as async
         // Set up viewModel with mock client
         let viewModel = BuildTransactionViewModel(bdkClient: .mock)
 
@@ -53,7 +53,7 @@ final class BDKSwiftExampleWalletSendViewModelTests: XCTestCase {
         let fee: Float = 17.0
 
         // Perform buildTransaction
-        viewModel.buildTransaction(
+        await viewModel.buildTransaction(  // Use await if it's an async function
             address: address,
             amount: UInt64(Int64(amount) ?? 0),
             feeRate: fee

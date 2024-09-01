@@ -72,16 +72,6 @@
         }
       }
     },
-    "%lld. %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld. %2$@"
-          }
-        }
-      }
-    },
     "%llu sats" : {
 
     },
@@ -231,6 +221,9 @@
     "Cannot Send Messages" : {
 
     },
+    "Change Descriptor: %@" : {
+
+    },
     "Choose your Network." : {
       "localizations" : {
         "fr" : {
@@ -267,6 +260,7 @@
       }
     },
     "Copy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -315,6 +309,9 @@
         }
       }
     },
+    "Descriptor: %@" : {
+
+    },
     "Enter address to send BTC to" : {
       "localizations" : {
         "fr" : {
@@ -324,6 +321,9 @@
           }
         }
       }
+    },
+    "Error" : {
+
     },
     "EskyLab" : {
 
@@ -378,6 +378,9 @@
     "Loading..." : {
 
     },
+    "Mnemonic: %@" : {
+
+    },
     "Network" : {
       "localizations" : {
         "fr" : {
@@ -420,6 +423,9 @@
           }
         }
       }
+    },
+    "No seed available." : {
+
     },
     "No Transactions" : {
       "localizations" : {
@@ -577,6 +583,7 @@
       }
     },
     "Showing Seed Error" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

@@ -29,7 +29,6 @@ class SettingsViewModel: ObservableObject {
         self.bdkClient = bdkClient
         self.keyClient = keyClient
 
-        // Set biometric preference to true on first launch
         if !hasLaunchedBefore {
             isBiometricEnabled = false // Default to false on first launch
             hasLaunchedBefore = true
@@ -37,48 +36,36 @@ class SettingsViewModel: ObservableObject {
     }
 
     func delete() {
-        do {
+        handleBDKError {
             try bdkClient.deleteWallet()
             self.isOnboarding = true
-        } catch _ as BdkError {
-            DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not delete seed")
-                self.showingSettingsViewErrorAlert = true
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not delete seed")
-                self.showingSettingsViewErrorAlert = true
-            }
         }
     }
 
     func getNetwork() {
-        do {
+        handleBDKError {
             self.network = try keyClient.getNetwork()
-        } catch _ as BdkError {
-            DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not get network")
-                self.showingSettingsViewErrorAlert = true
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not get network")
-                self.showingSettingsViewErrorAlert = true
-            }
         }
     }
 
     func getEsploraUrl() {
-        do {
+        handleBDKError {
             self.esploraURL = try keyClient.getEsploraURL()
+        }
+    }
+
+    private func handleBDKError(_ action: () throws -> Void) {
+        do {
+            try action()
         } catch _ as BdkError {
             DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not get esplora")
+                self.settingsError = BdkError.Generic(message: "Operation failed")
+                self.showingSettingsViewErrorAlert = true
             }
         } catch {
             DispatchQueue.main.async {
-                self.settingsError = BdkError.Generic(message: "Could not get esplora")
+                self.settingsError = BdkError.Generic(message: "Unknown error occurred")
+                self.showingSettingsViewErrorAlert = true
             }
         }
     }

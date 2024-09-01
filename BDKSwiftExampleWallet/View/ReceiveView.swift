@@ -73,27 +73,15 @@ struct ReceiveView: View {
             }
             .confirmationDialog("What would you like to do?", isPresented: $showAlert) {
                 Button("Copy Address") {
-                    UIPasteboard.general.string = viewModel.address
-                    isCopied = true
-                    showCheckmark = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        isCopied = false
-                        showCheckmark = false
-                    }
+                    copyAddressToClipboard()
                 }
                 Button("Share via iMessage") {
-                    if MFMessageComposeViewController.canSendText() {
-                        showMessageCompose = true
-                    } else {
-                        showMessageErrorAlert = true
-                    }
+                    showMessageCompose = MFMessageComposeViewController.canSendText()
+                    showMessageErrorAlert = !showMessageCompose
                 }
                 Button("Share via Email") {
-                    if MFMailComposeViewController.canSendMail() {
-                        showMailCompose = true
-                    } else {
-                        showMailErrorAlert = true
-                    }
+                    showMailCompose = MFMailComposeViewController.canSendMail()
+                    showMailErrorAlert = !showMailCompose
                 }
                 Button("Share via AirDrop") {
                     showShareSheet = true
@@ -131,8 +119,15 @@ struct ReceiveView: View {
         }
     }
 
-    private func fetchAddress() async {
-        await viewModel.getAddress()
+    // Encapsulate the address copy logic
+    private func copyAddressToClipboard() {
+        UIPasteboard.general.string = viewModel.address
+        isCopied = true
+        showCheckmark = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isCopied = false
+            showCheckmark = false
+        }
     }
 }
 

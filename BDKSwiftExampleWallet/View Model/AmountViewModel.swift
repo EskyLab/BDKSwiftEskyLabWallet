@@ -22,9 +22,9 @@ class AmountViewModel: ObservableObject {
         self.bdkClient = bdkClient
     }
 
-    func getBalance() {
+    func getBalance() async {
         do {
-            let balance = try bdkClient.getBalance()
+            let balance = try await fetchBalance()
             self.balanceTotal = balance.total
             self.balanceConfirmed = balance.confirmed
         } catch let error as WalletError {
@@ -36,6 +36,17 @@ class AmountViewModel: ObservableObject {
         } catch {
             self.amountViewError = .Generic(message: "Error Getting Balance")
             self.showingAmountViewErrorAlert = true
+        }
+    }
+
+    private func fetchBalance() async throws -> Balance {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                let balance = try bdkClient.getBalance()
+                continuation.resume(returning: balance)
+            } catch {
+                continuation.resume(throwing: error)
+            }
         }
     }
 }

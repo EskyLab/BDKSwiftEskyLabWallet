@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BitcoinDevKit
 
 struct SettingsView: View {
     @ObservedObject var viewModel: SettingsViewModel

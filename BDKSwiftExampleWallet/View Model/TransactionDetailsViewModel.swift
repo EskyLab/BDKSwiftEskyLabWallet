@@ -23,16 +23,14 @@ class TransactionDetailsViewModel: ObservableObject {
     ) {
         self.bdkClient = bdkClient
         self.keyClient = keyClient
+        self.getNetwork()
+        self.getEsploraUrl()
     }
 
+    // Fetch the network from the key client
     func getNetwork() {
         do {
             self.network = try keyClient.getNetwork()
-        } catch _ as BdkError {
-            DispatchQueue.main.async {
-                self.transactionDetailsError = BdkError.Generic(message: "Could not get network")
-                self.showingTransactionDetailsViewErrorAlert = true
-            }
         } catch {
             DispatchQueue.main.async {
                 self.transactionDetailsError = BdkError.Generic(message: "Could not get network")
@@ -41,6 +39,7 @@ class TransactionDetailsViewModel: ObservableObject {
         }
     }
 
+    // Fetch the Esplora URL based on the network
     func getEsploraUrl() {
         do {
             let savedEsploraURL = try keyClient.getEsploraURL()
@@ -49,13 +48,10 @@ class TransactionDetailsViewModel: ObservableObject {
             } else {
                 self.esploraURL = savedEsploraURL
             }
-        } catch _ as BdkError {
-            DispatchQueue.main.async {
-                self.transactionDetailsError = BdkError.Generic(message: "Could not get esplora")
-            }
         } catch {
             DispatchQueue.main.async {
                 self.transactionDetailsError = BdkError.Generic(message: "Could not get esplora")
+                self.showingTransactionDetailsViewErrorAlert = true
             }
         }
     }

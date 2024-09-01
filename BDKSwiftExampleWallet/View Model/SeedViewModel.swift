@@ -9,24 +9,25 @@ import BitcoinDevKit
 import Foundation
 import SwiftUI
 
-@Observable
 @MainActor
-class SeedViewModel {
-    var seed: BackupInfo = .init(mnemonic: "", descriptor: "", changeDescriptor: "")
-    var seedViewError: BdkError?
-    var showingSeedViewErrorAlert = false
+class SeedViewModel: ObservableObject {
+    @Published var seed: BackupInfo = BackupInfo(mnemonic: "", descriptor: "", changeDescriptor: "")
+    @Published var seedViewError: BdkError?
+    @Published var showingSeedViewErrorAlert = false
+
+    private let bdkClient: BDKClient
+
+    init(bdkClient: BDKClient = .live) {
+        self.bdkClient = bdkClient
+    }
 
     func getSeed() {
         do {
-            let seed = try BDKClient.live.getBackupInfo()
+            let seed = try bdkClient.getBackupInfo()
             self.seed = seed
-        } catch _ as BdkError {
-            self.seedViewError = BdkError.Generic(message: "Could not show seed")
-            self.showingSeedViewErrorAlert = true
         } catch {
             self.seedViewError = BdkError.Generic(message: "Could not show seed")
             self.showingSeedViewErrorAlert = true
         }
     }
-
 }
