@@ -13,7 +13,7 @@ struct BuildTransactionView: View {
     let amount: String
     let address: String
     let fee: Int
-    @Bindable var viewModel: BuildTransactionViewModel
+    @ObservedObject var viewModel: BuildTransactionViewModel // Change @Bindable to @ObservedObject
     @State var isSent: Bool = false
     @State var isError: Bool = false
     @Binding var shouldPopToRootView: Bool

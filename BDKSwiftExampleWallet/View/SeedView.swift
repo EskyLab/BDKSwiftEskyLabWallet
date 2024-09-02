@@ -10,6 +10,7 @@ import BitcoinDevKit
 
 struct SeedView: View {
     @ObservedObject var viewModel: SeedViewModel
+    @State private var isCopied = false // State to track if the seed has been copied
 
     var body: some View {
         VStack(spacing: 20) {
@@ -30,6 +31,18 @@ struct SeedView: View {
                         .foregroundColor(.secondary)
                 }
                 .padding()
+
+                Button(action: copySeed) {
+                    HStack {
+                        Image(systemName: isCopied ? "checkmark.circle" : "doc.on.doc")
+                            .foregroundColor(isCopied ? .green : .blue)
+                        Text(isCopied ? "Copied" : "Copy Seed")
+                            .foregroundColor(isCopied ? .green : .blue)
+                    }
+                    .padding()
+                    .background(Color(uiColor: .systemGray6))
+                    .cornerRadius(8)
+                }
             }
         }
         .onAppear {
@@ -43,14 +56,28 @@ struct SeedView: View {
             )
         }
     }
-}
-#if DEBUG
-    #Preview("SeedView - en") {
-        SeedView(viewModel: .init())
-    }
 
-    #Preview("SeedView - en - Large") {
-        SeedView(viewModel: .init())
-            .environment(\.sizeCategory, .accessibilityLarge)
+    private func copySeed() {
+        let seedText = """
+        Mnemonic: \(viewModel.seed.mnemonic)
+        Descriptor: \(viewModel.seed.descriptor)
+        Change Descriptor: \(viewModel.seed.changeDescriptor)
+        """
+        UIPasteboard.general.string = seedText
+        isCopied = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isCopied = false
+        }
     }
+}
+
+#if DEBUG
+#Preview("SeedView - en") {
+    SeedView(viewModel: .init())
+}
+
+#Preview("SeedView - en - Large") {
+    SeedView(viewModel: .init())
+        .environment(\.sizeCategory, .accessibilityLarge)
+}
 #endif

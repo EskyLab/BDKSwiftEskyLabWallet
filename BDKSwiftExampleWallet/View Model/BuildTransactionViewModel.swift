@@ -7,19 +7,17 @@
 
 import BitcoinDevKit
 import Foundation
+import Combine
 
 @MainActor
-@Observable
-class BuildTransactionViewModel {
+class BuildTransactionViewModel: ObservableObject {
     let bdkClient: BDKClient
 
-    var txBuilderResult: TxBuilderResult?
-    var buildTransactionViewError: BdkError?
-    var showingBuildTransactionViewErrorAlert = false
+    @Published var txBuilderResult: TxBuilderResult?
+    @Published var buildTransactionViewError: BdkError?
+    @Published var showingBuildTransactionViewErrorAlert = false
 
-    init(
-        bdkClient: BDKClient = .live
-    ) {
+    init(bdkClient: BDKClient = .live) {
         self.bdkClient = bdkClient
     }
 
@@ -53,9 +51,8 @@ class BuildTransactionViewModel {
             self.buildTransactionViewError = .Generic(message: error.description)
             self.showingBuildTransactionViewErrorAlert = true
         } catch {
-            self.buildTransactionViewError = .Generic(message: "Error Sending")
+            self.buildTransactionViewError = .Generic(message: "Error Sending Transaction")
             self.showingBuildTransactionViewErrorAlert = true
         }
     }
-
 }

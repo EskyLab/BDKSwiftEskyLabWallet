@@ -17,6 +17,7 @@ import Foundation
         spendable: 21_418_468,
         total: 21_418_468
     )
+
     let mockBalanceZero = Balance(
         immature: 0,
         trustedPending: 0,

@@ -259,6 +259,9 @@
         }
       }
     },
+    "Copied" : {
+
+    },
     "Copy" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -271,6 +274,9 @@
       }
     },
     "Copy Address" : {
+
+    },
+    "Copy Seed" : {
 
     },
     "Create Wallet" : {

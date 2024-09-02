@@ -50,3 +50,11 @@ class AmountViewModel: ObservableObject {
         }
     }
 }
+
+// Example usage of BdkError for demonstration
+// Note: This should be placed inside a function or a view's body to avoid top-level execution errors
+
+func printErrorExample() {
+    let error: BdkError = .InsufficientFunds(message: "Not enough funds to complete the transaction")
+    print(error.description) // Outputs: "Not enough funds to complete the transaction"
+}

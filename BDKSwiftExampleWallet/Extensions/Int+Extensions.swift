@@ -11,7 +11,6 @@ extension UInt32 {
     private static var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-
         return numberFormatter
     }()
 
@@ -24,16 +23,13 @@ extension UInt64 {
     private static var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-
         return numberFormatter
     }()
 
     var delimiter: String {
         return UInt64.numberFormatter.string(from: NSNumber(value: self)) ?? ""
     }
-}
 
-extension UInt64 {
     func formattedSatoshis() -> String {
         if self == 0 {
             return "0.00 000 000"
@@ -54,9 +50,12 @@ extension UInt64 {
             }
 
             let formattedBalance = "\(formattedZero).\(first) \(second) \(third)"
-
             return formattedBalance
         }
+    }
+
+    func toDate() -> Date {
+        return Date(timeIntervalSince1970: TimeInterval(self))
     }
 }
 
@@ -66,13 +65,6 @@ extension Int {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .full
         let relativeDate = formatter.localizedString(for: date, relativeTo: Date.now)
-
         return relativeDate
-    }
-}
-
-extension UInt64 {
-    func toDate() -> Date {
-        return Date(timeIntervalSince1970: TimeInterval(self))
     }
 }
