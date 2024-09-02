@@ -17,6 +17,7 @@ class AmountViewModel: ObservableObject {
     @Published var balanceConfirmed: UInt64?
     @Published var amountViewError: BdkError?
     @Published var showingAmountViewErrorAlert = false
+    @Published var exchangeRate: Double? // Store exchange rate
 
     init(bdkClient: BDKClient = .live) {
         self.bdkClient = bdkClient
@@ -48,6 +49,20 @@ class AmountViewModel: ObservableObject {
                 continuation.resume(throwing: error)
             }
         }
+    }
+
+    // Method to fetch exchange rate
+    func fetchExchangeRate() async {
+        // Simulating fetching the exchange rate (e.g., from an API)
+        // Example: 1 BTC = 40,000 USD, so 1 sats = 0.0004 USD
+        self.exchangeRate = 0.0004
+    }
+
+    // Calculate dollar amount
+    func calculateDollarAmount(sats: UInt64) -> String {
+        guard let exchangeRate = exchangeRate else { return "$0.00" }
+        let dollars = Double(sats) * exchangeRate
+        return String(format: "$%.2f", dollars)
     }
 }
 

@@ -97,6 +97,9 @@
       },
       "shouldTranslate" : false
     },
+    "~ $%.2f" : {
+
+    },
     "12 Word Seed Phrase (Optional)" : {
       "localizations" : {
         "fr" : {
@@ -383,6 +386,9 @@
           }
         }
       }
+    },
+    "Fetching price..." : {
+
     },
     "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
 

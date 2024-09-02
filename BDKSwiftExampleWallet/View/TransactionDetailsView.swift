@@ -10,6 +10,7 @@ import BitcoinDevKit
 
 struct TransactionDetailsView: View {
     @ObservedObject var viewModel: TransactionDetailsViewModel
+    @StateObject private var priceViewModel = PriceViewModel()
     let transaction: TransactionDetails
     let amount: UInt64
 
@@ -26,6 +27,7 @@ struct TransactionDetailsView: View {
         .onAppear {
             viewModel.getNetwork()
             viewModel.getEsploraUrl()
+            priceViewModel.fetchBitcoinPrice()
         }
     }
 
@@ -62,6 +64,18 @@ struct TransactionDetailsView: View {
                     .foregroundColor(.primary)
                 
                 Text("sats")
+                    .foregroundColor(.secondary)
+            }
+
+            if let priceUSD = priceViewModel.bitcoinPriceUSD {
+                let amountInBTC = Double(amount) / 100_000_000
+                let amountInUSD = amountInBTC * priceUSD
+                Text(String(format: "$%.2f", amountInUSD))
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("Fetching price...")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
             }
 

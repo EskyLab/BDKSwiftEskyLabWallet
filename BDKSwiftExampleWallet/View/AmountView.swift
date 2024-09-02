@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AmountView: View {
     @ObservedObject var viewModel: AmountViewModel
+    @ObservedObject var priceViewModel = PriceViewModel() // Observe the PriceViewModel
     @State private var numpadAmount = "0"
     @State private var isNextActive = false
 
@@ -40,6 +41,12 @@ struct AmountView: View {
                         }
                         .font(.caption2.weight(.medium))
                         .foregroundColor(.secondary)
+                    }
+
+                    if let bitcoinPriceUSD = priceViewModel.bitcoinPriceUSD {
+                        Text("~ $\(calculateDollarAmount(bitcoinPriceUSD: bitcoinPriceUSD), specifier: "%.2f")")
+                            .font(.title2.weight(.medium))
+                            .foregroundColor(.yellow)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -83,8 +90,11 @@ struct AmountView: View {
                 .padding(.bottom, 40) // Adjust this padding to control spacing from the bottom of the screen
             }
             .padding()
-            .task {
-                await viewModel.getBalance()
+            .onAppear {
+                priceViewModel.fetchBitcoinPrice() // Fetch the price when the view appears
+                Task {
+                    await viewModel.getBalance()
+                }
             }
         }
         .alert(isPresented: $viewModel.showingAmountViewErrorAlert) {
@@ -130,5 +140,10 @@ struct AmountView: View {
             }
             impactFeedbackGenerator.impactOccurred()
         }
+    }
+
+    private func calculateDollarAmount(bitcoinPriceUSD: Double) -> Double {
+        let sats = Double(numpadAmount) ?? 0
+        return (sats / 100_000_000) * bitcoinPriceUSD
     }
 }

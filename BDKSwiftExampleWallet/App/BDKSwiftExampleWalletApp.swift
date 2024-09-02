@@ -15,7 +15,9 @@ struct BDKSwiftExampleWalletApp: App {
     @AppStorage("isBiometricEnabled") var isBiometricEnabled: Bool = false
     @State private var isAuthenticated: Bool = false
     @State private var isShowingSplash: Bool = true
-    @State private var hasAttemptedBiometricAuth: Bool = false
+    @State private var hasAttemptedBiometricAuth: Bool = false  // Track if biometric auth has been attempted
+    @State private var hasAuthenticatedSuccessfully: Bool = false  // Track if biometric auth was successful
+
     let bdkService: BDKClient = .live
 
     var body: some Scene {
@@ -23,25 +25,15 @@ struct BDKSwiftExampleWalletApp: App {
             if isShowingSplash {
                 SplashScreenView(isShowingSplash: $isShowingSplash, authenticateUser: authenticateUser)
             } else if !isAuthenticated {
-                if isBiometricEnabled && !hasAttemptedBiometricAuth {
+                if isBiometricEnabled && !hasAuthenticatedSuccessfully {
+                    // If biometric is enabled and has not been successfully authenticated, show BiometricAuthView
                     BiometricAuthView(authenticateUser: authenticateUser)
                 } else {
-                    if isOnboarding {
-                        OnboardingView(viewModel: .init())
-                            .onAppear {
-                                isAuthenticated = true
-                            }
-                    } else {
-                        TabHomeView(viewModel: .init())
-                            .onAppear {
-                                isAuthenticated = true
-                            }
-                    }
+                    // Proceed directly to onboarding or main screen if already authenticated
+                    proceedToMainContent()
                 }
-            } else if isOnboarding {
-                OnboardingView(viewModel: .init())
             } else {
-                TabHomeView(viewModel: .init())
+                proceedToMainContent()
             }
         }
     }
@@ -50,6 +42,7 @@ struct BDKSwiftExampleWalletApp: App {
         #if targetEnvironment(simulator)
         DispatchQueue.main.async {
             self.isAuthenticated = true
+            self.hasAuthenticatedSuccessfully = true
             completion(true)
         }
         #else
@@ -64,6 +57,7 @@ struct BDKSwiftExampleWalletApp: App {
                     hasAttemptedBiometricAuth = true
                     if success {
                         isAuthenticated = true
+                        hasAuthenticatedSuccessfully = true
                         completion(true)
                     } else {
                         handleAuthenticationFailure(error: authenticationError as? LAError)
@@ -82,17 +76,39 @@ struct BDKSwiftExampleWalletApp: App {
         print("Biometric authentication failed.")
     }
 
+    @ViewBuilder
+    func proceedToMainContent() -> some View {
+        if isOnboarding {
+            OnboardingView(viewModel: .init())
+        } else {
+            TabHomeView(viewModel: .init())
+        }
+    }
+    
+    struct BiometricAuthView: View {
+        var authenticateUser: (@escaping (Bool) -> Void) -> Void
+
+        var body: some View {
+            Text("Authenticating...")
+                .onAppear {
+                    authenticateUser { success in
+                        if !success {
+                            print("Biometric authentication failed. Access denied.")
+                        }
+                    }
+                }
+        }
+    }
+    
     struct SplashScreenView: View {
         @Binding var isShowingSplash: Bool
         @State private var isAnimating = false
         @State private var showCulture = false
-        @State private var isAuthenticated = false
         var authenticateUser: (@escaping (Bool) -> Void) -> Void
 
         var body: some View {
             ZStack {
-                Color(UIColor.systemBackground)
-                    .ignoresSafeArea()
+                Color(UIColor.systemBackground).ignoresSafeArea()
 
                 VStack {
                     Spacer()
@@ -160,21 +176,6 @@ struct BDKSwiftExampleWalletApp: App {
 
         private func handleAuthenticationFailure() {
             print("Biometric authentication failed. Access denied.")
-        }
-    }
-
-    struct BiometricAuthView: View {
-        var authenticateUser: (@escaping (Bool) -> Void) -> Void
-
-        var body: some View {
-            Text("Authenticating...")
-                .onAppear {
-                    authenticateUser { success in
-                        if !success {
-                            print("Biometric authentication failed. Access denied.")
-                        }
-                    }
-                }
         }
     }
 }
