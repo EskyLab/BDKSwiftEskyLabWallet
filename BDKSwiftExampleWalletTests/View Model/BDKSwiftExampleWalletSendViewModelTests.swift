@@ -11,59 +11,38 @@ import XCTest
 @MainActor
 final class BDKSwiftExampleWalletSendViewModelTests: XCTestCase {
 
-    // Test for AmountViewModel
-    func testAmountViewModel() async throws {  // Mark the function as async
-        // Set up viewModel with mock client
+    func testAmountViewModel() async {
+        // Set up viewModel
         let viewModel = AmountViewModel(bdkClient: .mock)
 
-        // Perform getBalance
-        await viewModel.getBalance()  // Use await since it's an async function
-
-        // Assert that the balance is greater than 0
-        if let balance = viewModel.balanceTotal {
-            XCTAssertGreaterThan(balance, UInt64(0), "Balance should be greater than 0")
-        } else {
-            XCTFail("Balance should not be nil")
-        }
+        // Simulate successful getBalance() call
+        await viewModel.getBalance()  // Ensure getBalance is async; otherwise, remove await
+        XCTAssertGreaterThan(viewModel.balanceTotal!, UInt64(0))
     }
 
-    // Test for FeeViewModel
-    func testFeeViewModel() async throws {  // Mark the function as async
-        // Set up viewModel with mock clients
+    func testFeeViewModel() async {
+        // Set up viewModel
         let viewModel = FeeViewModel(feeClient: .mock, bdkClient: .mock)
 
-        // Perform getFees
-        await viewModel.getFees()  // Use await since it's an async function
-
-        // Assert that the recommended fastest fee is as expected
-        if let fees = viewModel.recommendedFees {
-            XCTAssertEqual(fees.fastestFee, 10, "Fastest fee should be 10")
-        } else {
-            XCTFail("Recommended fees should not be nil")
-        }
+        // Simulate successful getFees() call
+        await viewModel.getFees()  // Ensure getFees is async; otherwise, remove await
+        XCTAssertEqual(viewModel.recommendedFees?.fastestFee, 10)
     }
 
-    // Test for BuildTransactionViewModel
-    func testBuildTransactionViewModel() async throws {  // Mark the function as async
-        // Set up viewModel with mock client
+    func testBuildTransactionViewModel() async {
+        // Set up viewModel
         let viewModel = BuildTransactionViewModel(bdkClient: .mock)
 
         let amount = "100000"
         let address = "tb1pxg0lakl0x4jee73f38m334qsma7mn2yv764x9an5ylht6tx8ccdsxtktrt"
         let fee: Float = 17.0
 
-        // Perform buildTransaction
-        await viewModel.buildTransaction(  // Use await if it's an async function
+        // Simulate successful buildTransaction() call
+         viewModel.buildTransaction(  // Ensure buildTransaction is async; otherwise, remove await
             address: address,
             amount: UInt64(Int64(amount) ?? 0),
             feeRate: fee
         )
-
-        // Assert that the transaction fee is as expected
-        if let txBuilderResult = viewModel.txBuilderResult {
-            XCTAssertEqual(txBuilderResult.transactionDetails.fee, 2820, "Transaction fee should be 2820")
-        } else {
-            XCTFail("Transaction builder result should not be nil")
-        }
+        XCTAssertEqual(viewModel.txBuilderResult?.transactionDetails.fee, 2820)
     }
 }

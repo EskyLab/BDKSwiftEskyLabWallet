@@ -17,6 +17,9 @@ class TransactionDetailsViewModel: ObservableObject {
     @Published var transactionDetailsError: BdkError?
     @Published var showingTransactionDetailsViewErrorAlert = false
 
+    @Published var confirmedTransactions: [TransactionDetails] = []
+    @Published var unconfirmedTransactions: [TransactionDetails] = []
+
     init(
         bdkClient: BDKClient = .live,
         keyClient: KeyClient = .live
@@ -25,9 +28,9 @@ class TransactionDetailsViewModel: ObservableObject {
         self.keyClient = keyClient
         self.getNetwork()
         self.getEsploraUrl()
+        self.fetchTransactions()
     }
 
-    // Fetch the network from the key client
     func getNetwork() {
         do {
             self.network = try keyClient.getNetwork()
@@ -39,7 +42,6 @@ class TransactionDetailsViewModel: ObservableObject {
         }
     }
 
-    // Fetch the Esplora URL based on the network
     func getEsploraUrl() {
         do {
             let savedEsploraURL = try keyClient.getEsploraURL()
@@ -50,7 +52,21 @@ class TransactionDetailsViewModel: ObservableObject {
             }
         } catch {
             DispatchQueue.main.async {
-                self.transactionDetailsError = BdkError.Generic(message: "Could not get esplora")
+                self.transactionDetailsError = BdkError.Generic(message: "Could not get esplora URL")
+                self.showingTransactionDetailsViewErrorAlert = true
+            }
+        }
+    }
+
+    func fetchTransactions() {
+        do {
+            let transactions = try bdkClient.getTransactions()
+
+            self.confirmedTransactions = transactions.filter { $0.confirmationTime != nil }
+            self.unconfirmedTransactions = transactions.filter { $0.confirmationTime == nil }
+        } catch {
+            DispatchQueue.main.async {
+                self.transactionDetailsError = BdkError.Generic(message: "Could not fetch transactions")
                 self.showingTransactionDetailsViewErrorAlert = true
             }
         }
