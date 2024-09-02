@@ -173,6 +173,9 @@
         }
       }
     },
+    "Authenticating..." : {
+
+    },
     "Bitcoin" : {
 
     },
@@ -288,6 +291,12 @@
           }
         }
       }
+    },
+    "CULTURE" : {
+
+    },
+    "CYPHERPUNK" : {
+
     },
     "CypherPunk Culture Bitcoin Wallet!" : {
 
