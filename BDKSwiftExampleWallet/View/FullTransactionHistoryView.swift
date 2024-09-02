@@ -17,11 +17,11 @@ struct FullTransactionHistoryView: View {
         NavigationView {
             List {
                 ForEach(
-                    transactionDetails.sorted(
-                        by: {
-                            $0.confirmationTime?.timestamp ?? $0.received > $1.confirmationTime?.timestamp ?? $1.received
-                        }
-                    ),
+                    transactionDetails
+                        .filter { $0.confirmationTime != nil } // Filter out unconfirmed transactions
+                        .sorted(by: {
+                            $0.confirmationTime!.timestamp > $1.confirmationTime!.timestamp
+                        }),
                     id: \.txid
                 ) { transaction in
                     NavigationLink(
@@ -51,7 +51,7 @@ struct FullTransactionHistoryView: View {
                 .font(.largeTitle)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(
-                    transaction.confirmationTime != nil ? Color.bitcoinOrange : Color.secondary,
+                    Color.bitcoinOrange,
                     Color.gray.opacity(0.05)
                 )
 
@@ -65,10 +65,9 @@ struct FullTransactionHistoryView: View {
                     .foregroundColor(.primary)
 
                 Text(
-                    transaction.confirmationTime?.timestamp.toDate().formatted(.dateTime.day().month().hour().minute())
-                        ?? "Unconfirmed"
+                    transaction.confirmationTime!.timestamp.toDate().formatted(.dateTime.day().month().hour().minute())
                 )
-                .foregroundColor(transaction.confirmationTime == nil ? .red : .secondary)
+                .foregroundColor(.secondary)
                 .font(.subheadline)
             }
 

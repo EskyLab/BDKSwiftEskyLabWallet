@@ -27,6 +27,12 @@ struct Price: Codable, Equatable {
         case aud = "AUD"
         case jpy = "JPY"
     }
+
+    static func == (lhs: Price, rhs: Price) -> Bool {
+        return lhs.time == rhs.time && lhs.usd == rhs.usd && lhs.eur == rhs.eur
+            && lhs.gbp == rhs.gbp && lhs.cad == rhs.cad && lhs.chf == rhs.chf && lhs.aud == rhs.aud
+            && lhs.jpy == rhs.jpy
+    }
 }
 
 struct ExchangeRates: Codable {
@@ -48,25 +54,24 @@ struct ExchangeRates: Codable {
 }
 
 #if DEBUG
-let currentPriceMock = Price(
-    time: 1_693_079_705,
-    usd: 26030,
-    eur: 24508,
-    gbp: 22486,
-    cad: 35314,
-    chf: 23088,
-    aud: 40657,
-    jpy: 3_816_606
-)
-
-let currentPriceMockZero = Price(
-    time: 1_693_079_705,
-    usd: 0,
-    eur: 24508,
-    gbp: 22486,
-    cad: 35314,
-    chf: 23088,
-    aud: 40657,
-    jpy: 3_816_606
-)
+    let currentPriceMock = Price(
+        time: 1_693_079_705,
+        usd: 26030,
+        eur: 24508,
+        gbp: 22486,
+        cad: 35314,
+        chf: 23088,
+        aud: 40657,
+        jpy: 3_816_606
+    )
+    let currentPriceMockZero = Price(
+        time: 1_693_079_705,
+        usd: 0,
+        eur: 24508,
+        gbp: 22486,
+        cad: 35314,
+        chf: 23088,
+        aud: 40657,
+        jpy: 3_816_606
+    )
 #endif

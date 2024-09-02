@@ -9,11 +9,13 @@ import BitcoinDevKit
 import BitcoinUI
 import SwiftUI
 
+// Assuming BuildTransactionViewModel is already defined elsewhere
+
 struct BuildTransactionView: View {
     let amount: String
     let address: String
     let fee: Int
-    @ObservedObject var viewModel: BuildTransactionViewModel // Change @Bindable to @ObservedObject
+    @ObservedObject var viewModel: BuildTransactionViewModel
     @State var isSent: Bool = false
     @State var isError: Bool = false
     @Binding var shouldPopToRootView: Bool

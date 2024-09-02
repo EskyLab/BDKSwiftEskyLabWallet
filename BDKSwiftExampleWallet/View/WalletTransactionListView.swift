@@ -122,6 +122,14 @@ struct WalletTransactionListView: View {
     }
 
     private func transactionSortCriteria(_ t1: TransactionDetails, _ t2: TransactionDetails) -> Bool {
+        // Check if one of the transactions is unconfirmed
+        if t1.confirmationTime == nil && t2.confirmationTime != nil {
+            return true
+        } else if t1.confirmationTime != nil && t2.confirmationTime == nil {
+            return false
+        }
+        
+        // If both are confirmed or both are unconfirmed, sort by date
         let date1 = t1.confirmationTime?.timestamp ?? t1.received
         let date2 = t2.confirmationTime?.timestamp ?? t2.received
         return date1 > date2
