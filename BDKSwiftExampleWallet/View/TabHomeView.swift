@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TabHomeView: View {
     @StateObject var viewModel: TabHomeViewModel
-    @State private var impactFeedbackGenerator: UIImpactFeedbackGenerator? // Define here
+    @State private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
 
     var body: some View {
         ZStack {
@@ -38,10 +38,10 @@ struct TabHomeView: View {
                         Label("Settings", systemImage: "gear")
                     }
             }
-            .tint(Color("bitcoinOrange")) // Change to Bitcoin orange
+            .tint(Color("bitcoinOrange"))
             .onAppear {
                 viewModel.loadWallet()
-                prepareHapticFeedback() // Prepare haptic feedback when view appears
+                prepareHapticFeedback()
             }
         }
         .alert(isPresented: $viewModel.showingTabViewErrorAlert) {
@@ -59,6 +59,11 @@ struct TabHomeView: View {
     private func prepareHapticFeedback() {
         impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
         impactFeedbackGenerator?.prepare()
+    }
+
+    // Optional: Use this function to trigger haptic feedback when needed
+    private func triggerHapticFeedback() {
+        impactFeedbackGenerator?.impactOccurred()
     }
 }
 
