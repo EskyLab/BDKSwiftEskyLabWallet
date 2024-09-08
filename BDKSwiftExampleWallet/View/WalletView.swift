@@ -7,8 +7,7 @@
 
 import SwiftUI
 import BitcoinDevKit
-import BitcoinUI
-import LocalAuthentication
+import Promises
 
 struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModel
@@ -17,6 +16,7 @@ struct WalletView: View {
     @State private var newTransactionSent = false
     @State private var isRefreshing = false
     @State private var showSyncOverlay = false
+    @State private var isSyncing: Bool = false
     @AppStorage("isBiometricEnabled") private var isBiometricEnabled: Bool = false
     @AppStorage("hasShownWelcomeMessage") private var hasShownWelcomeMessage: Bool = false
 
@@ -36,7 +36,7 @@ struct WalletView: View {
         .alert(isPresented: $viewModel.showingWalletViewErrorAlert) {
             Alert(
                 title: Text("Wallet Error"),
-                message: Text(viewModel.walletViewError?.description ?? "Unknown"),
+                message: Text(viewModel.walletViewError?.localizedDescription ?? "Unknown"),
                 dismissButton: .default(Text("OK")) {
                     viewModel.walletViewError = nil
                 }
@@ -105,34 +105,57 @@ struct WalletView: View {
             .opacity(showSyncOverlay ? 0.5 : 1.0)
             .refreshable {
                 isRefreshing = true
-                await fetchWalletData()
+                fetchWalletData()
                 isRefreshing = false
             }
             Spacer()
         }
         .padding()
-        .task {
+        .onAppear {
             if isFirstAppear || newTransactionSent {
-                await fetchWalletData()
+                fetchWalletData()
                 isFirstAppear = false
             }
         }
     }
 
-    private func fetchWalletData() async {
-        toggleSyncOverlay(show: true)
-        await viewModel.sync()
-        viewModel.getBalance()
-        viewModel.getTransactions()
-        await viewModel.getPrices()
+    private func fetchWalletData() {
+        toggleSyncOverlay(show: true)  // Show overlay immediately when refresh begins
+        isRefreshing = true  // Indicate that refreshing is happening
 
-        if isFirstAppear && !hasShownWelcomeMessage {
-            withAnimation(.easeInOut(duration: 0.5)) {
-                hasShownWelcomeMessage = true
+        viewModel.sync()
+            .then { _ in
+                // Fetch balance, transactions, and prices concurrently
+                let balancePromise = self.viewModel.getBalance()
+                let transactionPromise = self.viewModel.getTransactions()
+                let pricePromise = self.viewModel.getPrices()
+
+                // Update the balance, transaction, and prices as soon as they arrive
+                return all(balancePromise, transactionPromise, pricePromise)
             }
-        }
-
-        toggleSyncOverlay(show: false)
+            .then { _ -> Promise<Void> in
+                // Perform UI updates after data has been fetched
+                if self.isFirstAppear && !self.hasShownWelcomeMessage {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        self.hasShownWelcomeMessage = true
+                    }
+                }
+                return Promise(())
+            }
+            .catch { error in
+                // Handle errors
+                if let bdkError = error as? BdkError {
+                    self.viewModel.walletViewError = bdkError
+                } else {
+                    self.viewModel.walletViewError = .Generic(message: "Unknown error occurred.")
+                }
+                self.viewModel.showingWalletViewErrorAlert = true
+            }
+            .then {
+                // Hide the overlay and end refreshing after everything has completed
+                toggleSyncOverlay(show: false)
+                isRefreshing = false
+            }
     }
 
     private func toggleSyncOverlay(show: Bool) {
@@ -146,36 +169,11 @@ struct WalletView: View {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
             VStack(spacing: 20) {
-                if !hasShownWelcomeMessage && !isRefreshing {
-                    Image(systemName: "network")
+                if viewModel.isSyncing {  // Use viewModel.isSyncing
+                    Image(systemName: "arrow.2.circlepath.circle")
                         .font(.system(size: 40))
                         .foregroundColor(.bitcoinOrange)
-                    Text("CypherPunk Culture Bitcoin Wallet!")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                    Text("Bitcoin: A Peer-to-Peer Electronic Cash System")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.8))
-                    Text("Once syncing is complete, your transactions and balance will be displayed here.")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.8))
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 5)
-                    Button("Got it!") {
-                        hasShownWelcomeMessage = true
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            showSyncOverlay = false
-                        }
-                    }
-                    .padding(.top, 10)
-                    .buttonStyle(.borderedProminent)
-                    .tint(.bitcoinOrange)
-                } else {
-                    Image(systemName: newTransactionSent ? "paperplane.fill" : "chart.bar.fill")
-                        .font(.system(size: 40))
-                        .foregroundColor(.bitcoinOrange)
-                        .symbolEffect(.pulse.byLayer)
-                    Text(activityText)
+                    Text(viewModel.activityText)  // Shows the current sync activity
                         .font(.headline)
                         .foregroundColor(.white)
                     Text("This may take a few moments.")

@@ -192,9 +192,6 @@
         }
       }
     },
-    "Bitcoin: A Peer-to-Peer Electronic Cash System" : {
-
-    },
     "Block %@" : {
       "localizations" : {
         "fr" : {
@@ -301,9 +298,6 @@
     "CYPHERPUNK" : {
 
     },
-    "CypherPunk Culture Bitcoin Wallet!" : {
-
-    },
     "CypherPunk Culture." : {
 
     },
@@ -393,9 +387,6 @@
     "For enhanced security, we recommend enabling biometric authentication and other security features in your device settings." : {
 
     },
-    "Got it!" : {
-
-    },
     "Loading..." : {
 
     },
@@ -477,9 +468,6 @@
           }
         }
       }
-    },
-    "Once syncing is complete, your transactions and balance will be displayed here." : {
-
     },
     "Paste" : {
 

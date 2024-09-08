@@ -16,6 +16,10 @@
 		92AAE8B52C78287B00CC7CF0 /* NumpadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AAE8B42C78287B00CC7CF0 /* NumpadButton.swift */; };
 		92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92B7D8D22C6E5DFA00AFDE95 /* BitcoinDevKit */; };
 		92BA8AA22C851D2B006FF021 /* TabHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BA8AA12C851D2B006FF021 /* TabHomeView.swift */; };
+		92BCE0472C8D60FD00E93375 /* FBLPromises in Frameworks */ = {isa = PBXBuildFile; productRef = 92BCE0462C8D60FD00E93375 /* FBLPromises */; };
+		92BCE0492C8D60FD00E93375 /* FBLPromisesTestHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 92BCE0482C8D60FD00E93375 /* FBLPromisesTestHelpers */; };
+		92BCE04B2C8D60FD00E93375 /* Promises in Frameworks */ = {isa = PBXBuildFile; productRef = 92BCE04A2C8D60FD00E93375 /* Promises */; };
+		92BCE04D2C8D60FD00E93375 /* PromisesTestHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 92BCE04C2C8D60FD00E93375 /* PromisesTestHelpers */; };
 		92DF35E22C8551FC002689D8 /* PriceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DF35E12C8551FC002689D8 /* PriceViewModel.swift */; };
 		A733D6D02A81113000F333B4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A733D6CF2A81113000F333B4 /* Localizable.xcstrings */; };
 		A73F7A362A3B778E00B87FC6 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73F7A352A3B778E00B87FC6 /* Int+Extensions.swift */; };
@@ -232,7 +236,9 @@
 			files = (
 				AEAF83B62B7BD4D10019B23B /* CodeScanner in Frameworks */,
 				AE4984A92A1BD425009951E2 /* BitcoinDevKit in Frameworks */,
+				92BCE04B2C8D60FD00E93375 /* Promises in Frameworks */,
 				AEB735D32B2CC4B900F99DBB /* BitcoinUI in Frameworks */,
+				92BCE0472C8D60FD00E93375 /* FBLPromises in Frameworks */,
 				AE7D5A0E2A7EE62200EAC8CE /* KeychainAccess in Frameworks */,
 				929570B42C7E04B900B2251A /* bdkFFI.framework in Frameworks */,
 			);
@@ -242,10 +248,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92BCE04D2C8D60FD00E93375 /* PromisesTestHelpers in Frameworks */,
 				924B75A02C716E70008CA7CD /* CodeScanner in Frameworks */,
 				924B759C2C716E65008CA7CD /* KeychainAccess in Frameworks */,
 				924B759E2C716E6B008CA7CD /* BitcoinUI in Frameworks */,
 				92B7D8D32C6E5DFA00AFDE95 /* BitcoinDevKit in Frameworks */,
+				92BCE0492C8D60FD00E93375 /* FBLPromisesTestHelpers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +553,8 @@
 				AE7D5A0D2A7EE62200EAC8CE /* KeychainAccess */,
 				AEB735D22B2CC4B900F99DBB /* BitcoinUI */,
 				AEAF83B52B7BD4D10019B23B /* CodeScanner */,
+				92BCE0462C8D60FD00E93375 /* FBLPromises */,
+				92BCE04A2C8D60FD00E93375 /* Promises */,
 			);
 			productName = BDKSwiftExampleWallet;
 			productReference = AE4984782A1BBBD6009951E2 /* CypherPunkCulture.app */;
@@ -605,6 +615,7 @@
 				AE7D5A0C2A7EE62200EAC8CE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				AEB735D12B2CC4B900F99DBB /* XCRemoteSwiftPackageReference "BitcoinUI" */,
 				AEAF83B42B7BD4D10019B23B /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AE4984792A1BBBD6009951E2 /* Products */;
@@ -1132,6 +1143,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/promises.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
 		AE4984A72A1BD425009951E2 /* XCRemoteSwiftPackageReference "bdk-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bitcoindevkit/bdk-swift";
@@ -1186,6 +1205,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AE4984A72A1BD425009951E2 /* XCRemoteSwiftPackageReference "bdk-swift" */;
 			productName = BitcoinDevKit;
+		};
+		92BCE0462C8D60FD00E93375 /* FBLPromises */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */;
+			productName = FBLPromises;
+		};
+		92BCE0482C8D60FD00E93375 /* FBLPromisesTestHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */;
+			productName = FBLPromisesTestHelpers;
+		};
+		92BCE04A2C8D60FD00E93375 /* Promises */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */;
+			productName = Promises;
+		};
+		92BCE04C2C8D60FD00E93375 /* PromisesTestHelpers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92BCE0452C8D60FD00E93375 /* XCRemoteSwiftPackageReference "promises" */;
+			productName = PromisesTestHelpers;
 		};
 		AE4984A82A1BD425009951E2 /* BitcoinDevKit */ = {
 			isa = XCSwiftPackageProductDependency;

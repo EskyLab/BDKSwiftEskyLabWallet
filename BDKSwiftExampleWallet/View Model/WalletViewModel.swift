@@ -8,6 +8,7 @@
 import BitcoinDevKit
 import Foundation
 import Combine
+import Promises
 
 class WalletViewModel: ObservableObject {
     let priceClient: PriceClient
@@ -37,51 +38,73 @@ class WalletViewModel: ObservableObject {
         self.bdkClient = bdkClient
     }
 
-    // Fetch the current price
-    func getPrices() async {
-        do {
-            let price = try await priceClient.fetchPrice()
-            DispatchQueue.main.async {
-                self.price = price.usd
+    // Fetch the current price using Promises
+    func getPrices() -> Promise<Void> {
+        return Promise { fulfill, reject in
+            Task {
+                do {
+                    let price = try await self.priceClient.fetchPrice()  // Explicit `self`
+                    DispatchQueue.main.async {
+                        self.price = price.usd
+                        fulfill(())
+                    }
+                } catch {
+                    reject(error)
+                    self.handleError(error, message: "Error Getting Prices")
+                }
             }
-        } catch {
-            self.handleError(error, message: "Error Getting Prices")
         }
     }
 
-    // Fetch the balance from the wallet
-    func getBalance() {
-        do {
-            let balance = try bdkClient.getBalance()
-            DispatchQueue.main.async {
-                self.balanceTotal = balance.total
+    // Fetch the balance from the wallet using Promises
+    func getBalance() -> Promise<Void> {
+        return Promise { fulfill, reject in
+            do {
+                let balance = try self.bdkClient.getBalance()  // Explicit `self`
+                DispatchQueue.main.async {
+                    self.balanceTotal = balance.total
+                    fulfill(())
+                }
+            } catch {
+                reject(error)
+                self.handleError(error, message: "Error Getting Balance")
             }
-        } catch {
-            self.handleError(error, message: "Error Getting Balance")
         }
     }
 
-    // Fetch the transactions from the wallet
-    func getTransactions() {
-        do {
-            let transactionDetails = try bdkClient.getTransactions()
-            DispatchQueue.main.async {
-                self.transactionDetails = transactionDetails
+    // Fetch the transactions from the wallet using Promises
+    func getTransactions() -> Promise<Void> {
+        return Promise { fulfill, reject in
+            do {
+                let transactionDetails = try self.bdkClient.getTransactions()  // Explicit `self`
+                DispatchQueue.main.async {
+                    self.transactionDetails = transactionDetails
+                    fulfill(())
+                }
+            } catch {
+                reject(error)
+                self.handleError(error, message: "Error Getting Transactions")
             }
-        } catch {
-            self.handleError(error, message: "Error Getting Transactions")
         }
     }
 
-    // Sync the wallet with the network
-    func sync() async {
+    // Sync the wallet with the network using Promises
+    func sync() -> Promise<Void> {
         updateSyncState(isSyncing: true, text: "Syncing Wallet...", state: .syncing)
 
-        do {
-            try await bdkClient.sync()
-            updateSyncState(isSyncing: false, text: "Wallet Synced", state: .synced, isConfirmed: true)
-        } catch {
-            handleSyncError(error)
+        return Promise { fulfill, reject in
+            Task {
+                do {
+                    try await self.bdkClient.sync()  // Explicit `self`
+                    DispatchQueue.main.async {
+                        self.updateSyncState(isSyncing: false, text: "Wallet Synced", state: .synced, isConfirmed: true)
+                        fulfill(())
+                    }
+                } catch {
+                    reject(error)
+                    self.handleSyncError(error)
+                }
+            }
         }
     }
 
@@ -98,14 +121,22 @@ class WalletViewModel: ObservableObject {
 
     private func handleError(_ error: Error, message: String) {
         DispatchQueue.main.async {
-            self.walletViewError = .Generic(message: message)
+            if let bdkError = error as? BdkError {
+                self.walletViewError = bdkError
+            } else {
+                self.walletViewError = .Generic(message: message)
+            }
             self.showingWalletViewErrorAlert = true
         }
     }
 
     private func handleSyncError(_ error: Error) {
         DispatchQueue.main.async {
-            self.walletSyncState = .error(error)
+            if let bdkError = error as? BdkError {
+                self.walletSyncState = .error(bdkError)
+            } else {
+                self.walletSyncState = .error(BdkError.Generic(message: "Sync Failed"))
+            }
             self.activityText = "Sync Failed"
             self.walletViewError = .Generic(message: "Error during sync")
             self.showingWalletViewErrorAlert = true
